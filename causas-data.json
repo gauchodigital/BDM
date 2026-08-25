@@ -1,0 +1,42 @@
+[
+  {
+    "id": "bacteriana",
+    "slug": "bacteriana",
+    "tagLabel": "MÁS GRAVE",
+    "tagColor": "accent",
+    "title": "Bacteriana",
+    "description": "La meningitis bacteriana es la **más grave de todas** y puede causar la muerte en pocas horas o dejar discapacidades severas[1]. Los síntomas aparecen de repente, por eso es muy importante estar atentos y buscar atención médica urgente[1,3].",
+    "body": "La meningitis bacteriana es la más grave de todas y puede causar la muerte en pocas horas o dejar discapacidades severas. Los síntomas aparecen de repente, por eso es muy importante estar atentos y buscar atención médica urgente.\n\nLos principales microorganismos responsables son Neumococo, Meningococo, Haemophilus influenzae tipo b y Streptococcus agalactiae (estreptococo del grupo B).",
+    "visible": true
+  },
+  {
+    "id": "viral",
+    "slug": "viral",
+    "tagLabel": "MÁS FRECUENTE",
+    "tagColor": "primary",
+    "title": "Viral",
+    "description": "Las meningitis virales son las más frecuentes y, por lo general, **tienen mejor evolución que las meningitis bacterianas**. Si bien puede ser contraída a cualquier edad, la mayoría de los casos es en niños menores de 5 años o personas que tienen el sistema inmunitario debilitado.[4]",
+    "body": "Las meningitis virales son las más frecuentes y, por lo general, tienen mejor evolución que las meningitis bacterianas. Si bien puede ser contraída a cualquier edad, la mayoría de los casos es en niños menores de 5 años o personas que tienen el sistema inmunitario debilitado.",
+    "visible": true
+  },
+  {
+    "id": "fungica",
+    "slug": "fungica",
+    "tagLabel": "POCO FRECUENTE",
+    "tagColor": "secondary",
+    "title": "Fúngica",
+    "description": "Ciertos **hongos que se encuentran en el ambiente** pueden causar meningitis. Las personas con sistemas inmunológicos debilitados son más propensos a enfermarse al inhalar esporas de hongos (células que producen ciertos hongos como una forma de defensa).[5]",
+    "body": "Ciertos **hongos que se encuentran en el ambiente** pueden causar meningitis. Las personas con sistemas inmunológicos debilitados son más propensos a enfermarse al inhalar esporas de hongos (células que producen ciertos hongos como una forma de defensa).",
+    "visible": true
+  },
+  {
+    "id": "parasitaria",
+    "slug": "parasitaria",
+    "tagLabel": "POCO FRECUENTE",
+    "tagColor": "secondary",
+    "title": "Parasitaria",
+    "description": "Las personas suelen contraer meningitis parasitaria al comer **animales infectados o alimentos contaminados**.[6]",
+    "body": "Las personas suelen contraer meningitis parasitaria al comer **animales infectados o alimentos contaminados**.",
+    "visible": true
+  }
+]

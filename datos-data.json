@@ -1,0 +1,23 @@
+[
+  {
+    "id": "transmision",
+    "label": "Transmisión",
+    "title": "Transmisión",
+    "body": "La meningitis se transmite, en la mayoría de los casos, **por vía respiratoria** desde una persona enferma o desde portadores asintomáticos por medio de la tos, los estornudos, los besos y también al compartir utensilios.[7]",
+    "visible": true
+  },
+  {
+    "id": "grupos-riesgo",
+    "label": "Grupos de riesgo",
+    "title": "Grupos de riesgo",
+    "body": "Aunque la meningitis afecta a todas las edades, **los niños pequeños son los que más riesgo tienen**.[1]\n\nTambién pueden aumentar el riesgo de padecer distintos tipos de meningitis: las inmunodeficiencias, la inmunodepresión, el consumo de tabaco y la exposición al humo del tabaco.",
+    "visible": true
+  },
+  {
+    "id": "diagnostico",
+    "label": "Diagnóstico",
+    "title": "Diagnóstico",
+    "body": "Acudir a un médico de forma inmediata para diferenciar el tipo de meningitis es de suma importancia para determinar el tratamiento.[3]\n\n**La meningitis es una urgencia médica y requiere de hospitalización inmediata.**[1]",
+    "visible": true
+  }
+]

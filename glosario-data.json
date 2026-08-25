@@ -1,0 +1,32 @@
+[
+  {
+    "id": "meninges",
+    "term": "Meninges",
+    "definition": "Membranas que recubren y protegen el cerebro y la médula espinal.",
+    "visible": true
+  },
+  {
+    "id": "meningococo",
+    "term": "Meningococo",
+    "definition": "Bacteria (Neisseria meningitidis) que puede causar meningitis y sepsis meningocócica.",
+    "visible": true
+  },
+  {
+    "id": "neumococo",
+    "term": "Neumococo",
+    "definition": "Bacteria (Streptococcus pneumoniae) asociada a neumonía, otitis y también meningitis.",
+    "visible": true
+  },
+  {
+    "id": "sepsis",
+    "term": "Sepsis",
+    "definition": "Respuesta grave del organismo a una infección que puede poner en riesgo la vida.",
+    "visible": true
+  },
+  {
+    "id": "profilaxis",
+    "term": "Profilaxis",
+    "definition": "Medida preventiva (por ejemplo, antibióticos o vacunas) para reducir el riesgo de enfermedad.",
+    "visible": true
+  }
+]

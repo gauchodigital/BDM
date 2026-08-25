@@ -1,0 +1,306 @@
+{
+  "hero": {
+    "title": "Vacunación es prevención",
+    "body": "Las vacunas enseñan al cuerpo a defenderse contra enfermedades, protegiéndonos de posibles infecciones.\n\nCumplir con las vacunas recomendadas no solo protege a cada persona de enfermedades prevenibles, sino que es también un **acto de responsabilidad social**: las vacunas permiten controlar y reducir enfermedades graves que pueden afectar especialmente a los más vulnerables: bebés, adultos mayores y personas con defensas bajas.[19]"
+  },
+  "calendarioPdfUrl": "https://www.argentina.gob.ar/salud/vacunas",
+  "calendarioIntro": {
+    "eyebrow": "protección en cada etapa de la vida",
+    "title": "Calendario Nacional de Vacunación",
+    "body": "Argentina tiene un Calendario Nacional de Vacunación robusto, completo y gratuito, que es **modelo en la región y en el mundo**. Este Calendario incluye **vacunas para las diferentes etapas de la vida, además de contemplar situaciones epidemiológicas particulares**[20]. Esto significa que, en función de la incorporación de nuevas vacunas o cambios en la circulación de la enfermedades, el calendario de vacunación suele actualizarse y adaptarse.[21]",
+    "selectLabel": "SELECCIONÁ UNA etapa de vida"
+  },
+  "etapas": [
+    {
+      "id": "embarazadas",
+      "label": "Embarazadas",
+      "icon": "pregnant_woman",
+      "bannerTitle": "Embarazadas y puerperio",
+      "bannerSubtitle": "Deben administrarse en cada embarazo.",
+      "grupos": [
+        {
+          "id": "embarazadas-grupo",
+          "badge": "EMBARAZADAS",
+          "vacunas": [
+            {
+              "nombre": "Triple Bacteriana Acelular dTpa",
+              "detalle": "A partir de la semana 20 de gestación."
+            },
+            {
+              "nombre": "Hepatitis B",
+              "detalle": "Iniciar o completar esquema de 3 dosis."
+            },
+            {
+              "nombre": "Virus Sincicial Respiratorio",
+              "detalle": "Única dosis entre las semanas 32 y 36 del embarazo durante la temporada de circulación del VSR."
+            },
+            {
+              "nombre": "Antigripal",
+              "detalle": "Única dosis en cualquier trimestre de gestación."
+            }
+          ]
+        },
+        {
+          "id": "puerperio",
+          "badge": "PUERPERIO",
+          "vacunas": [
+            {
+              "nombre": "Antigripal",
+              "detalle": "Si no la recibieron durante el embarazo deberán recibirla antes del egreso de la maternidad y hasta un máximo de 10 días después del parto."
+            },
+            {
+              "nombre": "Hepatitis B",
+              "detalle": "Iniciar o completar esquema."
+            },
+            {
+              "nombre": "Triple Viral",
+              "detalle": "Iniciar o completar esquema."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "recien-nacidos",
+      "label": "Recién nacidos",
+      "icon": "child_care",
+      "bannerTitle": "Recién nacidos",
+      "bannerSubtitle": "Las primeras horas de vida importan",
+      "grupos": [
+        {
+          "id": "rn",
+          "badge": "RECIÉN NACIDOS",
+          "vacunas": [
+            {
+              "nombre": "Hepatitis B",
+              "detalle": "En las primeras 12 horas de vida."
+            },
+            {
+              "nombre": "BCG",
+              "detalle": "Antes de egresar de la maternidad."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hasta-1-anio",
+      "label": "Hasta 1 año",
+      "icon": "stroller",
+      "bannerTitle": "Hasta el año de vida",
+      "bannerSubtitle": "Esquema del primer año",
+      "grupos": [
+        {
+          "id": "hasta-1",
+          "badge": "HASTA 1 AÑO",
+          "vacunas": [
+            {
+              "nombre": "Rotavirus",
+              "detalle": "A los 2 y 4 meses."
+            },
+            {
+              "nombre": "Quíntuple",
+              "detalle": "A los 2, 4 y 6 meses."
+            },
+            {
+              "nombre": "IPV (poliomielitis)",
+              "detalle": "A los 2, 4 y 6 meses."
+            },
+            {
+              "nombre": "Neumococo conjugada",
+              "detalle": "A los 2, 4 y 12 meses."
+            },
+            {
+              "nombre": "Meningococo",
+              "detalle": "A los 3 y 5 meses."
+            },
+            {
+              "nombre": "Antigripal",
+              "detalle": "A los 6 y 7 meses."
+            },
+            {
+              "nombre": "Triple Viral",
+              "detalle": "A los 12 meses."
+            },
+            {
+              "nombre": "Hepatitis A",
+              "detalle": "A los 12 meses."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hasta-2-anios",
+      "label": "Hasta 2 años",
+      "icon": "toys",
+      "bannerTitle": "Hasta los 2 años",
+      "bannerSubtitle": "Refuerzos del segundo año",
+      "grupos": [
+        {
+          "id": "hasta-2",
+          "badge": "HASTA 2 AÑOS",
+          "vacunas": [
+            {
+              "nombre": "Meningococo",
+              "detalle": "A los 15 meses."
+            },
+            {
+              "nombre": "Varicela",
+              "detalle": "A los 15 meses."
+            },
+            {
+              "nombre": "Antigripal",
+              "detalle": "Hasta los 24 meses."
+            },
+            {
+              "nombre": "Quíntuple",
+              "detalle": "Entre los 15 y 18 meses."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nacidos-2021",
+      "label": "Nacidos 2021",
+      "icon": "face",
+      "bannerTitle": "Nacidos a partir de 2021",
+      "bannerSubtitle": "Esquema escolar inicial",
+      "grupos": [
+        {
+          "id": "5-anios",
+          "badge": "5 AÑOS",
+          "vacunas": [
+            {
+              "nombre": "IPV (poliomielitis)",
+              "detalle": "Refuerzo."
+            },
+            {
+              "nombre": "Varicela",
+              "detalle": "Refuerzo."
+            },
+            {
+              "nombre": "Triple Viral",
+              "detalle": "Refuerzo."
+            },
+            {
+              "nombre": "Triple Bacteriana Celular",
+              "detalle": "Refuerzo."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nacidos-2018",
+      "label": "Nacidos 2018",
+      "icon": "school",
+      "bannerTitle": "Nacidos a partir de 2018 / 11 años",
+      "bannerSubtitle": "Vacunas de la adolescencia",
+      "grupos": [
+        {
+          "id": "11-anios",
+          "badge": "11 AÑOS",
+          "vacunas": [
+            {
+              "nombre": "Meningococo",
+              "detalle": "Según esquema del Calendario Nacional."
+            },
+            {
+              "nombre": "Triple Bacteriana Acelular",
+              "detalle": "Una dosis a los 11 años."
+            },
+            {
+              "nombre": "VPH",
+              "detalle": "Según esquema del Calendario Nacional."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "jovenes-adultos",
+      "label": "Jóvenes y adultos",
+      "icon": "person",
+      "bannerTitle": "Jóvenes y adultos",
+      "bannerSubtitle": "Protección en la adultez",
+      "grupos": [
+        {
+          "id": "15-64",
+          "badge": "15 A 64 AÑOS",
+          "vacunas": [
+            {
+              "nombre": "Hepatitis B",
+              "detalle": "Iniciar o completar esquema."
+            },
+            {
+              "nombre": "Doble adultos",
+              "detalle": "Según esquema del Calendario Nacional."
+            },
+            {
+              "nombre": "COVID-19",
+              "detalle": "Según recomendaciones vigentes."
+            }
+          ]
+        },
+        {
+          "id": "65-mas",
+          "badge": "65 AÑOS Y MÁS",
+          "vacunas": [
+            {
+              "nombre": "Neumococo",
+              "detalle": "Según esquema del Calendario Nacional."
+            },
+            {
+              "nombre": "Antigripal",
+              "detalle": "Dosis anual."
+            },
+            {
+              "nombre": "COVID-19",
+              "detalle": "Según recomendaciones vigentes."
+            },
+            {
+              "nombre": "Doble adultos",
+              "detalle": "Según esquema del Calendario Nacional."
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "centros": {
+    "eyebrow": "¿DÓNDE ME VACUNO?",
+    "title": "Encontrá tu centro de vacunación",
+    "body": "Buscá un centro de vacunación y conversá con un profesional de la salud.",
+    "paso1Label": "Paso 1: elegí tu provincia",
+    "placeholder": "Seleccioná una provincia",
+    "provincias": [
+      "Buenos Aires",
+      "CABA",
+      "Catamarca",
+      "Chaco",
+      "Chubut",
+      "Córdoba",
+      "Corrientes",
+      "Entre Ríos",
+      "Formosa",
+      "Jujuy",
+      "La Pampa",
+      "La Rioja",
+      "Mendoza",
+      "Misiones",
+      "Neuquén",
+      "Río Negro",
+      "Salta",
+      "San Juan",
+      "San Luis",
+      "Santa Cruz",
+      "Santa Fe",
+      "Santiago del Estero",
+      "Tierra del Fuego",
+      "Tucumán"
+    ],
+    "disclaimer": "Este buscador tiene como única finalidad proveer información útil sobre puntos de vacunación disponibles cerca de tu ubicación. El presente listado no es exhaustivo, sino una herramienta para ayudarte a encontrar centros de vacunación o efectores de salud en los que se aplican vacunas, incluyendo las vacunas contra la meningitis. Este listado incluye centros de vacunación relevados por GSK, pero no constituye recomendación médica, por lo cual te recomendamos consultar con tu médico de cabecera u obra social/prepaga para obtener la información más precisa sobre el lugar donde recibir tus vacunas.\n\nLa inclusión de centros de vacunación en este buscador no garantiza la disponibilidad de vacunas. La existencia de stock en cada punto de vacunación (farmacia, vacunatorio, etc.) depende exclusivamente del inventario disponible en cada punto de vacunación. Por ese motivo, te sugerimos contactarlos antes de concurrir a recibir tus vacunas. El listado está compuesto principalmente por centros de vacunación privados y farmacias. No obstante, también puedes acudir a centros de vacunación del sistema público para recibir tus vacunas.\n\nSi querés formar parte de este listado y tenés una farmacia o centro de vacunación habilitado, hacé click acá."
+  }
+}

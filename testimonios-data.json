@@ -1,0 +1,68 @@
+[
+  {
+    "id": "valentina-lamas",
+    "slug": "valentina-lamas",
+    "name": "Valentina Lamas",
+    "role": "Médica",
+    "category": "medico",
+    "quote": "",
+    "videoUrl": "https://www.youtube.com/watch?v=LMPG-8xA4xI",
+    "thumbnailSrc": "https://i.ytimg.com/vi/LMPG-8xA4xI/hqdefault.jpg",
+    "visible": true
+  },
+  {
+    "id": "fernando-lamas",
+    "slug": "fernando-lamas",
+    "name": "Fernando Lamas",
+    "role": "Médico",
+    "category": "medico",
+    "quote": "",
+    "videoUrl": "https://www.youtube.com/watch?v=y-xSeTAjjm8",
+    "thumbnailSrc": "https://i.ytimg.com/vi/y-xSeTAjjm8/hqdefault.jpg",
+    "visible": true
+  },
+  {
+    "id": "vanesa-castellano",
+    "slug": "vanesa-castellano",
+    "name": "Vanesa Castellano",
+    "role": "Especialista en pediatría",
+    "category": "medico",
+    "quote": "",
+    "videoUrl": "https://www.youtube.com/watch?v=qHjgLjGF8c4",
+    "thumbnailSrc": "https://i.ytimg.com/vi/qHjgLjGF8c4/hqdefault.jpg",
+    "visible": true
+  },
+  {
+    "id": "fernando-paciente",
+    "slug": "fernando",
+    "name": "Fernando Lanas",
+    "role": "Paciente",
+    "category": "paciente",
+    "quote": "",
+    "videoUrl": "https://www.youtube.com/watch?v=l5lI9yz4Qi8",
+    "thumbnailSrc": "https://i.ytimg.com/vi/l5lI9yz4Qi8/hqdefault.jpg",
+    "visible": true
+  },
+  {
+    "id": "maribel",
+    "slug": "maribel",
+    "name": "Maribel",
+    "role": "Paciente",
+    "category": "paciente",
+    "quote": "",
+    "videoUrl": "https://www.youtube.com/watch?v=kxirpXGSHFQ",
+    "thumbnailSrc": "https://i.ytimg.com/vi/kxirpXGSHFQ/hqdefault.jpg",
+    "visible": true
+  },
+  {
+    "id": "paloma",
+    "slug": "paloma",
+    "name": "Paloma",
+    "role": "Paciente",
+    "category": "paciente",
+    "quote": "",
+    "videoUrl": "https://www.youtube.com/watch?v=iA9dH8XgWJ4",
+    "thumbnailSrc": "https://i.ytimg.com/vi/iA9dH8XgWJ4/hqdefault.jpg",
+    "visible": true
+  }
+]

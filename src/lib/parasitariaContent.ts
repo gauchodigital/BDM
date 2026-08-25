@@ -1,0 +1,68 @@
+export const PARASITARIA = {
+  badge: "POCO FRECUENTE",
+  badgeColor: "primary" as const,
+  title: "Meningitis parasitaria",
+  breadcrumb: "Meningitis por parásitos",
+  intro: [
+    "Los parásitos pueden causar meningitis o afectar el cerebro y el sistema nervioso de otras maneras. Aunque la meningitis parasitaria es menos común que la meningitis viral y bacteriana, sigue siendo una **amenaza seria para la salud.**[6]",
+    "Algunas personas pueden tener un mayor riesgo de infección debido al lugar donde viven o viajan, exponiéndose a ambientes donde estos parásitos son más prevalentes. **El diagnóstico de la meningitis parasitaria puede ser difícil**, y lamentablemente, no existen tratamientos específicos para combatirla, lo que complica aún más su manejo y tratamiento adecuado.[6]",
+  ],
+  agentes: {
+    eyebrow: "AGENTES CAUSALES",
+    title: "Los 3 principales parásitos causantes",
+    body: "Los parásitos suelen infectar a animales, no a personas. Las personas se infectan con meningitis parasitaria principalmente a través de los siguientes parásitos[6]:",
+    items: [
+      {
+        num: "01",
+        name: "Angiostrongylus Cantonensis:",
+        body: "Caracoles o babosas crudas o poco cocinadas, productos agrícolas contaminados.",
+      },
+      {
+        num: "02",
+        name: "Baylisascaris procyonis:",
+        body: "Entornos (como la tierra) contaminados con heces de mapache.",
+      },
+      {
+        num: "03",
+        name: "Gnathostoma spinigerum",
+        body: "Peces de agua dulce o anguilas crudas o poco cocinadas, ranas, aves de corral, serpientes.",
+      },
+    ],
+  },
+  tratamiento: {
+    eyebrow: "TRATAMIENTO",
+    title: "¿Cómo se trata?",
+    paragraphs: [
+      "A menudo se necesitan medicamentos como los esteroides para reducir la reacción del organismo ante el parásito.",
+      "No todos los pacientes necesitan un tratamiento con medicamentos antiparasitarios. Se pueden utilizar analgésicos para los dolores de cabeza[6].",
+    ],
+  },
+  prevencion: {
+    eyebrow: "PREVENCIÓN",
+    title: "¿Cuándo buscar atención médica de emergencia?",
+    body: "Cualquier persona con síntomas de meningitis debe consultar a un profesional de la salud de inmediato. Solo un profesional de la salud puede determinar si tiene meningitis, cuál es la causa y determinar cuál es el mejor tratamiento para su caso[4].",
+    ctaLabel: "Conocer más sobre los síntomas",
+    ctaHref: "/sintomas",
+  },
+  otrasCausasEyebrow: "OTRAS CAUSAS",
+  otrasCausas: [
+    {
+      href: "/causas/bacteriana",
+      label: "Bacteriana",
+      bg: "#FFF0F6",
+      text: "#DD876E",
+    },
+    {
+      href: "/causas/fungica",
+      label: "Hongos",
+      bg: "#E6D4FE",
+      text: "#503C77",
+    },
+    {
+      href: "/causas/viral",
+      label: "Viral",
+      bg: "#F0E6FE",
+      text: "#503C77",
+    },
+  ],
+} as const;
