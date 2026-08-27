@@ -1,55 +1,127 @@
+import Image from "next/image";
 import { Button } from "@/components/ui/Button";
+
+function ScrollCue() {
+  return (
+    <a
+      href="/#que-es"
+      className="absolute inset-x-0 bottom-8 z-10 flex flex-col items-center text-[#DD876E] transition hover:brightness-110 lg:bottom-10"
+      aria-label="Ir a ¿Qué es la meningitis?"
+    >
+      <svg
+        width="20"
+        height="36"
+        viewBox="0 0 20 36"
+        fill="none"
+        className="animate-scroll-bounce"
+        aria-hidden
+      >
+        {/* Tallo punteado + flecha — accent #DD876E */}
+        <path
+          d="M10 2v20"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeDasharray="2.5 4"
+        />
+        <path
+          d="M4 18l6 8 6-8"
+          stroke="currentColor"
+          strokeWidth="2.25"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    </a>
+  );
+}
 
 export function HeroSection() {
   return (
-    <section className="relative bg-white px-6 pb-10 pt-10 md:px-8 md:pb-16 md:pt-16">
-      <div className="mx-auto max-w-6xl">
-        <div className="max-w-[28rem] md:max-w-xl">
-          <h1 className="animate-fade-up font-[family-name:var(--font-body)] text-[48px] font-black leading-[1.05] tracking-tight text-primary">
+    <>
+      {/* Mobile */}
+      <section className="relative isolate flex min-h-[100svh] flex-col overflow-hidden bg-[#0B1C33] lg:hidden">
+        <Image
+          src="/home/hero-banner-mobile.png"
+          alt=""
+          fill
+          priority
+          className="object-cover object-[center_top]"
+          sizes="100vw"
+          aria-hidden
+        />
+        <div className="relative z-10 flex flex-1 flex-col justify-center px-6 pb-28 pt-28">
+          <h1 className="animate-fade-up max-w-[20rem] text-[32px] font-black leading-[1.12] tracking-tight text-white">
             La meningitis puede afectar los sueños de tu hijo
-            <sup className="ml-0.5 text-[0.55em] font-bold align-super">1</sup>
+            <sup className="ml-0.5 align-super text-[0.45em] font-bold text-white/80">
+              1
+            </sup>
           </h1>
-          <p className="animate-fade-up animate-delay-1 mt-5 text-[16px] leading-[26px] text-dark">
+          <p className="animate-fade-up animate-delay-1 mt-4 max-w-sm text-[16px] leading-[1.55] text-white/85">
             Conocé todo lo que necesitás saber para proteger a tu familia.
           </p>
-          <div className="animate-fade-up animate-delay-2 mt-8 flex max-w-md flex-col gap-3">
+          <div className="animate-fade-up animate-delay-2 mt-8 flex flex-col gap-3">
             <Button
               href="/#que-es"
-              variant="primary"
-              className="w-full !rounded-xl !py-3.5 text-[15px] font-bold"
+              variant="cta"
+              className="!rounded-[10px] !bg-[#DD876E] !px-6 !py-3.5 text-[15px] font-bold !text-white hover:!brightness-105"
             >
               ¿Qué es la meningitis?
             </Button>
             <Button
-              href="/vacunacion"
+              href="/autotest"
               variant="secondary"
-              className="w-full !rounded-xl !border-2 !py-3.5 text-[15px] font-bold"
+              className="!rounded-[10px] !border-2 !border-white !bg-transparent !px-6 !py-3.5 text-[15px] font-bold !text-white hover:!bg-white/10"
             >
               ¿Estás al día con las vacunas?
             </Button>
           </div>
         </div>
+        <ScrollCue />
+      </section>
 
-        <div className="mt-12 flex justify-center md:mt-16">
-          <a
-            href="#que-es"
-            className="inline-flex flex-col items-center text-accent transition hover:opacity-80"
-            aria-label="Seguir leyendo"
-          >
-            <svg
-              viewBox="0 0 24 48"
-              className="h-11 w-6 animate-bounce-soft"
-              fill="currentColor"
-              aria-hidden
-            >
-              <rect x="10" y="2" width="4" height="5" rx="1" />
-              <rect x="10" y="11" width="4" height="5" rx="1" />
-              <rect x="10" y="20" width="4" height="12" rx="1" />
-              <path d="M12 46 L4 34 H20 Z" />
-            </svg>
-          </a>
+      {/* Desktop */}
+      <section className="relative hidden min-h-[min(78vh,720px)] overflow-hidden bg-[#0B1C33] lg:block">
+        <Image
+          src="/home/hero-banner-desktop.png"
+          alt=""
+          fill
+          priority
+          className="object-cover object-center"
+          sizes="100vw"
+          aria-hidden
+        />
+        <div className="relative z-10 mx-auto flex h-full min-h-[min(78vh,720px)] max-w-7xl items-center px-8 pb-20 pt-32">
+          <div className="max-w-[36rem]">
+            <h1 className="animate-fade-up text-[48px] font-black leading-[1.08] tracking-tight text-white xl:text-[56px]">
+              La meningitis puede afectar los sueños de tu hijo
+              <sup className="ml-0.5 align-super text-[0.45em] font-bold text-white/75">
+                1
+              </sup>
+            </h1>
+            <p className="animate-fade-up animate-delay-1 mt-5 text-[18px] leading-[1.55] text-white/85">
+              Conocé todo lo que necesitás saber para proteger a tu familia.
+            </p>
+            <div className="animate-fade-up animate-delay-2 mt-8 flex flex-wrap gap-3">
+              <Button
+                href="/#que-es"
+                variant="cta"
+                className="!rounded-[10px] !bg-[#DD876E] !px-6 !py-3.5 text-[15px] font-bold !text-white hover:!brightness-105"
+              >
+                ¿Qué es la meningitis?
+              </Button>
+              <Button
+                href="/autotest"
+                variant="secondary"
+                className="!rounded-[10px] !border-2 !border-white !bg-transparent !px-6 !py-3.5 text-[15px] font-bold !text-white hover:!bg-white/10"
+              >
+                ¿Estás al día con las vacunas?
+              </Button>
+            </div>
+          </div>
         </div>
-      </div>
-    </section>
+        <ScrollCue />
+      </section>
+    </>
   );
 }

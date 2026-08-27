@@ -7,11 +7,14 @@ export function RichText({
   text,
   className = "",
   strongClassName = "font-bold text-primary",
+  citeClassName = "ml-0.5 text-[0.85em] font-[inherit] leading-none text-[#503C77]",
 }: {
   text: string;
   className?: string;
   /** Classes for `**bold**` spans (default keeps brand purple). */
   strongClassName?: string;
+  /** Classes for citation superscripts like [1]. */
+  citeClassName?: string;
 }): ReactNode {
   const parts = text.split(/(\*\*[^*]+\*\*|\[\d+(?:[.,]\d+)*\])/g);
 
@@ -28,7 +31,7 @@ export function RichText({
         const cite = part.match(/^\[(\d+(?:[.,]\d+)*)\]$/);
         if (cite) {
           return (
-            <sup key={i} className="text-[0.7em] text-muted">
+            <sup key={i} className={citeClassName}>
               {cite[1].replace(/\./g, ",")}
             </sup>
           );

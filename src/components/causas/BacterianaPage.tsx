@@ -2,13 +2,10 @@ import type { ReactNode } from "react";
 import Link from "next/link";
 import { Chip } from "@/components/ui/Chip";
 import { RichText } from "@/components/ui/RichText";
-import { VacunasCtaSection } from "@/components/home/VacunasCtaSection";
-import { BacterianaSintomas } from "@/components/causas/BacterianaSintomas";
 import { CausaOtrasCausas } from "@/components/causas/CausaOtrasCausas";
-import { CentrosVacunacionBlock } from "@/components/vacunacion/CentrosVacunacionBlock";
+import { CasosChart } from "@/components/causas/CasosChart";
+import { SerogruposBadges } from "@/components/causas/SerogruposBadges";
 import { BACTERIANA } from "@/lib/bacterianaContent";
-import type { CentroVacunacion } from "@/lib/centrosData";
-import type { VacunacionData } from "@/lib/vacunacionData";
 
 function Eyebrow({ children }: { children: string }) {
   return (
@@ -41,13 +38,18 @@ function PersonStat({
   active: number;
   activeIcon: string;
   inactiveIcon: string;
-  tone?: "light" | "dark";
+  tone?: "light" | "dark" | "plain";
 }) {
   const dark = tone === "dark";
+  const plain = tone === "plain";
   return (
     <div
-      className={`flex flex-col items-center gap-2 overflow-hidden rounded-2xl px-5 py-6 ${
-        dark ? "bg-[#503c77]" : "bg-[#e9eff5]"
+      className={`flex flex-col items-center gap-2 overflow-hidden px-5 py-6 ${
+        dark
+          ? "rounded-2xl bg-[#503c77]"
+          : plain
+            ? "bg-transparent"
+            : "rounded-2xl bg-[#e9eff5]"
       }`}
     >
       <div className="flex items-end justify-center gap-1.5">
@@ -57,23 +59,23 @@ function PersonStat({
             key={i}
             src={i < active ? activeIcon : inactiveIcon}
             alt=""
-            width={28}
-            height={28}
-            className="size-7"
+            width={plain ? 24 : 28}
+            height={plain ? 24 : 28}
+            className={plain ? "size-6" : "size-7"}
           />
         ))}
       </div>
       <div className="w-full text-center">
         <p
-          className={`text-[22px] font-bold ${
+          className={`text-[22px] font-black ${
             dark ? "text-white" : "text-[#503c77]"
           }`}
         >
           {ratio}
         </p>
         <p
-          className={`mt-1 text-[13px] leading-5 ${
-            dark ? "text-white/80" : "text-[#442748]"
+          className={`mt-1 text-[13px] font-normal leading-5 ${
+            dark ? "text-white/80" : plain ? "text-[#6D6AAE]" : "text-[#442748]"
           }`}
         >
           <RichText text={label} />
@@ -83,13 +85,7 @@ function PersonStat({
   );
 }
 
-export function BacterianaPage({
-  centros,
-  centrosCopy,
-}: {
-  centros: CentroVacunacion[];
-  centrosCopy: VacunacionData["centros"];
-}) {
+export function BacterianaPage() {
   const d = BACTERIANA;
 
   return (
@@ -111,9 +107,9 @@ export function BacterianaPage({
       {/* Hero + TOC */}
       <section className="bg-white px-5 pb-10 pt-6 md:px-8">
         <div className="mx-auto flex max-w-2xl flex-col gap-6">
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-3">
             <Chip label={d.badge} color="accent" />
-            <h1 className="text-[32px] font-black leading-normal text-[#503c77]">
+            <h1 className="text-[34px] font-black leading-tight text-[#503c77] md:text-[40px]">
               {d.title}
             </h1>
           </div>
@@ -127,15 +123,45 @@ export function BacterianaPage({
 
           <div className="flex flex-col gap-2">
             <Eyebrow>EN ESTA PÁGINA</Eyebrow>
-            <nav className="flex flex-col gap-2 rounded-lg bg-[#e9eff5] px-5 py-4 text-[13px] leading-5 text-[#503c77] shadow-[2px_2px_2px_rgba(0,0,0,0.15)]">
+            <nav className="flex flex-col gap-2 rounded-lg bg-[#e9eff5] px-5 py-4 text-[13px] leading-5 text-[#503c77]">
               {d.toc.map((item) => (
-                <a
-                  key={item.id}
-                  href={`#${item.id}`}
-                  className="hover:underline"
-                >
-                  → {item.label}
-                </a>
+                <div key={item.id} className="flex flex-col gap-2">
+                  <a
+                    href={`#${item.id}`}
+                    className="inline-flex items-center gap-1.5"
+                  >
+                    <span
+                      className="material-symbols-outlined shrink-0 text-[9px] leading-none no-underline"
+                      aria-hidden
+                    >
+                      arrow_forward
+                    </span>
+                    <span className="underline underline-offset-2">
+                      {item.label}
+                    </span>
+                  </a>
+                  {"children" in item && item.children ? (
+                    <div className="ml-4 flex flex-col gap-2">
+                      {item.children.map((child) => (
+                        <a
+                          key={`${item.id}-${child.id}-${child.label}`}
+                          href={`#${child.id}`}
+                          className="inline-flex items-center gap-1.5"
+                        >
+                          <span
+                            className="material-symbols-outlined shrink-0 text-[9px] leading-none no-underline"
+                            aria-hidden
+                          >
+                            arrow_forward
+                          </span>
+                          <span className="underline underline-offset-2">
+                            {child.label}
+                          </span>
+                        </a>
+                      ))}
+                    </div>
+                  ) : null}
+                </div>
               ))}
             </nav>
           </div>
@@ -158,7 +184,7 @@ export function BacterianaPage({
             <p className="mt-1">
               <RichText text={d.queEs.bacteriaIntro} />
             </p>
-            <ul className="mt-1 list-disc space-y-0 pl-6">
+            <ul className="mt-4 list-disc space-y-0 pl-6">
               {d.queEs.bacterias.map((b) => (
                 <li key={b}>{b}</li>
               ))}
@@ -168,47 +194,47 @@ export function BacterianaPage({
         </div>
       </section>
 
-      {/* Urgency bar */}
-      <section className="bg-[#503c77]">
-        <div className="border-l-4 border-[#DD876E] px-5 py-10 md:px-8">
-          <p className="mx-auto max-w-2xl text-[16px] leading-snug text-white">
-            <RichText
-              text={d.urgency}
-              strongClassName="font-bold text-[#DD876E]"
-            />
-          </p>
-        </div>
-      </section>
-
       {/* Síntomas */}
       <section
         id="sintomas"
-        className="scroll-mt-20 bg-white px-5 py-16 md:px-8"
+        className="scroll-mt-20 bg-white px-5 py-12 md:px-8 md:py-16"
       >
-        <div className="mx-auto flex max-w-2xl flex-col gap-6">
-          <div className="flex flex-col gap-4">
-            <div className="flex flex-col gap-2">
-              <Eyebrow>{d.sintomas.eyebrow}</Eyebrow>
-              <SectionTitle>{d.sintomas.title}</SectionTitle>
-            </div>
-            <div className="text-[16px] leading-[26px] text-[#442748]">
-              <p>{d.sintomas.lead}</p>
-              <p>
-                <RichText text={d.sintomas.body} />
-              </p>
-            </div>
-            <div className="flex flex-col gap-2">
-              <Eyebrow>{d.sintomas.selectLabel}</Eyebrow>
-              <p className="text-[13px] leading-[18px] text-[#442748]">
-                {d.sintomas.selectHint}
-              </p>
-            </div>
+        <div className="mx-auto flex max-w-2xl flex-col gap-4">
+          <div className="flex flex-col gap-2">
+            <Eyebrow>{d.sintomas.eyebrow}</Eyebrow>
+            <SectionTitle>{d.sintomas.title}</SectionTitle>
           </div>
-          <BacterianaSintomas />
+          <div className="text-[16px] leading-[26px] text-[#442748]">
+            <p>
+              <RichText text={d.sintomas.body} />
+            </p>
+            <ul className="mt-4 list-disc space-y-0 pl-6">
+              {d.sintomas.items.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          </div>
         </div>
       </section>
 
-      <VacunasCtaSection />
+      {/* Urgency bar */}
+      <section className="bg-[#503c77]">
+        <div className="mx-auto flex max-w-7xl border-l-4 border-[#DD876E] px-4 py-16 md:px-8">
+          <p className="max-w-2xl text-[20px] font-medium leading-snug text-white">
+            La meningitis es una{" "}
+            <strong className="font-bold text-[#DD876E]">urgencia médica</strong>{" "}
+            y{" "}
+            <strong className="font-bold text-white">
+              requiere consulta y hospitalización
+            </strong>{" "}
+            inmediata
+            <sup className="ml-0.5 text-[0.65em] font-semibold leading-none text-white">
+              1
+            </sup>
+            .
+          </p>
+        </div>
+      </section>
 
       {/* Grupos de riesgo */}
       <section
@@ -240,32 +266,6 @@ export function BacterianaPage({
         </div>
       </section>
 
-      {/* Transmisión */}
-      <section
-        id="transmision"
-        className="scroll-mt-20 bg-white px-5 pb-12 md:px-8"
-      >
-        <div className="mx-auto flex max-w-2xl flex-col gap-4">
-          <div className="flex flex-col gap-2">
-            <Eyebrow>{d.transmision.eyebrow}</Eyebrow>
-            <SectionTitle>{d.transmision.title}</SectionTitle>
-          </div>
-          <p className="text-[16px] leading-[26px] text-[#442748]">
-            <RichText text={d.transmision.body} />
-          </p>
-        </div>
-      </section>
-
-      {/* Quote */}
-      <section className="bg-[#44274b] px-5 py-16 md:px-8">
-        <p className="mx-auto max-w-2xl text-[18px] leading-[28px] text-white">
-          <RichText
-            text={d.quote}
-            strongClassName="font-bold text-[#DD876E]"
-          />
-        </p>
-      </section>
-
       {/* Meningococo */}
       <section
         id="meningococo"
@@ -294,60 +294,16 @@ export function BacterianaPage({
                   </p>
                 ))}
               </div>
-              <div className="flex items-center justify-between gap-1">
-                {d.meningococo.serogrupos.map((letter) => {
-                  const highlight = letter === d.meningococo.highlightSerogrupo;
-                  const noRing = letter === "X";
-                  if (noRing) {
-                    return (
-                      <span
-                        key={letter}
-                        className="flex size-14 items-center justify-center text-[20px] font-black text-[#442748]"
-                      >
-                        {letter}
-                      </span>
-                    );
-                  }
-                  return (
-                    <div
-                      key={letter}
-                      className={`flex size-14 items-center justify-center rounded-full border-[3px] border-solid text-[20px] font-black ${
-                        highlight
-                          ? "border-[#DD876E] text-[#DD876E]"
-                          : "border-[#442748] text-[#442748]"
-                      }`}
-                    >
-                      {letter}
-                    </div>
-                  );
-                })}
-              </div>
+              <SerogruposBadges
+                letters={d.meningococo.serogrupos}
+                highlight={d.meningococo.highlightSerogrupo}
+              />
             </div>
 
-            <div className="flex flex-col gap-4 rounded-[12px] border border-[#e2e8f0] bg-white p-4 shadow-[2px_2px_4px_rgba(51,51,51,0.15)]">
-              <h3 className="text-[15px] font-bold text-[#442748]">
-                {d.meningococo.chartTitle}
-              </h3>
-              <div className="flex flex-col gap-5">
-                {d.meningococo.chart.map((row) => (
-                  <div key={row.label} className="flex flex-col gap-1.5">
-                    <div className="flex items-center justify-between text-[13px] font-medium text-[#442748]">
-                      <span>{row.label}</span>
-                      <span>{row.pct}%</span>
-                    </div>
-                    <div className="h-2.5 w-full overflow-hidden rounded-full bg-[#e9eff5]">
-                      <div
-                        className="h-full rounded-full"
-                        style={{
-                          width: `${row.pct}%`,
-                          backgroundColor: row.color,
-                        }}
-                      />
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
+            <CasosChart
+              title={d.meningococo.chartTitle}
+              rows={d.meningococo.chart}
+            />
           </div>
         </div>
       </section>
@@ -375,68 +331,83 @@ export function BacterianaPage({
       {/* Secuelas */}
       <section
         id="secuelas"
-        className="scroll-mt-20 bg-[rgba(166,192,214,0.25)] px-5 py-16 md:px-8"
+        className="scroll-mt-20 bg-[#EEECF2] px-5 py-16 md:px-8"
       >
-        <div className="mx-auto flex max-w-2xl flex-col gap-10">
-          <div className="flex flex-col gap-6">
-            <div className="flex flex-col gap-2">
-              <Eyebrow>{d.secuelas.eyebrow}</Eyebrow>
-              <SectionTitle>
-                <RichText text={d.secuelas.title} />
-              </SectionTitle>
-            </div>
-            <ul className="grid grid-cols-3 gap-y-10">
-              {d.secuelas.items.map((item) => (
-                <li
-                  key={item.label}
-                  className="flex flex-col items-center gap-2 px-1 text-center"
-                >
-                  <div className="relative size-16 shrink-0 overflow-hidden">
-                    {item.composite ? (
-                      // eslint-disable-next-line @next/next/no-img-element
+        <div className="mx-auto flex max-w-2xl flex-col gap-6">
+          <div className="flex flex-col gap-2">
+            <Eyebrow>{d.secuelas.eyebrow}</Eyebrow>
+            <SectionTitle>
+              <RichText text={d.secuelas.title} />
+            </SectionTitle>
+          </div>
+          <ul className="grid grid-cols-3 gap-y-10">
+            {d.secuelas.items.map((item) => (
+              <li
+                key={item.label}
+                className="flex flex-col items-center gap-2 px-1 text-center"
+              >
+                <div className="relative size-16 shrink-0 overflow-hidden">
+                  {item.composite ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={item.icon}
+                      alt=""
+                      width={64}
+                      height={64}
+                      className="size-16"
+                    />
+                  ) : (
+                    <>
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
-                        src={item.icon}
+                        src="/causas/bacteriana/secuela-circle.svg"
                         alt=""
                         width={64}
                         height={64}
-                        className="size-16"
+                        className="absolute inset-0 size-16"
                       />
-                    ) : (
-                      <>
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img
-                          src="/causas/bacteriana/secuela-circle.svg"
-                          alt=""
-                          width={64}
-                          height={64}
-                          className="absolute inset-0 size-16"
-                        />
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img
-                          src={item.icon}
-                          alt=""
-                          width={40}
-                          height={40}
-                          className="absolute left-3 top-3 size-10"
-                        />
-                      </>
-                    )}
-                  </div>
-                  <p className="text-[13px] leading-5 text-[#442748]">
-                    {item.label}
-                  </p>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <PersonStat {...d.secuelas.stat} tone="dark" />
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={item.icon}
+                        alt=""
+                        width={40}
+                        height={40}
+                        className="absolute left-3 top-3 size-10"
+                      />
+                    </>
+                  )}
+                </div>
+                <p className="text-[13px] leading-5 text-[#442748]">
+                  {item.label}
+                </p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      {/* Quote evolución */}
+      <section className="bg-[#503c77] px-5 py-16 md:px-8">
+        <p className="mx-auto max-w-2xl text-[18px] font-medium leading-[28px] text-white">
+          <RichText
+            text={d.quote}
+            strongClassName="font-bold text-white"
+            citeClassName="ml-0.5 text-[0.85em] font-[inherit] leading-none text-white"
+          />
+        </p>
+      </section>
+
+      {/* Stat secuelas */}
+      <section className="bg-white px-5 py-12 md:px-8">
+        <div className="mx-auto max-w-2xl">
+          <PersonStat {...d.secuelas.stat} tone="plain" />
         </div>
       </section>
 
       {/* Vacunación */}
       <section
         id="vacunacion"
-        className="scroll-mt-20 bg-[rgba(166,192,214,0.25)] px-5 pb-16 pt-4 md:px-8"
+        className="scroll-mt-20 bg-[#EEECF2] px-5 py-16 md:px-8"
       >
         <div className="mx-auto flex max-w-2xl flex-col gap-8">
           <div className="flex flex-col gap-4">
@@ -473,7 +444,7 @@ export function BacterianaPage({
             <h3 className="text-[18px] font-bold text-[#503c77]">
               <RichText text={d.vacunacion.esquemasTitle} />
             </h3>
-            <div className="flex flex-col gap-5 rounded-[12px] border border-[#e2e8f0] bg-white p-5 shadow-[2px_2px_4px_rgba(51,51,51,0.15)]">
+            <div className="flex flex-col gap-5 rounded-[12px] border border-[#e2e8f0] bg-[rgba(80,60,119,0.1)] p-5">
               {d.vacunacion.esquemas.map((esquema, idx) => (
                 <div
                   key={esquema.badge}
@@ -481,7 +452,7 @@ export function BacterianaPage({
                     idx === 0 ? "border-b border-[#dbe1e7] pb-5" : ""
                   }`}
                 >
-                  <span className="w-fit rounded-br-lg rounded-tl-lg bg-[#503c77] px-3 py-1.5 text-[11px] font-bold text-white">
+                  <span className="w-fit rounded-br-lg rounded-tl-lg bg-[#DD876E] px-3 py-1.5 text-[11px] font-bold text-white">
                     {esquema.badge}
                   </span>
                   <ul className="flex flex-col gap-2">
@@ -509,7 +480,7 @@ export function BacterianaPage({
             <p className="text-[15px] leading-6 text-[#442748]">
               <RichText text={d.vacunacion.serogrupoB.body} />
             </p>
-            <ul className="flex flex-col gap-3 rounded-[12px] border border-[#e2e8f0] bg-white p-[18px] shadow-[2px_2px_4px_rgba(51,51,51,0.15)]">
+            <ul className="flex flex-col gap-3 rounded-[14px] border border-[#e2e8f0] bg-[rgba(80,60,119,0.1)] px-5 py-[18px]">
               {d.vacunacion.serogrupoB.conditions.map((c) => (
                 <li key={c} className="flex gap-2.5">
                   <span
@@ -529,20 +500,28 @@ export function BacterianaPage({
       {/* Prevención */}
       <section
         id="prevencion"
-        className="scroll-mt-20 bg-[#e9eff5] px-5 py-16 md:px-8"
+        className="scroll-mt-20 bg-[#EEECF2] px-5 py-16 md:px-8"
       >
-        <div className="mx-auto flex max-w-2xl flex-col gap-4">
-          <div className="flex flex-col gap-2">
-            <Eyebrow>{d.prevencion.eyebrow}</Eyebrow>
-            <SectionTitle>{d.prevencion.title}</SectionTitle>
+        <div className="mx-auto flex max-w-2xl flex-col gap-6">
+          <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-2">
+              <Eyebrow>{d.prevencion.eyebrow}</Eyebrow>
+              <SectionTitle>{d.prevencion.title}</SectionTitle>
+            </div>
+            <p className="text-[16px] leading-[26px] text-[#442748]">
+              <RichText text={d.prevencion.body} />
+            </p>
           </div>
-          <p className="text-[16px] leading-[26px] text-[#442748]">
-            <RichText text={d.prevencion.body} />
-          </p>
+          <Link
+            href={d.prevencion.ctaHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex h-[52px] w-full items-center justify-center rounded-[12px] bg-white text-[15px] font-bold text-[#503c77] shadow-[0_1px_2px_rgba(0,0,0,0.06)] transition hover:bg-white/90"
+          >
+            {d.prevencion.ctaLabel}
+          </Link>
         </div>
       </section>
-
-      <CentrosVacunacionBlock {...centrosCopy} centros={centros} />
 
       <CausaOtrasCausas items={d.otrasCausas} />
     </>

@@ -1,42 +1,42 @@
-/** Tabs del menú inferior tipo app (mobile). */
-export const MOBILE_TAB_ITEMS = [
-  {
-    href: "/#que-es",
-    match: "que-es",
-    label: "¿Qué es?",
-    icon: "/icons/nav/que-es.svg",
-  },
-  {
-    href: "/sintomas",
-    match: "sintomas",
-    label: "Síntomas",
-    icon: "/icons/nav/sintomas.svg",
-  },
-  {
-    href: "/causas",
-    match: "causas",
-    label: "Causas",
-    icon: "/icons/nav/causas.svg",
-  },
-  {
-    href: "/vacunacion",
-    match: "vacunacion",
-    label: "Vacunación",
-    icon: "/icons/nav/vacunacion.svg",
-  },
-  {
-    href: "/faq",
-    match: "faq",
-    label: "Preguntas",
-    icon: "/icons/nav/preguntas.svg",
-  },
-] as const;
-
-/** Links desktop / footer */
-export const NAV_LINKS = [
-  { href: "/#que-es", label: "¿Qué es?" },
-  { href: "/sintomas", label: "Síntomas" },
-  { href: "/causas", label: "Causas" },
-  { href: "/vacunacion", label: "Vacunación" },
-  { href: "/faq", label: "Preguntas frecuentes" },
-] as const;
+/** Tabs del menú inferior tipo app (mobile). */
+export const MOBILE_TAB_ITEMS = [
+  {
+    href: "/#que-es",
+    match: "que-es",
+    label: "¿Qué es?",
+    icon: "/icons/nav/que-es.svg",
+  },
+  {
+    href: "/sintomas",
+    match: "sintomas",
+    label: "Síntomas",
+    icon: "/icons/nav/sintomas.svg",
+  },
+  {
+    href: "/causas",
+    match: "causas",
+    label: "Causas",
+    icon: "/icons/nav/causas.svg",
+  },
+  {
+    href: "/vacunacion",
+    match: "vacunacion",
+    label: "Vacunación",
+    icon: "/icons/nav/vacunacion.svg",
+  },
+  {
+    href: "/faq",
+    match: "faq",
+    label: "Preguntas",
+    icon: "/icons/nav/preguntas.svg",
+  },
+] as const;
+
+/** Links desktop / footer */
+export const NAV_LINKS = [
+  { href: "/#que-es", label: "¿Qué es?" },
+  { href: "/sintomas", label: "Síntomas" },
+  { href: "/causas", label: "Causas" },
+  { href: "/vacunacion", label: "Vacunación" },
+  { href: "/faq", label: "Preguntas" },
+] as const;

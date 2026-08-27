@@ -4,14 +4,6 @@ export const VIRAL = {
   breadcrumb: "Meningitis por virus",
   intro:
     "Si bien las meningitis virales tienden a ser menos graves que otros tipos, los síntomas iniciales suelen ser muy parecidos a los síntomas habituales de la meningitis.[4]",
-  sintomasTitle: "Síntomas que puede presentar",
-  sintomasChips: [
-    "Fiebre",
-    "Dolor de cabeza",
-    "Somnolencia",
-    "Irritabilidad",
-    "Dificultad para alimentarse",
-  ],
   queEs: {
     eyebrow: "CONOCÉ LA meningitis viral",
     title: "¿Qué es?",

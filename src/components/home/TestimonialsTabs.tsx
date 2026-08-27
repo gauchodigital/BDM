@@ -56,7 +56,7 @@ export function TestimonialsTabs({ items }: { items: TestimonioData[] }) {
     <div>
       <div
         role="tablist"
-        className="flex h-12 items-center gap-1 rounded-[10px] bg-[#503C77] p-1"
+        className="flex h-12 items-center gap-1 rounded-[10px] border border-[#503C77]/20 bg-white p-1 lg:max-w-xl"
       >
         {TABS.map((t) => {
           const active = t.id === tab;
@@ -69,8 +69,8 @@ export function TestimonialsTabs({ items }: { items: TestimonioData[] }) {
               onClick={() => setTab(t.id)}
               className={`flex h-full flex-1 items-center justify-center rounded-[10px] px-2 text-center leading-tight transition-colors ${
                 active
-                  ? "bg-white text-[13px] font-bold text-[#442748]"
-                  : "text-[11px] font-normal text-white/65 hover:text-white"
+                  ? "bg-[#503C77] text-[13px] font-bold text-white"
+                  : "text-[11px] font-normal text-[#503C77]/70 hover:text-[#503C77]"
               }`}
             >
               {t.label}
@@ -80,12 +80,12 @@ export function TestimonialsTabs({ items }: { items: TestimonioData[] }) {
       </div>
 
       {filtered.length === 0 ? (
-        <p className="mt-8 text-center text-sm text-white/70">
+        <p className="mt-8 text-center text-sm text-muted">
           Pronto vas a poder ver los testimonios de esta categoría.
         </p>
       ) : (
         <>
-          <div className="relative mt-6">
+          <div className="relative mt-6 lg:max-w-4xl">
             <div
               ref={trackRef}
               className="flex touch-pan-x snap-x snap-mandatory overflow-x-auto scroll-smooth [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
@@ -165,7 +165,7 @@ export function TestimonialsTabs({ items }: { items: TestimonioData[] }) {
                   className={`rounded-full transition-all ${
                     i === index
                       ? "h-2 w-2 bg-[#DD876E]"
-                      : "h-1.5 w-1.5 bg-white"
+                      : "h-1.5 w-1.5 bg-[#DD876E]/35"
                   }`}
                 />
               ))}

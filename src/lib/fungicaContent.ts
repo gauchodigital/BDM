@@ -1,21 +1,21 @@
 export const FUNGICA = {
   badge: "POCO FRECUENTE",
-  badgeColor: "primary" as const,
+  badgeColor: "secondary" as const,
   title: "Meningitis fúngica",
   breadcrumb: "Meningitis fúngica",
   intro:
     "Es muy poco frecuente, no se transmite de persona a persona y generalmente se produce en personas con el **sistema inmune debilitado.**[5]",
   queEs: {
     eyebrow: "CONOCÉ LA meningitis fúngica",
-    title: "¿Qué es la meningitis fúngica?",
+    title: "¿Qué es?",
     paragraphs: [
       "La meningitis fúngica o micótica es la inflamación de las meninges después de que una infección micótica se propaga. En personas con el sistema inmunitario debilitado, una infección fúngica (por hongos) puede comenzar en otra parte del cuerpo y luego extenderse a las zonas cercanas al cerebro y la médula espinal.",
       "Por ejemplo, la **inhalación de esporas fúngicas presentes en el ambiente** puede provocar una infección pulmonar, que posteriormente podría extenderse y dar lugar a una meningitis fúngica[5].",
     ],
   },
   gruposRiesgo: {
-    eyebrow: "GRUPOS DE RIESGO",
-    title: "¿Quiénes tienen mayor riesgo?[5]",
+    eyebrow: "¿a quiénes afecta?",
+    title: "Grupos de riesgo[5]",
     body: "Cualquier persona puede contraer meningitis fúngica, pero algunas personas tienen un mayor riesgo. Entre ellas:",
     items: [
       {
@@ -49,7 +49,7 @@ export const FUNGICA = {
     ],
     alert: {
       title: "No hay vacunas disponibles",
-      body: "No existe vacuna para proteger contra la meningitis fúngica. Es potencialmente mortal si no se trata adecuadamente.[17]",
+      body: "No existe vacuna para proteger contra la meningitis fúngica.[12]",
     },
   },
   prevencion: {

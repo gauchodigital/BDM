@@ -10,11 +10,15 @@ export const BACTERIANA = {
     { id: "que-es", label: "¿Qué es la meningitis bacteriana?" },
     { id: "sintomas", label: "Síntomas" },
     { id: "grupos-riesgo", label: "Grupos de riesgo" },
-    { id: "transmision", label: "Transmisión" },
-    { id: "meningococo", label: "Meningitis por meningococo" },
-    { id: "secuelas", label: "Secuelas" },
-    { id: "prevencion", label: "Prevención" },
-    { id: "vacunacion", label: "Vacunación" },
+    {
+      id: "meningococo",
+      label: "Meningitis por meningococo",
+      children: [
+        { id: "meningococo", label: "¿Qué es?" },
+        { id: "secuelas", label: "Secuelas" },
+        { id: "prevencion", label: "Prevención" },
+      ],
+    },
   ],
   queEs: {
     eyebrow: "CONOCÉ LA meningitis bacteriana",
@@ -38,93 +42,15 @@ export const BACTERIANA = {
       inactiveIcon: "/causas/bacteriana/person-inactive.svg",
     },
   },
-  urgency:
-    "La meningitis es una **urgencia médica** y requiere consulta y hospitalización inmediata[1].",
   sintomas: {
     eyebrow: "¿cómo reconocerla?",
-    title: "Síntomas de la meningitis",
-    lead: "La meningitis es una urgencia médica.",
-    body: "Puede ser mortal en menos de 24 horas y requiere atención médica urgente. Los síntomas aparecen de repente, por eso es muy importante estar atentos.[1,3]",
-    selectLabel: "SELECCIONÁ UNA CATEGORÍA",
-    selectHint:
-      "Pueden confundirse con otras enfermedades. Prestá atención si aparecen juntos.",
-    categories: [
-      {
-        id: "lactantes",
-        label: "Recién nacidos y lactantes",
-        items: [
-          {
-            label: "Mala alimentación",
-            icon: "/causas/bacteriana/sintomas/lactantes-alimentacion.svg",
-          },
-          {
-            label: "Rigidez corporal",
-            icon: "/causas/bacteriana/sintomas/lactantes-rigidez.svg",
-          },
-          {
-            label: "Irritación y llanto",
-            icon: "/causas/bacteriana/sintomas/lactantes-irritacion.svg",
-          },
-          {
-            label: "Sarpullido",
-            icon: "/causas/bacteriana/sintomas/lactantes-sarpullido.svg",
-          },
-          {
-            label: "Vómitos",
-            icon: "/causas/bacteriana/sintomas/lactantes-vomitos.svg",
-          },
-          {
-            label: "Somnolencia",
-            icon: "/causas/bacteriana/sintomas/lactantes-somnolencia.svg",
-          },
-          {
-            label: "Punto abultado en la parte superior de la cabeza",
-            icon: "/causas/bacteriana/sintomas/lactantes-fontanela.svg",
-          },
-          {
-            label: "Fiebre alta",
-            icon: "/causas/bacteriana/sintomas/lactantes-fiebre.svg",
-          },
-        ],
-      },
-      {
-        id: "mayores",
-        label: "Mayores de 2 años",
-        items: [
-          {
-            label: "Dolor de cabeza",
-            icon: "/causas/bacteriana/sintomas/mayores-dolor-cabeza.svg",
-          },
-          {
-            label: "Escalofríos",
-            icon: "/causas/bacteriana/sintomas/mayores-escalofrios.svg",
-          },
-          {
-            label: "Rigidez de cuello",
-            icon: "/causas/bacteriana/sintomas/mayores-rigidez-cuello.svg",
-          },
-          {
-            label: "Náuseas y vómitos",
-            icon: "/causas/bacteriana/sintomas/mayores-nauseas.svg",
-          },
-          {
-            label: "Fiebre alta",
-            icon: "/causas/bacteriana/sintomas/mayores-fiebre.svg",
-          },
-          {
-            label: "Rechazo a la luz",
-            icon: "/causas/bacteriana/sintomas/mayores-rechazo-luz.svg",
-          },
-          {
-            label: "Confusión o alteración del estado mental",
-            icon: "/causas/bacteriana/sintomas/mayores-confusion.svg",
-          },
-          {
-            label: "Convulsiones",
-            icon: "/causas/bacteriana/sintomas/mayores-convulsiones.svg",
-          },
-        ],
-      },
+    title: "Síntomas de la meningitis bacteriana",
+    body: "Las bacterias causantes de meningitis pueden provocar otros síntomas si infectan la sangre del torrente circulatorio, que pueden desembocar rápidamente en septicemia. Los síntomas más habituales son[1]:",
+    items: [
+      "Frío en manos y pies",
+      "Presión arterial baja",
+      "Respiración más rápida de lo habitual",
+      "Erupciones de la piel de color rojo o púrpura oscuro (petequias) que no desaparece al estirar la piel",
     ],
   },
   gruposRiesgo: {
@@ -146,13 +72,6 @@ export const BACTERIANA = {
       },
     ],
   },
-  transmision: {
-    eyebrow: "¿cómo se contagia?",
-    title: "Transmisión",
-    body: "Las meningitis bacterianas se transmiten, en su mayoría, **por vía respiratoria** desde una persona enferma o desde portadores asintomáticos por medio de la tos, los estornudos, los besos y también al compartir utensilios.[5]",
-  },
-  quote:
-    "La **evolución** de la meningitis por meningococo suele ser **rápida** e incluso con un tratamiento adecuado, algunos pacientes pueden fallecer entre las primeras **24 a 48 horas** de la aparición de los síntomas.[10]",
   meningococo: {
     eyebrow: "informate sobre el meningococo",
     title: "Meningitis por Meningococo",
@@ -219,9 +138,11 @@ export const BACTERIANA = {
       total: 5,
       active: 1,
       activeIcon: "/causas/bacteriana/person-active-coral.svg",
-      inactiveIcon: "/causas/bacteriana/person-inactive-light.svg",
+      inactiveIcon: "/causas/bacteriana/person-inactive-secondary.svg",
     },
   },
+  quote:
+    "La **evolución de la meningitis por meningococo suele ser rápida** e incluso con un tratamiento adecuado, algunos pacientes pueden fallecer entre las **primeras 24 a 48 horas de la aparición de los síntomas**.[10]",
   vacunacion: {
     eyebrow: "medidas de prevención",
     title: "Vacunación contra el meningococo",
@@ -269,7 +190,9 @@ export const BACTERIANA = {
   prevencion: {
     eyebrow: "Otros consejos",
     title: "Prevención",
-    body: "Además de las vacunas, otras medidas de prevención son: lavarse las manos, taparse la nariz al estornudar o toser y mantener una buena ventilación dentro de la casa[17].",
+    body: "Además de las vacunas, **otras medidas de prevención son**: lavarse las manos, taparse la nariz al estornudar o toser y mantener una buena ventilación dentro de la casa[17].",
+    ctaLabel: "Calendario de Vacunación",
+    ctaHref: "/docs/calendario-vacunacion-gsk-2026.pdf",
   },
   otrasCausas: [
     {

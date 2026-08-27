@@ -36,7 +36,7 @@ export function MobileAppNav() {
 
   return (
     <nav
-      className="fixed inset-x-0 bottom-0 z-[55] border-t border-[#e2e8f0] bg-white pb-[env(safe-area-inset-bottom)] shadow-[0_-2px_1px_rgba(0,0,0,0.08)] md:hidden"
+      className="fixed inset-x-0 bottom-0 z-[55] border-t border-[#e2e8f0] bg-white pb-[env(safe-area-inset-bottom)] shadow-[0_-2px_1px_rgba(0,0,0,0.08)] lg:hidden"
       aria-label="Navegación principal"
     >
       <div className="grid h-14 grid-cols-5">

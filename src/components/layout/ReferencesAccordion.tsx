@@ -27,15 +27,15 @@ export function ReferencesAccordion() {
   const [open, setOpen] = useState(false);
 
   return (
-    <section className="bg-white">
-      <div className="mx-auto w-full max-w-6xl px-6 md:px-8">
+    <section className="border-t border-[#E5E5E5] bg-white">
+      <div className="mx-auto w-full max-w-7xl px-6 md:px-8">
         <button
           type="button"
           aria-expanded={open}
           onClick={() => setOpen((v) => !v)}
-          className="flex min-h-[108px] w-full items-center justify-between gap-4 py-6 text-left md:px-2"
+          className="flex min-h-[72px] w-full items-center justify-between gap-4 py-5 text-left md:min-h-[88px] md:px-2"
         >
-          <span className="text-[22px] font-bold leading-[28px] text-[#442748]">
+          <span className="text-[22px] font-bold leading-[28px] text-[#503C77]">
             Referencias
           </span>
           <span

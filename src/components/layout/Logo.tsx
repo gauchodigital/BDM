@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Image from "next/image";
+import { LogoManito } from "@/components/layout/LogoManito";
 import { SITE_NAME } from "@/lib/siteLinks";
 
 export function Logo({
@@ -12,20 +12,12 @@ export function Logo({
   return (
     <Link
       href="/"
-      className={`inline-flex items-center gap-2 ${className}`}
+      className={`inline-flex items-center ${className}`}
       aria-label={SITE_NAME}
     >
-      <Image
-        src="/brand/logo-manito-white.png"
-        alt=""
-        width={58}
-        height={64}
-        className={`h-8 w-auto ${variant === "dark" ? "brightness-0 saturate-100" : ""}`}
-        style={
-          variant === "dark"
-            ? { filter: "brightness(0) saturate(100%) invert(22%) sepia(24%) saturate(1200%) hue-rotate(220deg)" }
-            : undefined
-        }
+      <LogoManito
+        variant={variant === "dark" ? "purple" : "white"}
+        className="h-9 w-auto"
       />
     </Link>
   );

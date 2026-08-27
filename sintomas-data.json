@@ -2,7 +2,7 @@
   {
     "id": "fiebre",
     "label": "Fiebre",
-    "description": "Aparición súbita y temperatura elevada.",
+    "description": "",
     "icon": "/sintomas/fiebre.svg",
     "phase": "early",
     "visible": true
@@ -10,15 +10,15 @@
   {
     "id": "dolor-cabeza",
     "label": "Dolor de cabeza",
-    "description": "Intenso y persistente.",
+    "description": "",
     "icon": "/sintomas/dolor-cabeza.svg",
     "phase": "early",
     "visible": true
   },
   {
     "id": "nauseas",
-    "label": "Náuseas o vómitos",
-    "description": "Sin causa aparente obvia.",
+    "label": "Náuseas y vómitos",
+    "description": "",
     "icon": "/sintomas/nauseas.svg",
     "phase": "early",
     "visible": true
@@ -26,7 +26,7 @@
   {
     "id": "irritabilidad",
     "label": "Irritabilidad",
-    "description": "Especialmente en bebés y niños pequeños.",
+    "description": "",
     "icon": "/sintomas/irritabilidad.svg",
     "phase": "early",
     "visible": true
@@ -34,7 +34,7 @@
   {
     "id": "somnolencia",
     "label": "Somnolencia",
-    "description": "Dificultad para despertar.",
+    "description": "",
     "icon": "/sintomas/somnolencia.svg",
     "phase": "early",
     "visible": true
@@ -42,7 +42,7 @@
   {
     "id": "cuello-rigido",
     "label": "Cuello rígido",
-    "description": "Dificultad para mover el cuello hacia adelante.",
+    "description": "",
     "icon": "/sintomas/cuello-rigido.svg",
     "phase": "alarm",
     "visible": true
@@ -50,16 +50,16 @@
   {
     "id": "rechazo-luz",
     "label": "Rechazo a la luz",
-    "description": "Sensibilidad extrema a la luz (fotofobia).",
+    "description": "",
     "icon": "/sintomas/rechazo-luz.svg",
     "phase": "alarm",
     "visible": true
   },
   {
-    "id": "petequias",
-    "label": "Petequias",
-    "description": "Manchas que no desaparecen al presionar.",
-    "icon": "/sintomas/petequias.svg",
+    "id": "confusion",
+    "label": "Confusión",
+    "description": "",
+    "icon": "/causas/bacteriana/sintomas/mayores-confusion.svg",
     "phase": "alarm",
     "visible": true
   }

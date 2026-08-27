@@ -8,7 +8,7 @@
     "eyebrow": "protección en cada etapa de la vida",
     "title": "Calendario Nacional de Vacunación",
     "body": "Argentina tiene un Calendario Nacional de Vacunación robusto, completo y gratuito, que es **modelo en la región y en el mundo**. Este Calendario incluye **vacunas para las diferentes etapas de la vida, además de contemplar situaciones epidemiológicas particulares**[20]. Esto significa que, en función de la incorporación de nuevas vacunas o cambios en la circulación de la enfermedades, el calendario de vacunación suele actualizarse y adaptarse.[21]",
-    "selectLabel": "SELECCIONÁ UNA etapa de vida"
+    "selectLabel": "SELECCIONÁ UNA ETAPA DE VIDA PARA VER SUS DETALLES"
   },
   "etapas": [
     {
@@ -46,7 +46,7 @@
           "vacunas": [
             {
               "nombre": "Antigripal",
-              "detalle": "Si no la recibieron durante el embarazo deberán recibirla antes del egreso de la maternidad y hasta un máximo de 10 días después del parto."
+              "detalle": "Si no la recibieron durante el embarazo deben recibirla antes del egreso de la maternidad y hasta un máximo de 10 días después del parto."
             },
             {
               "nombre": "Hepatitis B",
@@ -65,19 +65,19 @@
       "label": "Recién nacidos",
       "icon": "child_care",
       "bannerTitle": "Recién nacidos",
-      "bannerSubtitle": "Las primeras horas de vida importan",
+      "bannerSubtitle": "Vacunas a aplicar desde el nacimiento.",
       "grupos": [
         {
           "id": "rn",
           "badge": "RECIÉN NACIDOS",
           "vacunas": [
             {
-              "nombre": "Hepatitis B",
-              "detalle": "En las primeras 12 horas de vida."
+              "nombre": "BCG",
+              "detalle": "Iniciar o completar esquema."
             },
             {
-              "nombre": "BCG",
-              "detalle": "Antes de egresar de la maternidad."
+              "nombre": "Hepatitis B",
+              "detalle": "Aplicar en las primeras 12 horas de vida."
             }
           ]
         }
@@ -88,43 +88,43 @@
       "label": "Hasta 1 año",
       "icon": "stroller",
       "bannerTitle": "Hasta el año de vida",
-      "bannerSubtitle": "Esquema del primer año",
+      "bannerSubtitle": "Vacunas recomendadas durante el primer año.",
       "grupos": [
         {
           "id": "hasta-1",
           "badge": "HASTA 1 AÑO",
           "vacunas": [
             {
-              "nombre": "Rotavirus",
-              "detalle": "A los 2 y 4 meses."
-            },
-            {
               "nombre": "Quíntuple",
-              "detalle": "A los 2, 4 y 6 meses."
+              "detalle": "2, 4 y 6 meses."
             },
             {
-              "nombre": "IPV (poliomielitis)",
-              "detalle": "A los 2, 4 y 6 meses."
+              "nombre": "IPV",
+              "detalle": "2, 4 y 6 meses."
             },
             {
-              "nombre": "Neumococo conjugada",
-              "detalle": "A los 2, 4 y 12 meses."
-            },
-            {
-              "nombre": "Meningococo",
-              "detalle": "A los 3 y 5 meses."
+              "nombre": "Rotavirus",
+              "detalle": "2 y 4 meses."
             },
             {
               "nombre": "Antigripal",
-              "detalle": "A los 6 y 7 meses."
-            },
-            {
-              "nombre": "Triple Viral",
-              "detalle": "A los 12 meses."
+              "detalle": "A partir de los 6 meses."
             },
             {
               "nombre": "Hepatitis A",
-              "detalle": "A los 12 meses."
+              "detalle": "12 meses."
+            },
+            {
+              "nombre": "Neumococo Conjugada",
+              "detalle": "2, 4 y 12 meses."
+            },
+            {
+              "nombre": "Meningococo ACWY",
+              "detalle": "3 y 5 meses."
+            },
+            {
+              "nombre": "Triple Viral SRP",
+              "detalle": "12 meses."
             }
           ]
         }
@@ -135,27 +135,35 @@
       "label": "Hasta 2 años",
       "icon": "toys",
       "bannerTitle": "Hasta los 2 años",
-      "bannerSubtitle": "Refuerzos del segundo año",
+      "bannerSubtitle": "Refuerzos y vacunas del segundo año de vida.",
       "grupos": [
         {
           "id": "hasta-2",
           "badge": "HASTA 2 AÑOS",
           "vacunas": [
             {
-              "nombre": "Meningococo",
-              "detalle": "A los 15 meses."
+              "nombre": "Fiebre amarilla",
+              "detalle": "18 meses, residentes en zona de riesgo."
             },
             {
-              "nombre": "Varicela",
-              "detalle": "A los 15 meses."
+              "nombre": "Triple Viral SRP",
+              "detalle": "15-18 meses."
             },
             {
               "nombre": "Antigripal",
               "detalle": "Hasta los 24 meses."
             },
             {
+              "nombre": "Varicela",
+              "detalle": "15 meses."
+            },
+            {
+              "nombre": "Meningococo ACWY",
+              "detalle": "15 meses."
+            },
+            {
               "nombre": "Quíntuple",
-              "detalle": "Entre los 15 y 18 meses."
+              "detalle": "15-18 meses."
             }
           ]
         }
@@ -165,28 +173,36 @@
       "id": "nacidos-2021",
       "label": "Nacidos 2021",
       "icon": "face",
-      "bannerTitle": "Nacidos a partir de 2021",
-      "bannerSubtitle": "Esquema escolar inicial",
+      "bannerTitle": "Nacidos en 2021",
+      "bannerSubtitle": "Vacunas de cumplimiento de esquema.",
       "grupos": [
         {
           "id": "5-anios",
-          "badge": "5 AÑOS",
+          "badge": "NACIDOS EN 2021",
           "vacunas": [
             {
-              "nombre": "IPV (poliomielitis)",
-              "detalle": "Refuerzo."
+              "nombre": "Fiebre amarilla",
+              "detalle": ""
+            },
+            {
+              "nombre": "Triple Viral SRP",
+              "detalle": ""
+            },
+            {
+              "nombre": "Antigripal",
+              "detalle": ""
             },
             {
               "nombre": "Varicela",
-              "detalle": "Refuerzo."
+              "detalle": ""
             },
             {
-              "nombre": "Triple Viral",
-              "detalle": "Refuerzo."
+              "nombre": "Meningococo ACWY",
+              "detalle": ""
             },
             {
-              "nombre": "Triple Bacteriana Celular",
-              "detalle": "Refuerzo."
+              "nombre": "Quíntuple",
+              "detalle": ""
             }
           ]
         }
@@ -194,26 +210,38 @@
     },
     {
       "id": "nacidos-2018",
-      "label": "Nacidos 2018",
+      "label": "Nacidos 2015",
       "icon": "school",
-      "bannerTitle": "Nacidos a partir de 2018 / 11 años",
-      "bannerSubtitle": "Vacunas de la adolescencia",
+      "bannerTitle": "Nacidos en 2015",
+      "bannerSubtitle": "Refuerzos de cumplimiento de esquema.",
       "grupos": [
         {
           "id": "11-anios",
-          "badge": "11 AÑOS",
+          "badge": "NACIDOS EN 2015",
           "vacunas": [
             {
-              "nombre": "Meningococo",
-              "detalle": "Según esquema del Calendario Nacional."
+              "nombre": "Hepatitis B",
+              "detalle": "Iniciar o completar esquema de 3 dosis."
             },
             {
-              "nombre": "Triple Bacteriana Acelular",
-              "detalle": "Una dosis a los 11 años."
+              "nombre": "Triple Viral",
+              "detalle": "Iniciar o completar esquema."
             },
             {
               "nombre": "VPH",
-              "detalle": "Según esquema del Calendario Nacional."
+              "detalle": "Única dosis."
+            },
+            {
+              "nombre": "Triple Bacteriana Acelular",
+              "detalle": "Refuerzo."
+            },
+            {
+              "nombre": "Meningococo ACWY",
+              "detalle": ""
+            },
+            {
+              "nombre": "Fiebre amarilla",
+              "detalle": "Residentes en zona de riesgo si la recibieron la última vez antes de los 2 años."
             }
           ]
         }
@@ -224,45 +252,71 @@
       "label": "Jóvenes y adultos",
       "icon": "person",
       "bannerTitle": "Jóvenes y adultos",
-      "bannerSubtitle": "Protección en la adultez",
+      "bannerSubtitle": "Refuerzos y vacunas para jóvenes y adultos - adultos mayores (65+) - personal de salud.",
       "grupos": [
         {
           "id": "15-64",
-          "badge": "15 A 64 AÑOS",
+          "badge": "JÓVENES Y ADULTOS",
           "vacunas": [
             {
+              "nombre": "Fiebre Hemorrágica Argentina",
+              "detalle": "Residentes y/o trabajadores con riesgo ocupacional en zona de riesgo y que no hayan recibido la vacuna antes."
+            },
+            {
               "nombre": "Hepatitis B",
+              "detalle": "Iniciar o completar esquema de 3 dosis."
+            },
+            {
+              "nombre": "Triple Viral",
               "detalle": "Iniciar o completar esquema."
             },
             {
-              "nombre": "Doble adultos",
-              "detalle": "Según esquema del Calendario Nacional."
+              "nombre": "Antigripal",
+              "detalle": "Mayores de 65 años o menores con factores de riesgo."
             },
             {
-              "nombre": "COVID-19",
-              "detalle": "Según recomendaciones vigentes."
+              "nombre": "Doble Bacteriana",
+              "detalle": "Refuerzo cada 10 años."
             }
           ]
         },
         {
           "id": "65-mas",
-          "badge": "65 AÑOS Y MÁS",
+          "badge": "MAYORES DE 65 AÑOS / GRUPOS DE RIESGO",
           "vacunas": [
             {
-              "nombre": "Neumococo",
-              "detalle": "Según esquema del Calendario Nacional."
+              "nombre": "Doble Bacteriana",
+              "detalle": "Refuerzo cada 10 años."
+            },
+            {
+              "nombre": "Neumococo Conjugada",
+              "detalle": "Esquema secuencial."
+            },
+            {
+              "nombre": "Antigripal",
+              "detalle": ""
+            }
+          ]
+        },
+        {
+          "id": "personal-salud",
+          "badge": "PERSONAL DE SALUD",
+          "vacunas": [
+            {
+              "nombre": "Triple Bacteriana Acelular",
+              "detalle": "Una dosis. Personal de salud que atienda menores de 12 meses. Revacunar cada 5 años."
+            },
+            {
+              "nombre": "Hepatitis B",
+              "detalle": "Iniciar o completar esquema."
             },
             {
               "nombre": "Antigripal",
               "detalle": "Dosis anual."
             },
             {
-              "nombre": "COVID-19",
-              "detalle": "Según recomendaciones vigentes."
-            },
-            {
-              "nombre": "Doble adultos",
-              "detalle": "Según esquema del Calendario Nacional."
+              "nombre": "Triple Viral",
+              "detalle": "Iniciar o completar esquema."
             }
           ]
         }

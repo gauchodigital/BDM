@@ -43,36 +43,17 @@ export function ViralPage() {
       </nav>
 
       {/* Hero */}
-      <section className="bg-white px-5 pb-6 pt-6 md:px-8">
+      <section className="bg-white px-5 pb-10 pt-6 md:px-8">
         <div className="mx-auto flex max-w-2xl flex-col gap-6">
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-3">
             <Chip label={d.badge} color="primary" />
-            <h1 className="text-[32px] font-black leading-normal text-[#503c77]">
+            <h1 className="text-[34px] font-black leading-tight text-[#503c77] md:text-[40px]">
               {d.title}
             </h1>
           </div>
           <p className="text-[15px] leading-6 text-[#442748]">
             <RichText text={d.intro} />
           </p>
-        </div>
-      </section>
-
-      {/* Síntomas chips */}
-      <section className="bg-white px-5 pb-10 md:px-8">
-        <div className="mx-auto flex max-w-2xl flex-col gap-4">
-          <h2 className="text-[18px] font-bold leading-6 text-[#503c77]">
-            {d.sintomasTitle}
-          </h2>
-          <div className="flex flex-wrap gap-2">
-            {d.sintomasChips.map((chip) => (
-              <span
-                key={chip}
-                className="rounded-[20px] border border-[#a6c0d6] bg-[rgba(166,192,214,0.25)] px-3.5 py-1.5 text-[13px] font-medium text-[#442748]"
-              >
-                {chip}
-              </span>
-            ))}
-          </div>
         </div>
       </section>
 
@@ -106,7 +87,7 @@ export function ViralPage() {
           {d.gruposRiesgo.items.map((item) => (
             <div
               key={item.title}
-              className="rounded-[12px] border border-[#a6c0d6] bg-white p-4"
+              className="rounded-[12px] border border-[#e2e8f0] bg-white p-4 shadow-[2px_2px_4px_rgba(51,51,51,0.08)]"
             >
               <h3 className="text-[15px] font-bold leading-6 text-[#503c77]">
                 {item.title}
@@ -154,8 +135,12 @@ export function ViralPage() {
                 {d.prevencion.title}
               </h2>
             </div>
-            <p className="text-[14px] leading-[19.6px] text-white/90">
-              <RichText text={d.prevencion.body} />
+            <p className="text-[14px] leading-[19.6px] text-white">
+              <RichText
+                text={d.prevencion.body}
+                strongClassName="font-bold text-white"
+                citeClassName="ml-0.5 text-[0.85em] font-[inherit] leading-none text-white"
+              />
             </p>
           </div>
           <Link
@@ -165,19 +150,10 @@ export function ViralPage() {
             {d.prevencion.ctaLabel}
             <span
               aria-hidden
-              className="block size-3 shrink-0"
-              style={{
-                backgroundColor: "#503c77",
-                WebkitMaskImage: "url(/icons/arrow-right.svg)",
-                maskImage: "url(/icons/arrow-right.svg)",
-                WebkitMaskSize: "contain",
-                maskSize: "contain",
-                WebkitMaskRepeat: "no-repeat",
-                maskRepeat: "no-repeat",
-                WebkitMaskPosition: "center",
-                maskPosition: "center",
-              }}
-            />
+              className="material-symbols-outlined text-[18px] leading-none"
+            >
+              arrow_forward
+            </span>
           </Link>
         </div>
       </section>

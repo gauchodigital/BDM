@@ -10,8 +10,6 @@ import { FungicaPage } from "@/components/causas/FungicaPage";
 import { ParasitariaPage } from "@/components/causas/ParasitariaPage";
 import { ViralPage } from "@/components/causas/ViralPage";
 import { getCausaBySlug } from "@/lib/causasData";
-import { readCentros } from "@/lib/readCentros";
-import { readVacunacion } from "@/lib/vacunacionData";
 import { WHATSAPP_URL } from "@/lib/siteLinks";
 
 export const dynamic = "force-dynamic";
@@ -62,11 +60,7 @@ export default async function CausaDetailPage({ params }: Props) {
   if (!causa) notFound();
 
   if (slug === "bacteriana") {
-    const vacunacion = readVacunacion();
-    const centros = readCentros();
-    return (
-      <BacterianaPage centros={centros} centrosCopy={vacunacion.centros} />
-    );
+    return <BacterianaPage />;
   }
 
   if (slug === "viral") {
@@ -93,7 +87,7 @@ export default async function CausaDetailPage({ params }: Props) {
         Volver a causas
       </Link>
       <Chip label={causa.tagLabel} color={causa.tagColor} />
-      <h1 className="mt-4 max-w-2xl text-[2rem] leading-tight text-primary md:text-[2.5rem]">
+      <h1 className="mt-3 max-w-2xl text-[2.125rem] font-black leading-tight text-primary md:text-[2.5rem]">
         {causa.title}
       </h1>
       <p className="mt-4 max-w-2xl text-lg text-muted">

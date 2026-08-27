@@ -56,7 +56,7 @@ h4,
 h5,
 h6 {
   font-family: var(--font-headline);
-  font-weight: 800;
+  font-weight: 900;
   letter-spacing: -0.02em;
 }
 
@@ -131,4 +131,34 @@ h6 {
 }
 .animate-delay-3 {
   animation-delay: 0.24s;
+}
+
+@keyframes scroll-bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.85;
+  }
+  50% {
+    transform: translateY(5px);
+    opacity: 0.45;
+  }
+}
+
+.animate-scroll-bounce {
+  animation: scroll-bounce 2.4s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .animate-fade-up,
+  .animate-fade-in,
+  .animate-bounce-soft,
+  .animate-scroll-bounce {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
 }

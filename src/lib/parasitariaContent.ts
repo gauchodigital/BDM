@@ -1,32 +1,16 @@
 export const PARASITARIA = {
   badge: "POCO FRECUENTE",
-  badgeColor: "primary" as const,
+  badgeColor: "secondary" as const,
   title: "Meningitis parasitaria",
   breadcrumb: "Meningitis por parásitos",
-  intro: [
-    "Los parásitos pueden causar meningitis o afectar el cerebro y el sistema nervioso de otras maneras. Aunque la meningitis parasitaria es menos común que la meningitis viral y bacteriana, sigue siendo una **amenaza seria para la salud.**[6]",
-    "Algunas personas pueden tener un mayor riesgo de infección debido al lugar donde viven o viajan, exponiéndose a ambientes donde estos parásitos son más prevalentes. **El diagnóstico de la meningitis parasitaria puede ser difícil**, y lamentablemente, no existen tratamientos específicos para combatirla, lo que complica aún más su manejo y tratamiento adecuado.[6]",
-  ],
-  agentes: {
-    eyebrow: "AGENTES CAUSALES",
-    title: "Los 3 principales parásitos causantes",
-    body: "Los parásitos suelen infectar a animales, no a personas. Las personas se infectan con meningitis parasitaria principalmente a través de los siguientes parásitos[6]:",
-    items: [
-      {
-        num: "01",
-        name: "Angiostrongylus Cantonensis:",
-        body: "Caracoles o babosas crudas o poco cocinadas, productos agrícolas contaminados.",
-      },
-      {
-        num: "02",
-        name: "Baylisascaris procyonis:",
-        body: "Entornos (como la tierra) contaminados con heces de mapache.",
-      },
-      {
-        num: "03",
-        name: "Gnathostoma spinigerum",
-        body: "Peces de agua dulce o anguilas crudas o poco cocinadas, ranas, aves de corral, serpientes.",
-      },
+  intro:
+    "Los parásitos pueden causar meningitis o afectar el cerebro y el sistema nervioso de otras maneras.",
+  queEs: {
+    eyebrow: "CONOCÉ LA meningitis parasitaria",
+    title: "¿Qué es?",
+    paragraphs: [
+      "Aunque la meningitis parasitaria es menos común que la meningitis viral y bacteriana, sigue siendo una **amenaza seria para la salud.**[6]",
+      "Algunas personas pueden tener un mayor riesgo de infección debido al lugar donde viven o viajan, exponiéndose a ambientes donde estos parásitos son más prevalentes. **El diagnóstico de la meningitis parasitaria puede ser difícil**, y lamentablemente, no existen tratamientos específicos para combatirla, lo que complica aún más su manejo y tratamiento adecuado.[6]",
     ],
   },
   tratamiento: {
@@ -42,7 +26,7 @@ export const PARASITARIA = {
     title: "¿Cuándo buscar atención médica de emergencia?",
     body: "Cualquier persona con síntomas de meningitis debe consultar a un profesional de la salud de inmediato. Solo un profesional de la salud puede determinar si tiene meningitis, cuál es la causa y determinar cuál es el mejor tratamiento para su caso[4].",
     ctaLabel: "Conocer más sobre los síntomas",
-    ctaHref: "/sintomas",
+    ctaHref: "/vacunacion",
   },
   otrasCausasEyebrow: "OTRAS CAUSAS",
   otrasCausas: [

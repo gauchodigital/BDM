@@ -21,9 +21,9 @@ export default function CausasPage() {
   return (
     <>
       <section className="bg-white px-5 pb-10 pt-16 md:px-8 md:pt-16">
-        <div className="mx-auto w-full max-w-6xl">
+        <div className="mx-auto w-full max-w-7xl">
           <div className="mx-auto max-w-2xl">
-            <h1 className="text-[32px] font-black leading-normal text-[#503c77]">
+            <h1 className="text-[32px] font-[900] leading-normal text-[#503c77]">
               Causas de la meningitis
             </h1>
             <p className="mt-4 text-[16px] leading-[26px] text-[#442748]">
@@ -42,14 +42,14 @@ export default function CausasPage() {
       </section>
 
       <section className="bg-white px-5 pb-16 md:px-8">
-        <div className="mx-auto w-full max-w-6xl">
+        <div className="mx-auto w-full max-w-7xl">
           <div className="mx-auto flex max-w-2xl flex-col gap-6">
             {causas.map((causa) => (
               <article key={causa.id} className={CARD_CLASS}>
                 <div className="flex flex-col gap-4">
-                  <div className="flex flex-col gap-2">
+                  <div className="flex flex-col gap-3">
                     <Chip label={causa.tagLabel} color={causa.tagColor} />
-                    <h2 className="text-[24px] font-bold leading-9 text-[#442748]">
+                    <h2 className="text-[28px] font-extrabold leading-tight text-[#503c77]">
                       {causa.title}
                     </h2>
                   </div>
@@ -71,26 +71,6 @@ export default function CausasPage() {
                 </Link>
               </article>
             ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="bg-[#503c77]">
-        <div className="mx-auto w-full max-w-6xl px-5 py-16 md:px-8">
-          <div className="mx-auto flex max-w-2xl flex-col gap-4">
-            <div className="flex flex-col gap-2">
-              <p className="text-[11px] font-bold uppercase leading-[16.8px] tracking-[1.3px] text-[#dd876e]">
-                compromiso social
-              </p>
-              <h2 className="text-[28px] font-bold leading-9 !text-white">
-                Por un mundo sin meningitis
-              </h2>
-            </div>
-            <p className="text-[16px] leading-[26px] text-white/85">
-              Nos unimos al compromiso de la Organización Mundial de la Salud
-              para poner fin a la meningitis para el 2030
-              <sup className="text-[0.65em] text-white/70">22</sup>.
-            </p>
           </div>
         </div>
       </section>

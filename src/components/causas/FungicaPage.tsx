@@ -45,9 +45,9 @@ export function FungicaPage() {
       {/* Hero */}
       <section className="bg-white px-5 pb-10 pt-6 md:px-8">
         <div className="mx-auto flex max-w-2xl flex-col gap-6">
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-3">
             <Chip label={d.badge} color={d.badgeColor} />
-            <h1 className="text-[32px] font-black leading-normal text-[#503c77]">
+            <h1 className="text-[34px] font-black leading-tight text-[#503c77] md:text-[40px]">
               {d.title}
             </h1>
           </div>
@@ -92,7 +92,7 @@ export function FungicaPage() {
             {d.gruposRiesgo.items.map((item) => (
               <div
                 key={item.lead}
-                className="rounded-[12px] bg-[rgba(166,192,214,0.2)] p-4"
+                className="rounded-[12px] bg-[#EEECF2] p-4"
               >
                 <p className="text-[14px] leading-[22px] text-[#442748]">
                   <span className="font-bold text-[#503c77]">{item.lead}</span>
@@ -125,25 +125,14 @@ export function FungicaPage() {
 
           <div
             role="note"
-            className="flex gap-3 rounded-[12px] border border-[#ef4444]/35 bg-[#fef2f2] p-4"
+            className="rounded-[12px] border border-[#ef4444] bg-white p-4"
           >
-            <span
-              className="material-symbols-outlined mt-0.5 shrink-0 text-[22px] text-[#ef4444]"
-              aria-hidden
-            >
-              warning
-            </span>
-            <div className="flex flex-col gap-1">
-              <p className="text-[14px] font-bold leading-5 text-[#ef4444]">
-                {d.tratamiento.alert.title}
-              </p>
-              <p className="text-[13px] leading-5 text-[#ef4444]">
-                <RichText
-                  text={d.tratamiento.alert.body}
-                  strongClassName="font-bold text-[#ef4444]"
-                />
-              </p>
-            </div>
+            <p className="text-[14px] font-bold leading-5 text-[#ef4444]">
+              {d.tratamiento.alert.title}
+            </p>
+            <p className="mt-1 text-[13px] leading-5 text-[#442748]">
+              <RichText text={d.tratamiento.alert.body} />
+            </p>
           </div>
         </div>
       </section>
@@ -158,8 +147,12 @@ export function FungicaPage() {
                 {d.prevencion.title}
               </h2>
             </div>
-            <p className="text-[14px] leading-[19.6px] text-white/90">
-              <RichText text={d.prevencion.body} />
+            <p className="text-[14px] leading-[19.6px] text-white">
+              <RichText
+                text={d.prevencion.body}
+                strongClassName="font-bold text-white"
+                citeClassName="ml-0.5 text-[0.85em] font-[inherit] leading-none text-white"
+              />
             </p>
           </div>
           <Link
@@ -169,19 +162,10 @@ export function FungicaPage() {
             {d.prevencion.ctaLabel}
             <span
               aria-hidden
-              className="block size-3 shrink-0"
-              style={{
-                backgroundColor: "#503c77",
-                WebkitMaskImage: "url(/icons/arrow-right.svg)",
-                maskImage: "url(/icons/arrow-right.svg)",
-                WebkitMaskSize: "contain",
-                maskSize: "contain",
-                WebkitMaskRepeat: "no-repeat",
-                maskRepeat: "no-repeat",
-                WebkitMaskPosition: "center",
-                maskPosition: "center",
-              }}
-            />
+              className="material-symbols-outlined text-[18px] leading-none"
+            >
+              arrow_forward
+            </span>
           </Link>
         </div>
       </section>

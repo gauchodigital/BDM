@@ -1,93 +1,149 @@
 [
   {
-    "id": "vacunas-mismo-dia",
-    "category": "que-son",
-    "question": "¿Se puede recibir más de una vacuna el mismo día?",
-    "answer": "Sí. En la mayoría de los casos se pueden aplicar varias vacunas en la misma visita, según el Calendario Nacional y la indicación del profesional de la salud. Así se completa el esquema a tiempo y se reduce la cantidad de consultas.",
-    "visible": true
-  },
-  {
     "id": "como-fabrican",
     "category": "que-son",
     "question": "¿Cómo se fabrican las vacunas?",
-    "answer": "Las vacunas se elaboran con procesos estrictamente controlados. Contienen componentes que enseñan al sistema inmune a reconocer un microorganismo sin causar la enfermedad. Luego se someten a controles de calidad, seguridad y eficacia antes de autorizarse su uso.",
-    "visible": true
-  },
-  {
-    "id": "sintomas-post-vacuna",
-    "category": "que-son",
-    "question": "¿Qué síntomas puedo tener después de vacunarme?",
-    "answer": "Es frecuente sentir dolor o enrojecimiento en el sitio de aplicación, cansancio leve o fiebre baja. Suelen ser leves y pasajeros. Si los síntomas son intensos, persistentes o te preocupan, consultá a un profesional de la salud.",
+    "answer": "Se formulan de varias maneras. Algunas incluyen a los microorganismos que causan la enfermedad pero “atenuados” (vivos, pero “debilitados” para generar una infección controlable fácilmente por el sistema inmune) o inactivados (“muertos”).\n\nEn otras situaciones, se trata de una composición con algunas partes de los microorganismos: como proteínas, fragmentos de la superficie exterior, que posibilitan la producción de defensas igualmente adecuadas.\n\nUna vez vacunada, si la persona tiene contacto con el microorganismo, su cuerpo estará preparado para protegerse y no enfermar o hacerlo de manera leve.[22]",
     "visible": true
   },
   {
     "id": "vacunas-seguras",
     "category": "que-son",
     "question": "¿Las vacunas son seguras?",
-    "answer": "Sí. Las vacunas autorizadas pasan por evaluaciones rigurosas de seguridad y se monitorean de forma continua una vez en uso. Los beneficios de prevenir enfermedades graves, como la meningitis, superan ampliamente los riesgos habituales de la vacunación.",
+    "answer": "Las vacunas utilizadas en los programas de inmunizaciones son seguras y eficaces. Las reacciones que pueden provocar son leves y poco frecuentes.\n\nLa seguridad de las vacunas es controlada en forma estricta por las autoridades sanitarias que chequean los procesos de fabricación, distribución, y la calidad de cada lote. En nuestro país es la Administración nacional de medicamentos, alimentos y tecnología médica (ANMAT).[22]",
     "visible": true
   },
   {
     "id": "quien-invento",
     "category": "que-son",
     "question": "¿Quién inventó las vacunas?",
-    "answer": "El concepto moderno de vacunación se asocia a Edward Jenner a fines del siglo XVIII, con la vacuna contra la viruela. Desde entonces, la ciencia avanzó hasta desarrollar vacunas contra muchas enfermedades prevenibles, incluidas formas graves de meningitis.",
+    "answer": "A. Edward Jenner (1749-1823), médico investigador inglés; se lo llama “padre de las vacunas” porque fue quien descubrió la vacuna contra la viruela, enfermedad que provocaba grandes epidemias en varios continentes.\n\nPosteriormente, científicos como el propio Jenner, Pasteur, Salk y Sabin, entre muchos otros, desarrollaron vacunas que han sido una herramienta fundamental para la salud de las poblaciones.\n\nSi las vacunas son administradas en forma oportuna, menos personas van a contraer enfermedades. Los avances en las vacunas y el acceso cada vez más amplio a ellas se traducen en una mejor calidad y esperanza de vida para las comunidades de todo el mundo.[22]",
     "visible": true
   },
   {
     "id": "erradicacion-eliminacion",
     "category": "que-son",
     "question": "¿Cuáles son las diferencias entre erradicación, eliminación y control de enfermedades prevenibles por vacunas?",
-    "answer": "Erradicación significa que la enfermedad desaparece en todo el mundo (como la viruela). Eliminación es cuando deja de circular de forma sostenida en un país o región. Control implica reducir la cantidad de casos y complicaciones a niveles bajos gracias a la vacunación y otras medidas.",
+    "answer": "**Erradicación** se refiere a la situación en la cual no solamente ya no existen casos en ningún grupo poblacional sino que también se eliminaron las causas de la enfermedad, en particular el agente que la produce. (Ej: la viruela: la viruela y su agente productor fueron eliminados a escala mundial).\n\n**Eliminación** se refiere a la situación en la cual ya no existen casos de enfermedad en una determinada población, aunque persisten las causas que pueden potencialmente producir la aparición de casos. (Ej: sarampión está eliminado de Argentina, pero sigue habiendo casos en otros países del mundo que potencialmente pueden volver a generar casos en nuestro país).\n\n**Control:** Se refiere a la aplicación de medidas poblacionales dirigidas a conseguir la reducción de la incidencia de la enfermedad a niveles en que deje de constituir un problema de salud pública. Las medidas de control se dirigen principalmente a reducir la mortalidad y la morbilidad de la enfermedad. (Ej. difteria, tétanos neonatal, transmisión materno infantil de la hepatitis).[22]",
     "visible": true
   },
   {
-    "id": "por-que-vacunarse",
+    "id": "ninos-sanos",
     "category": "por-que-vacunarse",
-    "question": "¿Por qué es importante vacunarse?",
-    "answer": "Las vacunas protegen a quien se vacuna y también a su entorno. Ayudan a prevenir enfermedades graves, reducir hospitalizaciones y cuidar especialmente a bebés, personas mayores y quienes tienen defensas bajas.",
+    "question": "¿Por qué los niños necesitan vacunarse aunque estén sanos?",
+    "answer": "La vacunación es una herramienta de “prevención primaria”, esto quiere decir que evita que personas sanas enfermen, o si lo hacen, que evolucionen a cuadros graves o mortales.\n\nSi bien la mayoría de las enfermedades prevenibles causan cuadros benignos, un niño sano puede tener complicaciones graves o fallecer por enfermedades que se previenen de forma muy eficaz y segura a través de la vacunación.[22]",
     "visible": true
   },
   {
-    "id": "acto-responsabilidad",
+    "id": "por-que-importantes",
     "category": "por-que-vacunarse",
-    "question": "¿Vacunarse es un acto de responsabilidad social?",
-    "answer": "Sí. Cumplir con el esquema recomendado no solo te protege a vos: también contribuye a controlar enfermedades prevenibles y a cuidar a quienes no pueden vacunarse o tienen mayor riesgo de complicaciones.",
+    "question": "¿Por qué son importantes las vacunas?",
+    "answer": "Según la Organización Mundial de la Salud (OMS), las vacunas y el agua potable son las dos herramientas más importantes para prevenir enfermedades.\n\nHace muchos años, cuando aún no existían las vacunas, había epidemias que causaban secuelas irreversibles o miles de muertes por año.[22]\n\nHoy en día, las vacunas previenen más de 30 enfermedades potencialmente mortales[23] y le enseñan al cuerpo a defenderse contra enfermedades, estimulando la producción de anticuerpos, creando inmunidad y protegiéndonos de futuras infecciones.[19]\n\nPor ejemplo, a pesar de los casos registrados de sarampión en los últimos años, Argentina continúa siendo un país libre de circulación endémica del virus gracias a la implementación de estrategias de control basadas en la inmunización.[26]",
     "visible": true
   },
   {
-    "id": "calendario-que-es",
+    "id": "responsabilidad-social",
+    "category": "por-que-vacunarse",
+    "question": "¿Por qué la vacunación es una responsabilidad social?",
+    "answer": "La vacunación es un acto responsable y solidario. La persona que no se vacuna, puede contraer y contagiar estas enfermedades. Por lo tanto, no solo se pone en riesgo a sí misma, sino también a toda la comunidad, especialmente a aquellas personas que son más vulnerables, como los menores de 1 año que aún no han completado sus esquemas de vacunación, embarazadas e inmunodeprimidas (aquellas que por distintas enfermedades o tratamientos tienen bajas sus defensas).[22]",
+    "visible": true
+  },
+  {
+    "id": "si-no-nos-vacunamos",
+    "category": "por-que-vacunarse",
+    "question": "¿Qué puede pasar si no nos vacunamos?",
+    "answer": "Si tenemos contacto con el microorganismo causante de la infección, corremos el riesgo de padecer la enfermedad y, por supuesto, sus formas graves o fatales.\n\nAdemás, es fundamental tomar conciencia de que no solo podemos enfermarnos nosotros, sino también contagiar a personas más vulnerables que no pueden recibir las vacunas por tener contraindicaciones para su aplicación o no tienen la edad para recibir la vacuna.[22]",
+    "visible": true
+  },
+  {
+    "id": "proteccion-rebano",
+    "category": "por-que-vacunarse",
+    "question": "¿Qué se entiende en vacunación por protección rebaño?",
+    "answer": "Cuando la mayoría de las personas en una comunidad están correctamente inmunizadas, si alguien adquiere una enfermedad prevenible por vacunas, la enfermedad probablemente no se propague ya que en su entorno entra en contacto con otras personas que están protegidas. De esta forma, la diseminación de la enfermedad quedará limitada y no alcanzará a personas susceptibles que no hayan podido vacunarse por contraindicación médica (ej. con cáncer); a este efecto de protección indirecta se lo denomina “efecto rebaño”. Este fenómeno, también denominado inmunidad “colectiva”, es especialmente eficaz con las enfermedades extremadamente contagiosas, como el sarampión.[22]",
+    "visible": true
+  },
+  {
+    "id": "sintomas-post-vacuna",
+    "category": "por-que-vacunarse",
+    "question": "¿Qué síntomas puedo tener después de vacunarme?",
+    "answer": "Una vacuna inyectable puede causarnos dolor, enrojecimiento e inflamación en el lugar de la aplicación. En general, estos efectos son leves y desaparecen espontáneamente.\n\nEn un grupo pequeño de personas puede aparecer fiebre y decaimiento durante un par de días. Si surge alguna duda, debemos consultar al equipo de salud.[22]",
+    "visible": true
+  },
+  {
+    "id": "vacunas-todas-etapas",
+    "category": "por-que-vacunarse",
+    "question": "¿Por qué se dice que hay vacunas para todas las etapas de la vida?",
+    "answer": "En el momento en que un niño nace se recomienda que reciba las primeras vacunas y a lo largo de sus primeros años de vida se administran muchas de ellas. Pero es necesario destacar que en todas las etapas de la vida hay indicación de vacunas (adolescentes, personas adultas, adultas mayores), ya sea por necesidad de reforzar las defensas que generaron las vacunas que se dieron en la infancia o para proteger de otras enfermedades (ej. cáncer de cuello uterino mediante la vacuna contra el VPH). También en situaciones especiales como en embarazadas, por viajes internacionales, factores de riesgo o para determinadas profesiones. Por este motivo es importante que consultes con un profesional de la salud qué vacunas te faltan.[22]",
+    "visible": true
+  },
+  {
+    "id": "vacunas-mismo-dia",
     "category": "calendario",
-    "question": "¿Qué es el Calendario Nacional de Vacunación?",
-    "answer": "Es el esquema oficial de vacunas recomendadas en Argentina para distintas etapas de la vida. Es completo, gratuito y obligatorio, y se actualiza según evidencia científica y situación epidemiológica.",
+    "question": "¿Se puede recibir más de una vacuna el mismo día?",
+    "answer": "Las vacunas del Calendario Nacional que corresponden a cada etapa de la vida pueden recibirse el mismo día o en forma diferida. Sin embargo, es esencial poner al día el Calendario en la menor cantidad de visitas posibles al centro de salud, hospital o vacunatorio y así evitar oportunidades perdidas. Las vacunas contra la COVID-19 también pueden administrarse en el mismo momento, con cualquiera de las vacunas del Calendario Nacional.[22]",
     "visible": true
   },
   {
-    "id": "calendario-gratis",
+    "id": "calendario-solo-ninos",
     "category": "calendario",
-    "question": "¿Las vacunas del calendario son gratuitas?",
-    "answer": "Las vacunas incluidas en el Calendario Nacional son gratuitas en el sistema público de salud. Consultá en tu centro de vacunación o con tu médico el esquema que corresponde según la edad y la situación.",
+    "question": "¿Las vacunas del Calendario Nacional son solo para los niños?",
+    "answer": "No: para cada etapa de la vida corresponde la aplicación de diversas vacunas.\n\nPor ejemplo, la primera vacuna, contra la hepatitis B, se aplica durante las primeras 12 horas de vida. Además, antes del egreso de la maternidad se aplica también la BCG. Toda persona adulta debe recibir refuerzo contra difteria y tétanos cada 10 años.\n\nComo algunas vacunas aplicadas durante la infancia pierden su eficacia con el tiempo, durante la adolescencia y adultez deben aplicarse dosis de refuerzo, así como también existen vacunas que tienen indicación precisa durante esta etapa o alguna condición en particular.[22]",
     "visible": true
   },
   {
-    "id": "que-es-meningitis",
-    "category": "meningitis",
-    "question": "¿Qué es la meningitis?",
-    "answer": "Es la inflamación de las meninges, las membranas que protegen el cerebro y la médula espinal. Puede ser causada por bacterias, virus, hongos u otras causas menos frecuentes.",
+    "id": "embarazada-vacunas",
+    "category": "calendario",
+    "question": "¿Una embarazada puede recibir vacunas?",
+    "answer": "Todas las embarazadas deben vacunarse para protegerse contra enfermedades que pueden causar graves complicaciones durante ese período de la vida (la gripe, por ejemplo).\n\nLas vacunas, además, durante el embarazo transfieren anticuerpos a través de la placenta y luego a través de la lactancia a la persona recién nacida protegiéndola durante los primeros meses de vida (contra la tos convulsa y la bronquiolitis).\n\nHay algunas vacunas que están contraindicadas en el embarazo, pero, si la persona lo necesita, se le pueden aplicar en el puerperio inmediato o previo al embarazo.[22]",
     "visible": true
   },
   {
-    "id": "cuando-consultar",
-    "category": "meningitis",
-    "question": "¿Cuándo debo consultar de urgencia?",
-    "answer": "Ante fiebre alta, dolor de cabeza intenso, rigidez de nuca, vómitos, confusión, manchas en la piel o deterioro rápido del estado general. En bebés: llanto inconsolable, fontanela abultada, rechazo del alimento o irritabilidad marcada. No esperes: es una emergencia médica.",
+    "id": "importante-seguir-calendario",
+    "category": "calendario",
+    "question": "¿Por qué es importante seguir el Calendario Nacional de Vacunación?",
+    "answer": "Cumplir con el Calendario Nacional de Vacunación no solo protege a cada persona de enfermedades prevenibles, sino que es también un acto de responsabilidad social. Las vacunas incluidas en el calendario —gratuitas y obligatorias— permiten controlar y reducir enfermedades graves que pueden afectar especialmente a los más vulnerables: bebés, adultos mayores y personas con defensas bajas.[18]\n\nMantener altas tasas de vacunación es esencial para lograr la inmunidad colectiva, lo que impide la circulación de los virus y bacterias en la comunidad. Cuando la vacunación disminuye, como ha ocurrido en los últimos años en distintos grupos etarios, se incrementa el riesgo de que reaparezcan enfermedades que ya estaban controladas, poniendo en peligro la salud pública.\n\nVacunarse según lo establecido en el calendario nacional y las recomendaciones de tu médico es una forma concreta de cuidar no solo de uno mismo, sino también de los demás. Es un compromiso con el bienestar colectivo y una herramienta clave para evitar brotes, hospitalizaciones y muertes evitables.[18]",
     "visible": true
   },
   {
-    "id": "como-prevenir-meningitis",
+    "id": "una-sola-dosis",
+    "category": "calendario",
+    "question": "¿Estoy protegido/a si una vacuna necesita varias dosis, pero solo me pongo una?",
+    "answer": "Esto dependerá del esquema de cada vacuna. En aquellas que su esquema conste de más de una dosis, aplicar una sola puede no garantizar una protección completa. Por eso, completar el esquema de vacunación es fundamental para estar realmente protegido y así evitar enfermedades que pueden ser graves.[21]",
+    "visible": true
+  },
+  {
+    "id": "dose-atrasada",
+    "category": "calendario",
+    "question": "Me atrasé en aplicar una dosis de la vacuna, ¿vuelvo a empezar?",
+    "answer": "No, no hace falta empezar de nuevo. Si te atrasaste con alguna dosis, simplemente se debe retomar el esquema de vacunación desde donde se dejó.\n\nLas vacunas que ya te aplicaste siguen siendo válidas, incluso si pasó más tiempo del recomendado entre una dosis y otra. Lo importante es ponerse al día lo antes posible para asegurarte una protección completa frente a la enfermedad.*\n\nSi tenés dudas, siempre podés consultar con un profesional de salud para que te indique cómo completar el calendario según tu situación particular.[21]\n\n*Los intervalos máximos de administración pueden no haber sido evaluados en todos los casos. GSK recomienda seguir las posologías y esquemas de aplicación aprobados por ANMAT para cada vacuna.",
+    "visible": true
+  },
+  {
+    "id": "donde-disponibles",
+    "category": "calendario",
+    "question": "¿Dónde están disponibles las vacunas?",
+    "answer": "Todas las vacunas contempladas en el Calendario Nacional están disponibles de forma gratuita en los vacunatorios, centros de salud y hospitales públicos del país. No requieren orden médica.[22]",
+    "visible": true
+  },
+  {
+    "id": "sintomas-meningitis",
     "category": "meningitis",
-    "question": "¿Cómo se puede prevenir la meningitis?",
-    "answer": "La vacunación es una de las herramientas más importantes para prevenir formas graves de meningitis bacteriana. También ayudan hábitos de higiene, evitar el contacto cercano con personas enfermas y consultar a tiempo ante síntomas de alarma.",
+    "question": "¿Cuáles son los síntomas de la meningitis?",
+    "answer": "Los síntomas más habituales de la Meningitis son fiebre, cuello rígido, irritabilidad, somnolencia, rechazo a la luz, náuseas o vómitos y dolor de cabeza.\n\nEn lactantes, los más característicos son fiebre, llanto constante, somnolencia o irritabilidad excesivas, dificultad para despertar del sueño, lentitud o inactividad, no despertarse para comer, no comer bien, vómitos y tener la fontanela (parte superior de la cabeza del bebé) abultada.\n\nEn los casos de Meningitis Bacteriana, las bacterias causantes de Meningitis pueden provocar otros síntomas si infectan la sangre del torrente circulatorio, que pueden desembocar rápidamente en septicemia (también conocida como sepsis, que es una infección grave de la sangre que puede provocar el mal funcionamiento de órganos y, si no se trata rápidamente, la muerte). Estos síntomas pueden ser: frío en manos y pies, dolor muscular y articular, respiración más rápida de lo habitual, diarrea y erupciones de la piel de color rojo o púrpura oscuro (petequias).\n\nAnte la presencia de estos síntomas, es fundamental acudir inmediatamente al médico.[1]",
+    "visible": true
+  },
+  {
+    "id": "transmision-meningitis",
+    "category": "meningitis",
+    "question": "¿Cómo se transmite la meningitis?",
+    "answer": "La meningitis se transmite, en la mayoría de los casos, por vía respiratoria desde una persona enferma o desde portadores asintomáticos. Las formas de transmisión incluyen:\n\n- Tos\n- Estornudos\n- Besos\n- Compartir utensilios\n\nAdemás, el contacto cercano y prolongado con una persona infectada, como en hogares, jardines maternales, escuelas o universidades, aumenta el riesgo de transmisión.[1]",
+    "visible": true
+  },
+  {
+    "id": "tipos-meningitis",
+    "category": "meningitis",
+    "question": "¿Qué tipos de meningitis existen?",
+    "answer": "Existen varios tipos de meningitis, clasificados según su causa:\n\n**Meningitis bacteriana:** Es la forma más grave y puede ser causada por bacterias como Neumococo, Meningococo, Haemophilus influenzae tipo b y Streptococcus agalactiae. La meningitis por Meningococo puede evolucionar rápidamente y, incluso con tratamiento adecuado, algunos pacientes pueden fallecer entre las primeras 24 a 48 horas de la aparición de los síntomas.\n\n**Meningitis viral:** Es la forma más frecuente y, por lo general, tiene mejor evolución que las bacterianas. Puede ser contraída a cualquier edad, pero la mayoría de los casos ocurre en niños menores de 5 años o personas con el sistema inmunitario debilitado.\n\n**Meningitis por hongos:** Ciertos hongos presentes en el ambiente pueden causar meningitis, especialmente en personas con sistemas inmunológicos debilitados. La infección suele ocurrir al inhalar esporas de hongos.\n\n**Meningitis parasitaria:** Se contrae al consumir animales infectados o alimentos contaminados.[1,3]",
     "visible": true
   }
 ]

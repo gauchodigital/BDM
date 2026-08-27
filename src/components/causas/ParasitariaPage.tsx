@@ -53,50 +53,30 @@ export function ParasitariaPage() {
       {/* Hero */}
       <section className="bg-white px-5 pb-10 pt-6 md:px-8">
         <div className="mx-auto flex max-w-2xl flex-col gap-6">
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-3">
             <Chip label={d.badge} color={d.badgeColor} />
-            <h1 className="text-[32px] font-black leading-normal text-[#503c77]">
+            <h1 className="text-[34px] font-black leading-tight text-[#503c77] md:text-[40px]">
               {d.title}
             </h1>
           </div>
-          <div className="flex flex-col gap-4 text-[15px] leading-6 text-[#442748]">
-            {d.intro.map((p) => (
-              <p key={p.slice(0, 48)}>
-                <RichText text={p} />
-              </p>
-            ))}
-          </div>
+          <p className="text-[15px] leading-6 text-[#442748]">
+            <RichText text={d.intro} />
+          </p>
         </div>
       </section>
 
-      {/* Agentes causales */}
+      {/* ¿Qué es? */}
       <section className="scroll-mt-20 bg-white px-5 pb-16 md:px-8">
-        <div className="mx-auto flex max-w-2xl flex-col gap-6">
-          <div className="flex flex-col gap-4">
-            <div className="flex flex-col gap-2">
-              <Eyebrow>{d.agentes.eyebrow}</Eyebrow>
-              <SectionTitle>{d.agentes.title}</SectionTitle>
-            </div>
-            <p className="text-[16px] leading-[26px] text-[#442748]">
-              <RichText text={d.agentes.body} />
-            </p>
+        <div className="mx-auto flex max-w-2xl flex-col gap-4">
+          <div className="flex flex-col gap-2">
+            <Eyebrow>{d.queEs.eyebrow}</Eyebrow>
+            <SectionTitle>{d.queEs.title}</SectionTitle>
           </div>
-          <div className="flex flex-col gap-3">
-            {d.agentes.items.map((item) => (
-              <div
-                key={item.num}
-                className="flex flex-col gap-1 rounded-[16px] bg-[#E9EFF5] p-4"
-              >
-                <span className="text-[14px] font-bold leading-5 text-[#dd876e]">
-                  {item.num}
-                </span>
-                <p className="text-[14px] font-bold leading-5 text-[#503c77]">
-                  {item.name}
-                </p>
-                <p className="text-[14px] leading-[22px] text-[#442748]">
-                  {item.body}
-                </p>
-              </div>
+          <div className="flex flex-col gap-4 text-[16px] leading-[25px] text-[#442748]">
+            {d.queEs.paragraphs.map((p) => (
+              <p key={p.slice(0, 48)}>
+                <RichText text={p} />
+              </p>
             ))}
           </div>
         </div>
@@ -129,8 +109,12 @@ export function ParasitariaPage() {
                 {d.prevencion.title}
               </h2>
             </div>
-            <p className="text-[14px] leading-[19.6px] text-white/90">
-              <RichText text={d.prevencion.body} />
+            <p className="text-[14px] leading-[19.6px] text-white">
+              <RichText
+                text={d.prevencion.body}
+                strongClassName="font-bold text-white"
+                citeClassName="ml-0.5 text-[0.85em] font-[inherit] leading-none text-white"
+              />
             </p>
           </div>
           <Link
@@ -140,19 +124,10 @@ export function ParasitariaPage() {
             {d.prevencion.ctaLabel}
             <span
               aria-hidden
-              className="block size-3 shrink-0"
-              style={{
-                backgroundColor: "#503c77",
-                WebkitMaskImage: "url(/icons/arrow-right.svg)",
-                maskImage: "url(/icons/arrow-right.svg)",
-                WebkitMaskSize: "contain",
-                maskSize: "contain",
-                WebkitMaskRepeat: "no-repeat",
-                maskRepeat: "no-repeat",
-                WebkitMaskPosition: "center",
-                maskPosition: "center",
-              }}
-            />
+              className="material-symbols-outlined text-[18px] leading-none"
+            >
+              arrow_forward
+            </span>
           </Link>
         </div>
       </section>

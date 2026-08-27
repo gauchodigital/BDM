@@ -21,7 +21,7 @@ export function Section({
 
   return (
     <section id={id} className={`section-pad ${tones[tone]} ${className}`}>
-      <div className="mx-auto w-full max-w-6xl px-6 md:px-8">{children}</div>
+      <div className="mx-auto w-full max-w-7xl px-6 md:px-8">{children}</div>
     </section>
   );
 }

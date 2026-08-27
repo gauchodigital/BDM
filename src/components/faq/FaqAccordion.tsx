@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { RichText } from "@/components/ui/RichText";
 import { FAQ_CATEGORIES, type FaqData } from "@/lib/faqTypes";
 
 export function FaqAccordion({
@@ -66,28 +67,63 @@ export function FaqAccordion({
           return (
             <div
               key={item.id}
-              className="overflow-hidden rounded-xl border border-[#e2e8f0] bg-white shadow-[2px_2px_0_rgba(92,82,184,0.15)]"
+              className="relative overflow-hidden rounded-xl border border-[#e2e8f0] bg-white shadow-[2px_2px_6px_rgba(54,50,118,0.1)]"
             >
+              {open ? (
+                <span
+                  className="absolute bottom-0 left-0 top-0 w-1.5 bg-[#A6C0D6]"
+                  aria-hidden
+                />
+              ) : null}
               <button
                 type="button"
-                className="flex w-full items-center justify-between gap-3 px-3 py-4 text-left"
+                className={`flex w-full items-start justify-between gap-3 py-4 text-left ${
+                  open ? "pl-5 pr-3" : "px-3"
+                }`}
                 aria-expanded={open}
                 onClick={() => setOpenId(open ? null : item.id)}
               >
-                <span className="text-[15px] font-bold leading-6 text-[#442748]">
+                <span className="text-[15px] font-[900] leading-snug text-[#442748]">
                   {item.question}
                 </span>
                 <span
-                  className="material-symbols-outlined shrink-0 text-[20px] leading-none text-[#503c77]"
+                  className="material-symbols-outlined mt-0.5 shrink-0 text-[20px] leading-none text-[#503c77]"
                   aria-hidden
                 >
                   {open ? "remove" : "add"}
                 </span>
               </button>
               {open ? (
-                <p className="border-t border-[#e2e8f0] px-3 pb-4 pt-3 text-[15px] leading-6 text-[#442748]/85 animate-fade-in">
-                  {item.answer}
-                </p>
+                <div className="space-y-3 border-t border-[#e2e8f0] py-4 pl-5 pr-3 animate-fade-in">
+                  {item.answer.split(/\n\n+/).map((block) => {
+                    const lines = block.split("\n").filter(Boolean);
+                    const isList = lines.every((l) => l.trim().startsWith("- "));
+                    if (isList) {
+                      return (
+                        <ul
+                          key={block.slice(0, 40)}
+                          className="list-disc space-y-1 pl-5 text-[14px] leading-[1.55] text-[#442748]/85"
+                        >
+                          {lines.map((l) => (
+                            <li key={l}>{l.replace(/^\-\s*/, "")}</li>
+                          ))}
+                        </ul>
+                      );
+                    }
+                    return (
+                      <p
+                        key={block.slice(0, 48)}
+                        className={
+                          block.trimStart().startsWith("*")
+                            ? "text-[12px] italic leading-[1.5] text-[#442748]/70"
+                            : "text-[14px] leading-[1.55] text-[#442748]/85"
+                        }
+                      >
+                        <RichText text={block} />
+                      </p>
+                    );
+                  })}
+                </div>
               ) : null}
             </div>
           );

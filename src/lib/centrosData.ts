@@ -1,4 +1,4 @@
-export const TIPOS_VACUNATORIO = ["Farmacia", "Hospital", "Vacunatorio"] as const;
+export const TIPOS_VACUNATORIO = ["Vacunatorio", "Hospital", "Farmacia"] as const;
 
 export type TipoVacunatorio = (typeof TIPOS_VACUNATORIO)[number] | string;
 

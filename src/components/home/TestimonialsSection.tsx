@@ -1,4 +1,5 @@
 import { TestimonialsTabs } from "@/components/home/TestimonialsTabs";
+import { Reveal } from "@/components/ui/Reveal";
 import type { TestimonioData } from "@/lib/testimoniosData";
 
 export function TestimonialsSection({
@@ -7,18 +8,20 @@ export function TestimonialsSection({
   testimonios: TestimonioData[];
 }) {
   return (
-    <section id="testimonios" className="scroll-mt-16 section-pad bg-[#442748]">
-      <div className="mx-auto w-full max-w-6xl px-6 md:px-8">
-        <div className="mx-auto max-w-2xl">
-          <p className="text-[11px] font-bold uppercase tracking-[0.1em] text-accent">
-            Escuchá las experiencias
-          </p>
-          <h2 className="mt-3 text-[28px] font-extrabold leading-tight !text-white">
-            Meningitis en primera persona
-          </h2>
-          <div className="mt-8">
+    <section id="testimonios" className="section-pad scroll-mt-16 bg-[#503C77]/10">
+      <div className="mx-auto w-full max-w-7xl px-6 md:px-8">
+        <div className="max-w-2xl lg:max-w-none">
+          <Reveal>
+            <p className="text-[11px] font-bold uppercase tracking-[0.1em] text-accent">
+              Escuchá las experiencias
+            </p>
+            <h2 className="mt-3 text-[28px] font-extrabold leading-tight text-primary md:text-[2.5rem]">
+              Meningitis en primera persona
+            </h2>
+          </Reveal>
+          <Reveal delay={100} className="mt-8 lg:mt-10">
             <TestimonialsTabs items={testimonios} />
-          </div>
+          </Reveal>
         </div>
       </div>
     </section>

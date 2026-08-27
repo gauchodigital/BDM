@@ -12,7 +12,7 @@ export function Footer() {
     <>
       <ReferencesAccordion />
       <footer className="bg-[#503C77] pb-[calc(3.85rem+env(safe-area-inset-bottom))] text-white md:pb-0">
-        <div className="mx-auto max-w-6xl px-6 py-10 md:px-8 md:py-12">
+        <div className="mx-auto max-w-7xl px-6 py-10 md:px-8 md:py-12">
           <p className="text-[28px] font-extrabold tracking-tight text-white">
             GSK
           </p>
