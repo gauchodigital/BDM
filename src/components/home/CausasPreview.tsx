@@ -14,7 +14,7 @@ export function CausasPreview({ causas }: { causas: CausaData[] }) {
       <section id="causas" className="section-pad scroll-mt-16 bg-white">
         <div className="mx-auto w-full max-w-7xl px-6 md:px-8">
           <Reveal>
-            <div className="max-w-2xl">
+            <div className="max-w-2xl lg:max-w-none">
               <p className="text-[11px] font-bold uppercase tracking-[0.1em] text-accent">
                 ¿Cómo se clasifica?
               </p>

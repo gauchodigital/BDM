@@ -61,7 +61,9 @@ export function IntroSection() {
   return (
     <section
       id="que-es"
-      className="section-pad scroll-mt-16 bg-white"
+      /* py-16/md:py-24 replican section-pad; en desktop la sección ocupa
+         la pantalla completa y centra su contenido. */
+      className="scroll-mt-16 bg-white py-16 md:py-24 lg:flex lg:min-h-[100svh] lg:items-center lg:py-8"
     >
       <div className="mx-auto w-full max-w-7xl px-6 md:px-8">
         {/* Mobile */}
@@ -125,44 +127,45 @@ export function IntroSection() {
             </h2>
           </Reveal>
 
-          <div className="mt-10 grid grid-cols-[1.15fr_0.85fr] items-start gap-14">
-            <div>
-              <Reveal delay={80}>
-                <div className="max-w-xl space-y-5 text-[16px] leading-[26px] text-dark">
-                  <p>
-                    La meningitis es una enfermedad que{" "}
-                    <strong className="font-bold text-primary">
-                      afecta a las membranas que recubren el cerebro, el
-                      cerebelo y la médula espinal.
-                    </strong>{" "}
-                    Estas membranas se llaman{" "}
-                    <em className="italic">meninges</em> y desempeñan un papel
-                    importante en la protección y el funcionamiento adecuado del
-                    sistema nervioso central.
-                    <sup className="ml-0.5 text-[0.7em] text-muted">1,2</sup>
-                  </p>
-                  <p>
-                    La inflamación de las meninges habitualmente sucede cuando
-                    una bacteria, virus, hongo o parásito infecta el líquido que
-                    rodea al cerebro, afectando a su vez a las meninges.
-                    <sup className="ml-0.5 text-[0.7em] text-muted">1</sup>
-                  </p>
-                </div>
-              </Reveal>
-              <Reveal delay={120} className="mt-10 max-w-xl">
-                <Image
-                  src="/home/anatomia-meninges.png"
-                  alt="Ilustración: el cráneo, las meninges y el cerebro."
-                  width={1200}
-                  height={700}
-                  className="h-auto w-full"
-                  sizes="36rem"
-                />
-              </Reveal>
+          <Reveal delay={80} className="mt-8">
+            <div className="max-w-3xl space-y-5 text-[17px] leading-[28px] text-dark">
+              <p>
+                La meningitis es una enfermedad que{" "}
+                <strong className="font-bold text-primary">
+                  afecta a las membranas que recubren el cerebro, el cerebelo y
+                  la médula espinal.
+                </strong>{" "}
+                Estas membranas se llaman <em className="italic">meninges</em>{" "}
+                y desempeñan un papel importante en la protección y el
+                funcionamiento adecuado del sistema nervioso central.
+                <sup className="ml-0.5 text-[0.7em] text-muted">1,2</sup>
+              </p>
+              <p>
+                La inflamación de las meninges habitualmente sucede cuando una
+                bacteria, virus, hongo o parásito infecta el líquido que rodea
+                al cerebro, afectando a su vez a las meninges.
+                <sup className="ml-0.5 text-[0.7em] text-muted">1</sup>
+              </p>
             </div>
+          </Reveal>
 
-            <Reveal delay={100} from="right" className="pt-2">
-              <LegendList />
+          <div className="mt-12 grid grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)] items-center gap-14">
+            <Reveal delay={120}>
+              <Image
+                src="/home/anatomia-meninges.png"
+                alt="Ilustración: el cráneo, las meninges y el cerebro."
+                width={1200}
+                height={700}
+                /* el tope en vh evita que la sección supere el alto de pantalla */
+                className="h-auto max-h-[42vh] w-full object-contain"
+                sizes="44rem"
+              />
+            </Reveal>
+
+            <Reveal delay={100} from="right">
+              <div className="rounded-2xl bg-cream p-8">
+                <LegendList />
+              </div>
             </Reveal>
           </div>
         </div>

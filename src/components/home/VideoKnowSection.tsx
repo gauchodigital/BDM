@@ -19,10 +19,10 @@ export function VideoKnowSection() {
   return (
     <div className="flex flex-col">
       <section className="bg-light">
-        <div className="mx-auto max-w-7xl px-6 py-10 md:px-8 md:py-12 lg:py-10">
-          <div className="md:grid md:grid-cols-[1fr_1.35fr] md:items-center md:gap-10 lg:grid-cols-[1fr_1.1fr] lg:gap-14">
+        <div className="mx-auto max-w-7xl px-6 py-10 md:px-8 md:py-12 lg:py-16">
+          <div className="md:grid md:grid-cols-[1fr_1.35fr] md:items-center md:gap-10 lg:grid-cols-[1fr_1.1fr] lg:gap-16">
             <Reveal>
-              <h2 className="text-[20px] font-extrabold leading-tight text-primary md:text-[28px] lg:text-[36px] lg:leading-[1.15]">
+              <h2 className="text-[20px] font-extrabold leading-tight text-primary md:text-[28px] lg:text-[40px] lg:leading-[1.12]">
                 Todo lo que tenés que saber
               </h2>
             </Reveal>

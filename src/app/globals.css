@@ -133,6 +133,26 @@ h6 {
   animation-delay: 0.24s;
 }
 
+/* Nubes del hero: entran por la derecha y salen por la izquierda.
+   El 100% del translate es el ancho de la propia nube, así el ciclo
+   cierra fuera de pantalla sin salto visible. */
+@keyframes cloud-drift {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(calc(-101vw - 100%), 0, 0);
+  }
+}
+
+.cloud-drift {
+  left: 100%;
+  animation-name: cloud-drift;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  will-change: transform;
+}
+
 @keyframes scroll-bounce {
   0%,
   100% {
@@ -160,5 +180,10 @@ h6 {
     animation: none !important;
     opacity: 1 !important;
     transform: none !important;
+  }
+  /* Las nubes quedan quietas en el punto que les tocaba del recorrido. */
+  .cloud-drift {
+    animation: none !important;
+    transform: translate3d(var(--rest-x, -50vw), 0, 0) !important;
   }
 }

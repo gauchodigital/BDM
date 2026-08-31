@@ -64,19 +64,21 @@ export function VacunasCtaSection({
     <section className="bg-[#503C77]">
       <div className="mx-auto w-full max-w-7xl px-5 py-12 md:px-8 md:py-16">
         <Reveal>
-          <div className="max-w-2xl text-left">
-            <p className="text-[11px] font-bold uppercase tracking-[0.1em] text-[#DD876E]">
-              Chequeá tu calendario de vacunación
-            </p>
-            <h2 className="mt-3 text-[28px] font-[900] leading-tight !text-white md:text-[2.5rem]">
-              ¿Estás al día con las vacunas?
-            </h2>
-            <p className="mt-3 text-[14px] leading-[1.55] text-white/85 md:text-[16px]">
-              Respondé y descubrí si tu familia está protegida.
-            </p>
+          <div className="lg:flex lg:items-center lg:justify-between lg:gap-16">
+            <div className="max-w-2xl text-left">
+              <p className="text-[11px] font-bold uppercase tracking-[0.1em] text-[#DD876E]">
+                Chequeá tu calendario de vacunación
+              </p>
+              <h2 className="mt-3 text-[28px] font-[900] leading-tight !text-white md:text-[2.5rem]">
+                ¿Estás al día con las vacunas?
+              </h2>
+              <p className="mt-3 text-[14px] leading-[1.55] text-white/85 md:text-[16px]">
+                Respondé y descubrí si tu familia está protegida.
+              </p>
+            </div>
             <Link
               href="/autotest"
-              className="mt-8 flex h-[52px] w-full items-center justify-center rounded-full bg-white px-8 text-[15px] font-bold text-[#503C77] transition hover:bg-white/95"
+              className="mt-8 flex h-[52px] w-full items-center justify-center rounded-full bg-white px-8 text-[15px] font-bold text-[#503C77] transition hover:bg-white/95 lg:mt-0 lg:w-auto lg:shrink-0 lg:px-14"
             >
               Comenzar
             </Link>

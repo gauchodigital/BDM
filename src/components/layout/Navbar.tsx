@@ -35,8 +35,8 @@ export function Navbar() {
           </nav>
         </header>
 
-        {/* Desktop: transparente sobre el cielo */}
-        <header className="absolute inset-x-0 top-0 z-50 hidden lg:block">
+        {/* Desktop: transparente sobre el cielo, con scrim para legibilidad */}
+        <header className="absolute inset-x-0 top-0 z-50 hidden bg-gradient-to-b from-[#0B1C33]/70 via-[#0B1C33]/30 to-transparent pb-6 lg:block">
           <nav className="mx-auto flex h-[88px] max-w-7xl items-center justify-between px-8">
             <Link
               href="/"

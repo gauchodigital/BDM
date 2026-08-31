@@ -1,5 +1,5 @@
-import Image from "next/image";
 import { Button } from "@/components/ui/Button";
+import { SkyBackdrop } from "@/components/home/SkyBackdrop";
 
 function ScrollCue() {
   return (
@@ -41,15 +41,7 @@ export function HeroSection() {
     <>
       {/* Mobile */}
       <section className="relative isolate flex min-h-[100svh] flex-col overflow-hidden bg-[#0B1C33] lg:hidden">
-        <Image
-          src="/home/hero-banner-mobile.png"
-          alt=""
-          fill
-          priority
-          className="object-cover object-[center_top]"
-          sizes="100vw"
-          aria-hidden
-        />
+        <SkyBackdrop variant="mobile" />
         <div className="relative z-10 flex flex-1 flex-col justify-center px-6 pb-28 pt-28">
           <h1 className="animate-fade-up max-w-[20rem] text-[32px] font-black leading-[1.12] tracking-tight text-white">
             La meningitis puede afectar los sueños de tu hijo
@@ -81,17 +73,9 @@ export function HeroSection() {
       </section>
 
       {/* Desktop */}
-      <section className="relative hidden min-h-[min(78vh,720px)] overflow-hidden bg-[#0B1C33] lg:block">
-        <Image
-          src="/home/hero-banner-desktop.png"
-          alt=""
-          fill
-          priority
-          className="object-cover object-center"
-          sizes="100vw"
-          aria-hidden
-        />
-        <div className="relative z-10 mx-auto flex h-full min-h-[min(78vh,720px)] max-w-7xl items-center px-8 pb-20 pt-32">
+      <section className="relative hidden min-h-[100svh] overflow-hidden bg-[#0B1C33] lg:block">
+        <SkyBackdrop variant="desktop" />
+        <div className="relative z-10 mx-auto flex h-full min-h-[100svh] max-w-7xl items-center px-8 pb-20 pt-32">
           <div className="max-w-[36rem]">
             <h1 className="animate-fade-up text-[48px] font-black leading-[1.08] tracking-tight text-white xl:text-[56px]">
               La meningitis puede afectar los sueños de tu hijo
