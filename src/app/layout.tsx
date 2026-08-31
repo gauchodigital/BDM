@@ -9,7 +9,6 @@ import { MetaPixel } from "@/components/analytics/MetaPixel";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { MobileAppNav } from "@/components/layout/MobileAppNav";
-import { WhatsAppFloat } from "@/components/layout/WhatsAppFloat";
 import { SITE_NAME } from "@/lib/siteLinks";
 import "./globals.css";
 
@@ -56,7 +55,6 @@ export default function RootLayout({
         </main>
         <Footer />
         <MobileAppNav />
-        <WhatsAppFloat />
       </body>
     </html>
   );

@@ -22,6 +22,7 @@ export default function VacunacionPage() {
       <VacunacionCalendarioSection
         hero={data.hero}
         calendarioIntro={data.calendarioIntro}
+        calendarioPdfUrl={data.calendarioPdfUrl}
         etapas={data.etapas}
       />
       <CentrosVacunacionBlock {...data.centros} centros={centros} />

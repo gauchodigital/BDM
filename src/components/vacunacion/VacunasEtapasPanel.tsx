@@ -98,13 +98,13 @@ export function VacunasEtapasPanel({
               key={etapa.id}
               type="button"
               onClick={() => setActiveId(etapa.id)}
-              className={`inline-flex h-9 items-center gap-1.5 rounded-[22px] px-3 py-1.5 text-[13px] font-bold leading-[16.8px] transition lg:h-10 lg:px-4 ${
+              className={`inline-flex h-9 items-center gap-1.5 rounded-[22px] px-3 py-1.5 text-[13px] font-bold leading-[16.8px] transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] lg:h-10 lg:px-4 ${
                 isActive
-                  ? `bg-primary text-white max-lg:bg-primary max-lg:text-white ${style.active}`
-                  : `border border-light bg-white text-dark/50 hover:text-dark/80 max-lg:border max-lg:border-light max-lg:bg-white ${style.idle}`
+                  ? `scale-[1.03] bg-primary text-white shadow-[0_4px_14px_rgba(80,60,119,0.28)] max-lg:bg-primary max-lg:text-white ${style.active}`
+                  : `border border-light bg-white text-dark/50 hover:scale-[1.02] hover:text-dark/80 max-lg:border max-lg:border-light max-lg:bg-white ${style.idle}`
               }`}
             >
-              <span className="material-symbols-outlined text-[22px] leading-none lg:text-[24px]">
+              <span className="material-symbols-outlined text-[22px] leading-none transition-transform duration-300 lg:text-[24px]">
                 {etapa.icon}
               </span>
               <span className="lg:hidden">{chipLabel(etapa, false)}</span>
@@ -114,7 +114,7 @@ export function VacunasEtapasPanel({
         })}
       </div>
 
-      <div className="flex flex-col gap-4 lg:hidden">
+      <div key={active.id} className="animate-fade-up flex flex-col gap-4 lg:hidden">
         <div className="rounded-xl bg-primary p-4">
           <div className="flex items-start gap-3">
             <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-white text-primary">
@@ -166,7 +166,8 @@ export function VacunasEtapasPanel({
       </div>
 
       <div
-        className={`hidden gap-6 lg:grid ${
+        key={`desktop-${active.id}`}
+        className={`animate-fade-up hidden gap-6 lg:grid ${
           active.grupos.length > 1
             ? "lg:grid-cols-2"
             : "lg:max-w-2xl lg:grid-cols-1"

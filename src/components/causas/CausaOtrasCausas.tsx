@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Reveal } from "@/components/ui/Reveal";
 import type { CausaCardLink } from "@/lib/causaCardColors";
 
 function Eyebrow({
@@ -28,7 +29,8 @@ export function CausaOtrasCausas({
 }) {
   return (
     <section className="bg-white px-5 py-16 md:px-8">
-      <div className="mx-auto flex max-w-2xl flex-col gap-4">
+      <Reveal delay={80}>
+        <div className="mx-auto flex max-w-2xl flex-col gap-4">
         <Eyebrow className={eyebrowClassName}>{eyebrow}</Eyebrow>
         <div className="grid grid-cols-3 gap-2">
           {items.map((causa) => (
@@ -59,7 +61,8 @@ export function CausaOtrasCausas({
             </Link>
           ))}
         </div>
-      </div>
+        </div>
+      </Reveal>
     </section>
   );
 }

@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import Link from "next/link";
 import { Chip } from "@/components/ui/Chip";
 import { RichText } from "@/components/ui/RichText";
+import { Reveal } from "@/components/ui/Reveal";
 import { CausaOtrasCausas } from "@/components/causas/CausaOtrasCausas";
 import { CasosChart } from "@/components/causas/CasosChart";
 import { SerogruposBadges } from "@/components/causas/SerogruposBadges";
@@ -59,9 +60,9 @@ function PersonStat({
             key={i}
             src={i < active ? activeIcon : inactiveIcon}
             alt=""
-            width={plain ? 24 : 28}
-            height={plain ? 24 : 28}
-            className={plain ? "size-6" : "size-7"}
+            width={28}
+            height={plain ? 30 : 28}
+            className={plain ? "h-[30px] w-7 shrink-0" : "size-7 shrink-0"}
           />
         ))}
       </div>
@@ -107,13 +108,13 @@ export function BacterianaPage() {
       {/* Hero + TOC */}
       <section className="bg-white px-5 pb-10 pt-6 md:px-8">
         <div className="mx-auto flex max-w-2xl flex-col gap-6">
-          <div className="flex flex-col gap-3">
+          <div className="animate-fade-up flex flex-col gap-3">
             <Chip label={d.badge} color="accent" />
             <h1 className="text-[34px] font-black leading-tight text-[#503c77] md:text-[40px]">
               {d.title}
             </h1>
           </div>
-          <div className="flex flex-col gap-1 text-[16px] leading-[26px] text-[#442748]">
+          <div className="animate-fade-up animate-delay-1 flex flex-col gap-1 text-[16px] leading-[26px] text-[#442748]">
             {d.intro.map((p) => (
               <p key={p.slice(0, 48)}>
                 <RichText text={p} />
@@ -121,7 +122,7 @@ export function BacterianaPage() {
             ))}
           </div>
 
-          <div className="flex flex-col gap-2">
+          <div className="animate-fade-up animate-delay-2 flex flex-col gap-2">
             <Eyebrow>EN ESTA PÁGINA</Eyebrow>
             <nav className="flex flex-col gap-2 rounded-lg bg-[#e9eff5] px-5 py-4 text-[13px] leading-5 text-[#503c77]">
               {d.toc.map((item) => (
@@ -170,6 +171,7 @@ export function BacterianaPage() {
 
       {/* ¿Qué es? */}
       <section id="que-es" className="scroll-mt-20 bg-white px-5 pb-10 md:px-8">
+        <Reveal delay={80}>
         <div className="mx-auto flex max-w-2xl flex-col gap-4">
           <div className="flex flex-col gap-2">
             <Eyebrow>{d.queEs.eyebrow}</Eyebrow>
@@ -192,6 +194,7 @@ export function BacterianaPage() {
           </div>
           <PersonStat {...d.queEs.stat} />
         </div>
+        </Reveal>
       </section>
 
       {/* Síntomas */}
@@ -199,6 +202,7 @@ export function BacterianaPage() {
         id="sintomas"
         className="scroll-mt-20 bg-white px-5 py-12 md:px-8 md:py-16"
       >
+        <Reveal delay={100}>
         <div className="mx-auto flex max-w-2xl flex-col gap-4">
           <div className="flex flex-col gap-2">
             <Eyebrow>{d.sintomas.eyebrow}</Eyebrow>
@@ -215,10 +219,12 @@ export function BacterianaPage() {
             </ul>
           </div>
         </div>
+        </Reveal>
       </section>
 
       {/* Urgency bar */}
       <section className="bg-[#503c77]">
+        <Reveal delay={150}>
         <div className="mx-auto flex max-w-7xl border-l-4 border-[#DD876E] px-4 py-16 md:px-8">
           <p className="max-w-2xl text-[20px] font-medium leading-snug text-white">
             La meningitis es una{" "}
@@ -234,6 +240,7 @@ export function BacterianaPage() {
             .
           </p>
         </div>
+        </Reveal>
       </section>
 
       {/* Grupos de riesgo */}
@@ -241,6 +248,7 @@ export function BacterianaPage() {
         id="grupos-riesgo"
         className="scroll-mt-20 bg-white px-5 py-16 md:px-8"
       >
+        <Reveal delay={80}>
         <div className="mx-auto flex max-w-2xl flex-col gap-6">
           <div className="flex flex-col gap-4">
             <div className="flex flex-col gap-2">
@@ -264,6 +272,7 @@ export function BacterianaPage() {
             ))}
           </div>
         </div>
+        </Reveal>
       </section>
 
       {/* Meningococo */}
@@ -271,6 +280,7 @@ export function BacterianaPage() {
         id="meningococo"
         className="scroll-mt-20 bg-[rgba(166,192,214,0.25)] px-5 py-16 md:px-8"
       >
+        <Reveal delay={100}>
         <div className="mx-auto flex max-w-2xl flex-col gap-8">
           <div className="flex flex-col gap-4">
             <div className="flex flex-col gap-2">
@@ -306,10 +316,12 @@ export function BacterianaPage() {
             />
           </div>
         </div>
+        </Reveal>
       </section>
 
       {/* 95% Malbrán */}
       <section className="bg-[#503c77] px-5 py-12 md:px-8">
+        <Reveal delay={150}>
         <div className="mx-auto flex max-w-2xl flex-col gap-3">
           <div className="flex items-center gap-2.5">
             <p className="shrink-0 text-[40px] font-black leading-[42px] text-[#dd876e]">
@@ -326,6 +338,7 @@ export function BacterianaPage() {
             {d.meningococo.malbranStat.source}
           </p>
         </div>
+        </Reveal>
       </section>
 
       {/* Secuelas */}
@@ -333,6 +346,7 @@ export function BacterianaPage() {
         id="secuelas"
         className="scroll-mt-20 bg-[#EEECF2] px-5 py-16 md:px-8"
       >
+        <Reveal delay={80}>
         <div className="mx-auto flex max-w-2xl flex-col gap-6">
           <div className="flex flex-col gap-2">
             <Eyebrow>{d.secuelas.eyebrow}</Eyebrow>
@@ -384,10 +398,12 @@ export function BacterianaPage() {
             ))}
           </ul>
         </div>
+        </Reveal>
       </section>
 
       {/* Quote evolución */}
       <section className="bg-[#503c77] px-5 py-16 md:px-8">
+        <Reveal delay={100}>
         <p className="mx-auto max-w-2xl text-[18px] font-medium leading-[28px] text-white">
           <RichText
             text={d.quote}
@@ -395,13 +411,16 @@ export function BacterianaPage() {
             citeClassName="ml-0.5 text-[0.85em] font-[inherit] leading-none text-white"
           />
         </p>
+        </Reveal>
       </section>
 
       {/* Stat secuelas */}
       <section className="bg-white px-5 py-12 md:px-8">
+        <Reveal delay={150}>
         <div className="mx-auto max-w-2xl">
           <PersonStat {...d.secuelas.stat} tone="plain" />
         </div>
+        </Reveal>
       </section>
 
       {/* Vacunación */}
@@ -409,6 +428,7 @@ export function BacterianaPage() {
         id="vacunacion"
         className="scroll-mt-20 bg-[#EEECF2] px-5 py-16 md:px-8"
       >
+        <Reveal delay={80}>
         <div className="mx-auto flex max-w-2xl flex-col gap-8">
           <div className="flex flex-col gap-4">
             <div className="flex flex-col gap-2">
@@ -495,6 +515,7 @@ export function BacterianaPage() {
             </ul>
           </div>
         </div>
+        </Reveal>
       </section>
 
       {/* Prevención */}
@@ -502,6 +523,7 @@ export function BacterianaPage() {
         id="prevencion"
         className="scroll-mt-20 bg-[#EEECF2] px-5 py-16 md:px-8"
       >
+        <Reveal delay={100}>
         <div className="mx-auto flex max-w-2xl flex-col gap-6">
           <div className="flex flex-col gap-4">
             <div className="flex flex-col gap-2">
@@ -521,6 +543,7 @@ export function BacterianaPage() {
             {d.prevencion.ctaLabel}
           </Link>
         </div>
+        </Reveal>
       </section>
 
       <CausaOtrasCausas items={d.otrasCausas} />

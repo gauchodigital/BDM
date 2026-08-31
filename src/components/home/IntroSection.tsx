@@ -12,14 +12,8 @@ const legendItems = [
     id: "meninges",
     title: "Meninges",
     subtitle: "3 capas de membrana protectora",
-    dotClass: "bg-primary",
-    badge: "SE INFLAMAN",
-  },
-  {
-    id: "lcr",
-    title: "Líquido cefalorraquídeo",
-    subtitle: "Medio de propagación de la infección",
     dotClass: "bg-meninges border border-meninges-stroke",
+    badge: "SE INFLAMAN",
   },
   {
     id: "cerebro",
@@ -31,23 +25,30 @@ const legendItems = [
 
 function LegendList() {
   return (
-    <ul className="flex flex-col gap-5">
-      {legendItems.map((item) => (
-        <li key={item.id} className="flex items-start gap-4">
+    <ul className="overflow-hidden rounded-[12px] border border-[#E5E5E5] bg-white">
+      {legendItems.map((item, i) => (
+        <li
+          key={item.id}
+          className={`flex items-start gap-3 px-4 py-3.5 ${
+            i > 0 ? "border-t border-[#E5E5E5]" : ""
+          }`}
+        >
           <span
-            className={`mt-0.5 size-10 shrink-0 rounded-full ${item.dotClass}`}
+            className={`mt-0.5 size-8 shrink-0 rounded-full ${item.dotClass}`}
             aria-hidden
           />
-          <div className="min-w-0 flex-1 pt-0.5">
+          <div className="min-w-0 flex-1">
             <div className="flex flex-wrap items-center gap-2">
-              <p className="font-bold text-primary">{item.title}</p>
+              <p className="text-[15px] font-bold leading-snug text-[#442748]">
+                {item.title}
+              </p>
               {"badge" in item && item.badge ? (
                 <span className="rounded-md bg-accent px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-white">
                   {item.badge}
                 </span>
               ) : null}
             </div>
-            <p className="mt-0.5 text-sm leading-snug text-muted">
+            <p className="mt-0.5 text-[13px] leading-snug text-muted">
               {item.subtitle}
             </p>
           </div>
@@ -96,9 +97,7 @@ export function IntroSection() {
             </div>
           </Reveal>
           <Reveal delay={100} className="mt-8">
-            <div className="rounded-[16px] bg-white p-5">
-              <LegendList />
-            </div>
+            <LegendList />
           </Reveal>
           <Reveal delay={120} className="mt-8">
             <div className="overflow-hidden">

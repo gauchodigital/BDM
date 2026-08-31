@@ -89,45 +89,45 @@ export function SymptomCard({
 }) {
   const cfg = SINTOMA_PHASE_UI[phase];
   const isSvg = item.icon.endsWith(".svg") || item.icon.startsWith("/");
-  const borderGrad =
-    phase === "early"
-      ? "bg-[linear-gradient(90deg,#442748_0%,#442748_80%,#DD876E_100%)]"
-      : "bg-[linear-gradient(90deg,#DD876E_0%,#DD876E_80%,#EF4444_100%)]";
+  const borderClass =
+    phase === "early" ? "border-[#E2E8F0]" : "border-[#F0C4B8]";
 
   return (
-    <div className={`rounded-[12px] p-[2px] ${borderGrad}`}>
-      <div className="rounded-[10px] bg-white p-2">
-        <div className="flex items-start gap-3">
-          {isSvg ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={item.icon}
-              alt=""
-              width={28}
-              height={28}
-              className="mt-0.5 h-7 w-7 shrink-0"
-              aria-hidden
-            />
-          ) : (
-            <span
-              className={`material-symbols-outlined mt-0.5 text-[28px] leading-none ${cfg.iconColor}`}
-              aria-hidden
-            >
-              {item.icon}
-            </span>
-          )}
-          <div className="min-w-0">
-            <p
-              className={`text-[13px] font-bold leading-tight ${cfg.titleColor}`}
-            >
-              {item.label}
+    <div className={`rounded-[12px] border bg-white p-2 ${borderClass}`}>
+      <div
+        className={`flex gap-3 ${
+          item.description ? "items-start" : "items-center"
+        }`}
+      >
+        {isSvg ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={item.icon}
+            alt=""
+            width={28}
+            height={28}
+            className="h-7 w-7 shrink-0"
+            aria-hidden
+          />
+        ) : (
+          <span
+            className={`material-symbols-outlined text-[28px] leading-none ${cfg.iconColor}`}
+            aria-hidden
+          >
+            {item.icon}
+          </span>
+        )}
+        <div className="min-w-0">
+          <p
+            className={`text-[13px] font-bold leading-tight ${cfg.titleColor}`}
+          >
+            {item.label}
+          </p>
+          {item.description ? (
+            <p className="mt-1 text-[12px] leading-[1.5] text-muted">
+              {item.description}
             </p>
-            {item.description ? (
-              <p className="mt-1 text-[12px] leading-[1.5] text-muted">
-                {item.description}
-              </p>
-            ) : null}
-          </div>
+          ) : null}
         </div>
       </div>
     </div>
@@ -169,7 +169,7 @@ export function SintomasMobileTimeline({
     Array(markerCount).fill(false),
   );
   const [shown, setShown] = useState<boolean[]>(() =>
-    Array(cardCount).fill(false),
+    Array(cardCount).fill(true),
   );
 
   useEffect(() => {

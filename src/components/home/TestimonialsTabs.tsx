@@ -40,7 +40,10 @@ export function TestimonialsTabs({ items }: { items: TestimonioData[] }) {
     if (!el) return;
     scrollingRef.current = true;
     setIndex(next);
-    el.scrollTo({ left: next * el.clientWidth, behavior: "smooth" });
+    const card = el.children[next] as HTMLElement | undefined;
+    if (card) {
+      el.scrollTo({ left: card.offsetLeft, behavior: "smooth" });
+    }
     window.setTimeout(() => {
       scrollingRef.current = false;
     }, 400);
@@ -54,9 +57,10 @@ export function TestimonialsTabs({ items }: { items: TestimonioData[] }) {
 
   return (
     <div>
+      {/* Figma: track púrpura, tab activo blanco con borde */}
       <div
         role="tablist"
-        className="flex h-12 items-center gap-1 rounded-[10px] border border-[#503C77]/20 bg-white p-1 lg:max-w-xl"
+        className="flex h-12 items-center gap-1 rounded-[12px] bg-[#503C77] p-1 lg:max-w-xl"
       >
         {TABS.map((t) => {
           const active = t.id === tab;
@@ -69,8 +73,8 @@ export function TestimonialsTabs({ items }: { items: TestimonioData[] }) {
               onClick={() => setTab(t.id)}
               className={`flex h-full flex-1 items-center justify-center rounded-[10px] px-2 text-center leading-tight transition-colors ${
                 active
-                  ? "bg-[#503C77] text-[13px] font-bold text-white"
-                  : "text-[11px] font-normal text-[#503C77]/70 hover:text-[#503C77]"
+                  ? "border border-[#503C77] bg-white text-[13px] font-bold text-[#503C77] shadow-[0_1px_3px_rgba(68,39,72,0.12)]"
+                  : "text-[13px] font-normal text-white/75 hover:text-white/90"
               }`}
             >
               {t.label}
@@ -88,14 +92,22 @@ export function TestimonialsTabs({ items }: { items: TestimonioData[] }) {
           <div className="relative mt-6 lg:max-w-4xl">
             <div
               ref={trackRef}
-              className="flex touch-pan-x snap-x snap-mandatory overflow-x-auto scroll-smooth [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+              className="flex touch-pan-x snap-x snap-mandatory gap-3 overflow-x-auto scroll-smooth [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
               onScroll={() => {
                 if (scrollingRef.current) return;
                 const el = trackRef.current;
                 if (!el || !el.clientWidth) return;
-                const next = Math.round(el.scrollLeft / el.clientWidth);
-                const clamped = Math.max(0, Math.min(next, filtered.length - 1));
-                if (clamped !== index) setIndex(clamped);
+                const children = Array.from(el.children) as HTMLElement[];
+                let closest = 0;
+                let minDist = Infinity;
+                children.forEach((child, i) => {
+                  const dist = Math.abs(child.offsetLeft - el.scrollLeft);
+                  if (dist < minDist) {
+                    minDist = dist;
+                    closest = i;
+                  }
+                });
+                if (closest !== index) setIndex(closest);
               }}
             >
               {filtered.map((item) => {
@@ -103,7 +115,7 @@ export function TestimonialsTabs({ items }: { items: TestimonioData[] }) {
                 return (
                   <article
                     key={item.id}
-                    className="relative w-full min-w-full shrink-0 snap-center overflow-hidden rounded-[10px] bg-black/30"
+                    className="relative w-[92%] min-w-[92%] shrink-0 snap-center overflow-hidden rounded-[12px] bg-black/30 shadow-[0_8px_24px_rgba(68,39,72,0.14)] sm:w-full sm:min-w-full"
                   >
                     <div className="relative aspect-video">
                       {thumb ? (
@@ -117,7 +129,7 @@ export function TestimonialsTabs({ items }: { items: TestimonioData[] }) {
                       ) : (
                         <div className="absolute inset-0 bg-[#5a3d62]" />
                       )}
-                      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-transparent" />
 
                       {item.videoUrl ? (
                         <a
@@ -139,14 +151,35 @@ export function TestimonialsTabs({ items }: { items: TestimonioData[] }) {
                         </div>
                       )}
 
-                      <div className="pointer-events-none absolute bottom-4 left-4 z-10 max-w-[75%] overflow-hidden rounded-[8px] border-l-4 border-accent bg-white px-3 py-2 shadow-md">
-                        <p className="text-[14px] font-bold leading-tight text-accent">
+                      {/* Badge nombre — Figma: blanco, nombre coral + rol */}
+                      <div className="pointer-events-none absolute bottom-3 left-3 z-10 max-w-[78%] rounded-[8px] bg-white px-3 py-2 shadow-[0_2px_8px_rgba(0,0,0,0.18)]">
+                        <p className="text-[13px] font-bold leading-snug text-[#DD876E]">
                           {item.name}
-                        </p>
-                        <p className="mt-0.5 text-[12px] leading-tight text-dark">
-                          {item.role}
+                          <span className="font-normal text-[#5C5670]">
+                            {" "}
+                            | {item.role}
+                          </span>
                         </p>
                       </div>
+
+                      {item.videoUrl ? (
+                        <a
+                          href={item.videoUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="absolute bottom-3 right-3 z-10 flex items-center gap-1.5 rounded bg-black/70 px-2 py-1 text-[11px] font-semibold text-white backdrop-blur-sm"
+                          aria-label="Mirar en YouTube"
+                        >
+                          <svg
+                            viewBox="0 0 24 24"
+                            className="h-3.5 w-3.5 fill-[#FF0000]"
+                            aria-hidden
+                          >
+                            <path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31.5 31.5 0 0 0 0 12a31.5 31.5 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31.5 31.5 0 0 0 24 12a31.5 31.5 0 0 0-.5-5.8zM9.75 15.5v-7l6.5 3.5-6.5 3.5z" />
+                          </svg>
+                          Mirar en YouTube
+                        </a>
+                      ) : null}
                     </div>
                   </article>
                 );
