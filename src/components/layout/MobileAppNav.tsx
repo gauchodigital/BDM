@@ -15,7 +15,7 @@ function NavIcon({ src, active }: { src: string; active: boolean }) {
       aria-hidden
       className="block size-6 shrink-0"
       style={{
-        backgroundColor: active ? "#442748" : "#d9d4e0",
+        backgroundColor: active ? "#442748" : "#9B95A8",
         WebkitMaskImage: `url(${src})`,
         maskImage: `url(${src})`,
         WebkitMaskSize: "contain",
@@ -57,7 +57,7 @@ export function MobileAppNav() {
                 className={`max-w-full truncate text-[10px] leading-[15px] tracking-[0.04px] ${
                   active
                     ? "font-bold text-[#442748]"
-                    : "font-normal text-[#d9d4e0]"
+                    : "font-normal text-[#9B95A8]"
                 }`}
               >
                 {tab.label}

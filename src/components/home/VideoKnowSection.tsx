@@ -2,94 +2,53 @@ import Image from "next/image";
 import {
   VIDEO_CONCIENTIZACION_URL,
   VIDEO_CONCIENTIZACION_ID,
-  CENTROS_VACUNACION_URL,
 } from "@/lib/siteLinks";
 import { TRACK } from "@/lib/analytics";
-import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
 
-/**
- * Dos bloques apilados y pegados (como en Figma):
- * 1) Celeste — título + video
- * 2) Violeta — ¿Dónde me vacuno?
- */
 export function VideoKnowSection() {
   const thumb = `https://i.ytimg.com/vi/${VIDEO_CONCIENTIZACION_ID}/hqdefault.jpg`;
 
   return (
-    <div className="flex flex-col">
-      <section className="bg-light">
-        <div className="mx-auto max-w-7xl px-6 py-10 md:px-8 md:py-12 lg:py-16">
-          <div className="md:grid md:grid-cols-[1fr_1.35fr] md:items-center md:gap-10 lg:grid-cols-[1fr_1.1fr] lg:gap-16">
-            <Reveal>
-              <h2 className="text-[20px] font-extrabold leading-tight text-primary md:text-[28px] lg:text-[40px] lg:leading-[1.12]">
-                Todo lo que tenés que saber
-              </h2>
-            </Reveal>
+    <section className="bg-light">
+      <div className="mx-auto max-w-7xl px-6 py-10 md:px-8 md:py-12 lg:py-10">
+        <div className="md:grid md:grid-cols-[1fr_1.35fr] md:items-center md:gap-10 lg:grid-cols-[1fr_1.1fr] lg:gap-14">
+          <Reveal>
+            <h2 className="text-[20px] font-extrabold leading-tight text-primary md:text-[28px] lg:text-[36px] lg:leading-[1.15]">
+              Todo lo que tenés que saber
+            </h2>
+          </Reveal>
 
-            <Reveal delay={100} className="mt-6 md:mt-0">
-              <a
-                href={VIDEO_CONCIENTIZACION_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                data-track={TRACK.events.videoClick}
-                data-location="que-es-video"
-                className={`${TRACK.ctaClass} group relative block overflow-hidden rounded-2xl bg-black shadow-md transition hover:shadow-lg`}
-              >
-                <div className="relative aspect-video">
-                  <Image
-                    src={thumb}
-                    alt="Video: Meningitis — Todo lo que tenés que saber"
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 768px) 100vw, 40rem"
-                  />
-                  <span className="absolute inset-0 bg-black/25 transition group-hover:bg-black/35" />
-                  <span className="absolute inset-0 flex items-center justify-center">
-                    <span className="flex h-14 w-14 items-center justify-center rounded-full bg-black/80 text-white shadow-lg transition group-hover:scale-105">
-                      <span className="material-symbols-outlined text-3xl">
-                        play_arrow
-                      </span>
+          <Reveal delay={100} className="mt-6 md:mt-0">
+            <a
+              href={VIDEO_CONCIENTIZACION_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-track={TRACK.events.videoClick}
+              data-location="que-es-video"
+              className={`${TRACK.ctaClass} group relative block overflow-hidden rounded-2xl bg-black shadow-md transition hover:shadow-lg`}
+            >
+              <div className="relative aspect-video">
+                <Image
+                  src={thumb}
+                  alt="Video: Meningitis — Todo lo que tenés que saber"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 40rem"
+                />
+                <span className="absolute inset-0 bg-black/25 transition group-hover:bg-black/35" />
+                <span className="absolute inset-0 flex items-center justify-center">
+                  <span className="flex h-14 w-14 items-center justify-center rounded-full bg-black/80 text-white shadow-lg transition group-hover:scale-105">
+                    <span className="material-symbols-outlined text-3xl">
+                      play_arrow
                     </span>
                   </span>
-                </div>
-              </a>
-            </Reveal>
-          </div>
-        </div>
-      </section>
-
-      <section className="bg-primary">
-        <div className="mx-auto max-w-7xl px-6 py-10 md:px-8 md:py-14">
-          <Reveal>
-            <div className="md:flex md:items-end md:justify-between md:gap-12">
-              <div className="max-w-2xl">
-                <p className="text-[11px] font-bold uppercase tracking-[0.1em] text-accent">
-                  ¿Dónde me vacuno?
-                </p>
-                <h2 className="mt-3 text-[28px] font-extrabold leading-[1.15] !text-white">
-                  Encontrá tu centro de vacunación
-                </h2>
-                <p className="mt-4 text-[15px] leading-[1.6] text-white/85 md:text-base">
-                  Buscá el vacunatorio más cercano según tu ubicación.
-                </p>
-              </div>
-              <Button
-                href={CENTROS_VACUNACION_URL}
-                variant="onPrimary"
-                className="mt-8 w-full !rounded-[10px] !py-3.5 text-[15px] font-bold md:mt-0 md:w-auto md:min-w-[240px] md:px-6"
-                trackEvent={TRACK.events.vacunarseClick}
-                trackLocation="vacunatorios-cta"
-              >
-                Ver centros disponibles
-                <span aria-hidden className="text-lg leading-none">
-                  →
                 </span>
-              </Button>
-            </div>
+              </div>
+            </a>
           </Reveal>
         </div>
-      </section>
-    </div>
+      </div>
+    </section>
   );
 }

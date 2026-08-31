@@ -54,7 +54,7 @@ export function SintomasPreview({
         <div
           role="tablist"
           aria-label="Grupo etario"
-          className="mt-8 flex flex-wrap gap-2"
+          className="mt-8 grid grid-cols-2 gap-2 md:flex md:w-fit"
         >
           {LACTANTES_SUBTABS.map((t) => {
             const active = t.id === sub;
@@ -65,10 +65,10 @@ export function SintomasPreview({
                 role="tab"
                 aria-selected={active}
                 onClick={() => setSub(t.id)}
-                className={`inline-flex h-10 items-center rounded-full px-4 text-[13px] font-bold transition ${
+                className={`flex min-h-10 items-center justify-center rounded-full px-2 py-2.5 text-center text-[11px] font-bold leading-snug transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] md:inline-flex md:h-10 md:whitespace-nowrap md:px-4 md:py-0 md:text-[13px] ${
                   active
-                    ? "bg-primary text-white"
-                    : "border border-[#D8D4DE] bg-white text-dark/55 hover:text-dark"
+                    ? "scale-[1.02] bg-primary text-white shadow-[0_4px_12px_rgba(80,60,119,0.25)]"
+                    : "border border-[#D8D4DE] bg-white text-dark/55 hover:scale-[1.01] hover:text-dark"
                 }`}
               >
                 {t.label}

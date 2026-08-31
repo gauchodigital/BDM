@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Chip } from "@/components/ui/Chip";
 import { RichText } from "@/components/ui/RichText";
 import { CausaOtrasCausas } from "@/components/causas/CausaOtrasCausas";
+import { RevealSection } from "@/components/ui/RevealSection";
 import { VIRAL } from "@/lib/viralContent";
 
 function Eyebrow({ children }: { children: string }) {
@@ -45,20 +46,20 @@ export function ViralPage() {
       {/* Hero */}
       <section className="bg-white px-5 pb-10 pt-6 md:px-8">
         <div className="mx-auto flex max-w-2xl flex-col gap-6">
-          <div className="flex flex-col gap-3">
+          <div className="animate-fade-up flex flex-col gap-3">
             <Chip label={d.badge} color="primary" />
             <h1 className="text-[34px] font-black leading-tight text-[#503c77] md:text-[40px]">
               {d.title}
             </h1>
           </div>
-          <p className="text-[15px] leading-6 text-[#442748]">
+          <p className="animate-fade-up animate-delay-1 text-[15px] leading-6 text-[#442748]">
             <RichText text={d.intro} />
           </p>
         </div>
       </section>
 
       {/* ¿Qué es? */}
-      <section className="scroll-mt-20 bg-white px-5 pb-16 md:px-8">
+      <RevealSection className="scroll-mt-20 bg-white px-5 pb-16 md:px-8" delay={80}>
         <div className="mx-auto flex max-w-2xl flex-col gap-4">
           <div className="flex flex-col gap-2">
             <Eyebrow>{d.queEs.eyebrow}</Eyebrow>
@@ -68,10 +69,10 @@ export function ViralPage() {
             <RichText text={d.queEs.body} />
           </p>
         </div>
-      </section>
+      </RevealSection>
 
       {/* Grupos de riesgo */}
-      <section className="scroll-mt-20 bg-white px-5 pb-16 md:px-8">
+      <RevealSection className="scroll-mt-20 bg-white px-5 pb-16 md:px-8" delay={100}>
         <div className="mx-auto flex max-w-2xl flex-col gap-6">
           <div className="flex flex-col gap-4">
             <div className="flex flex-col gap-2">
@@ -106,10 +107,10 @@ export function ViralPage() {
             </div>
           ))}
         </div>
-      </section>
+      </RevealSection>
 
       {/* Tratamiento */}
-      <section className="scroll-mt-20 bg-white px-5 pb-16 md:px-8">
+      <RevealSection className="scroll-mt-20 bg-white px-5 pb-16 md:px-8" delay={150}>
         <div className="mx-auto flex max-w-2xl flex-col gap-4">
           <div className="flex flex-col gap-2">
             <Eyebrow>{d.tratamiento.eyebrow}</Eyebrow>
@@ -123,10 +124,10 @@ export function ViralPage() {
             ))}
           </div>
         </div>
-      </section>
+      </RevealSection>
 
       {/* Prevención CTA */}
-      <section className="bg-[#503c77] px-5 py-16 md:px-8">
+      <RevealSection className="bg-[#503c77] px-5 py-16 md:px-8" delay={80}>
         <div className="mx-auto flex max-w-2xl flex-col gap-10">
           <div className="flex flex-col gap-4">
             <div className="flex flex-col gap-2">
@@ -156,7 +157,7 @@ export function ViralPage() {
             </span>
           </Link>
         </div>
-      </section>
+      </RevealSection>
 
       <CausaOtrasCausas items={d.otrasCausas} />
     </>

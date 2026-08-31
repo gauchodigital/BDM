@@ -8,7 +8,7 @@ export function TestimonialsSection({
   testimonios: TestimonioData[];
 }) {
   return (
-    <section id="testimonios" className="section-pad scroll-mt-16 bg-[#503C77]/10">
+    <section id="testimonios" className="scroll-mt-16 bg-[#F5F5F5] py-10 md:py-16">
       <div className="mx-auto w-full max-w-7xl px-6 md:px-8">
         <div className="max-w-2xl lg:max-w-none">
           <Reveal>

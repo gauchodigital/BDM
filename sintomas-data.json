@@ -56,10 +56,10 @@
     "visible": true
   },
   {
-    "id": "confusion",
-    "label": "Confusión",
-    "description": "",
-    "icon": "/causas/bacteriana/sintomas/mayores-confusion.svg",
+    "id": "petequias",
+    "label": "Petequias",
+    "description": "Erupciones de la piel de color rojo o púrpura oscuro.",
+    "icon": "/sintomas/petequias.svg",
     "phase": "alarm",
     "visible": true
   }

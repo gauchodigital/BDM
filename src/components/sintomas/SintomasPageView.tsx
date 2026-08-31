@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { RichText } from "@/components/ui/RichText";
+import { Reveal } from "@/components/ui/Reveal";
 import {
   PhaseHeader,
   SymptomCard,
@@ -32,41 +33,43 @@ export function SintomasPageView() {
       <section className="bg-white px-5 pb-8 pt-10 md:px-8 md:pb-10 md:pt-14 lg:pt-16">
         <div className="mx-auto w-full max-w-7xl">
           <div className="max-w-2xl">
-            <h1 className="text-[28px] font-[900] leading-tight text-[#503C77] md:text-[40px] lg:text-[48px] lg:leading-[1.08]">
+            <h1 className="animate-fade-up text-[28px] font-[900] leading-tight text-[#503C77] md:text-[40px] lg:text-[48px] lg:leading-[1.08]">
               {SINTOMAS_PAGE.hero.title}
             </h1>
-            <p className="mt-4 text-[15px] leading-[1.6] text-dark md:text-[16px]">
+            <p className="animate-fade-up animate-delay-1 mt-4 text-[15px] leading-[1.6] text-dark md:text-[16px]">
               <RichText text={SINTOMAS_PAGE.hero.body} />
             </p>
           </div>
 
-          <div
-            role="tablist"
-            aria-label="Grupo etario"
-            className="mt-8 flex flex-wrap gap-2"
-          >
-            {LACTANTES_SUBTABS.map((t) => {
-              const active = t.id === sub;
-              return (
-                <button
-                  key={t.id}
-                  type="button"
-                  role="tab"
-                  aria-selected={active}
-                  onClick={() => setSub(t.id)}
-                  className={`inline-flex h-10 items-center rounded-full px-4 text-[13px] font-bold transition ${
+          <Reveal delay={80}>
+            <div
+              role="tablist"
+              aria-label="Grupo etario"
+              className="mt-8 grid grid-cols-2 gap-2 md:flex md:w-fit"
+            >
+              {LACTANTES_SUBTABS.map((t) => {
+                const active = t.id === sub;
+                return (
+                  <button
+                    key={t.id}
+                    type="button"
+                    role="tab"
+                    aria-selected={active}
+                    onClick={() => setSub(t.id)}
+                  className={`flex min-h-10 items-center justify-center rounded-full px-2 py-2.5 text-center text-[11px] font-bold leading-snug transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] md:inline-flex md:h-10 md:whitespace-nowrap md:px-4 md:py-0 md:text-[13px] ${
                     active
-                      ? "bg-primary text-white shadow-[0_4px_12px_rgba(80,60,119,0.25)]"
-                      : "border border-[#D8D4DE] bg-white text-dark/55 hover:text-dark"
+                      ? "scale-[1.02] bg-primary text-white shadow-[0_4px_12px_rgba(80,60,119,0.25)]"
+                      : "border border-[#D8D4DE] bg-white text-dark/55 hover:scale-[1.01] hover:text-dark"
                   }`}
-                >
-                  {t.label}
-                </button>
-              );
-            })}
-          </div>
+                  >
+                    {t.label}
+                  </button>
+                );
+              })}
+            </div>
+          </Reveal>
 
-          <div className="mt-8" key={sub} role="tabpanel">
+          <div className="mt-8 animate-fade-up" key={sub} role="tabpanel">
             <SintomasMobileTimeline
               early={early}
               alarm={alarm}
@@ -77,44 +80,48 @@ export function SintomasPageView() {
 
             <div className="hidden gap-6 md:grid md:grid-cols-2 lg:gap-8">
               {early.length > 0 ? (
-                <div className="rounded-[16px] bg-[#F3F0F8] p-6 lg:p-8">
-                  <PhaseHeader phase="early" showTimelineDot={false} />
-                  <ul className="flex flex-col gap-3">
-                    {early.map((s) => (
-                      <li key={s.id}>
-                        <SymptomCard item={s} phase="early" />
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                <Reveal delay={80}>
+                  <div className="rounded-[16px] bg-[#F3F0F8] p-6 lg:p-8">
+                    <PhaseHeader phase="early" showTimelineDot={false} />
+                    <ul className="flex flex-col gap-3">
+                      {early.map((s) => (
+                        <li key={s.id}>
+                          <SymptomCard item={s} phase="early" />
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </Reveal>
               ) : null}
 
               {alarm.length > 0 ? (
-                <div className="rounded-[16px] bg-[#FDF0EC] p-6 lg:p-8">
-                  <PhaseHeader phase="alarm" showTimelineDot={false} />
-                  <ul className="flex flex-col gap-3">
-                    {alarm.map((s) => (
-                      <li key={s.id}>
-                        <SymptomCard item={s} phase="alarm" />
-                      </li>
-                    ))}
-                  </ul>
-                  <div className="mt-3 flex items-start gap-3">
-                    <span
-                      className="mt-2 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#EF4444] text-white"
-                      aria-hidden
-                    >
-                      <span className="material-symbols-outlined text-[18px] leading-none">
-                        warning
+                <Reveal delay={150} from="right">
+                  <div className="rounded-[16px] bg-[#FDF0EC] p-6 lg:p-8">
+                    <PhaseHeader phase="alarm" showTimelineDot={false} />
+                    <ul className="flex flex-col gap-3">
+                      {alarm.map((s) => (
+                        <li key={s.id}>
+                          <SymptomCard item={s} phase="alarm" />
+                        </li>
+                      ))}
+                    </ul>
+                    <div className="mt-3 flex items-start gap-3">
+                      <span
+                        className="mt-2 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#EF4444] text-white"
+                        aria-hidden
+                      >
+                        <span className="material-symbols-outlined text-[18px] leading-none">
+                          warning
+                        </span>
                       </span>
-                    </span>
-                    <div className="flex-1 rounded-[8px] bg-[#FEF2F2] px-4 py-[14px] shadow-[inset_0_0_0_2px_#EF4444]">
-                      <p className="text-[12px] font-bold leading-snug text-[#7F1D1D]">
-                        {WARNING_SHORT}
-                      </p>
+                      <div className="flex-1 rounded-[8px] bg-[#FEF2F2] px-4 py-[14px] shadow-[inset_0_0_0_2px_#EF4444]">
+                        <p className="text-[12px] font-bold leading-snug text-[#7F1D1D]">
+                          {WARNING_SHORT}
+                        </p>
+                      </div>
                     </div>
                   </div>
-                </div>
+                </Reveal>
               ) : null}
             </div>
           </div>

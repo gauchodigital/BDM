@@ -12,6 +12,7 @@ import {
   mapsSearchUrl,
   type CentroVacunacion,
 } from "@/lib/centrosData";
+import { Reveal } from "@/components/ui/Reveal";
 
 function DisclaimerText({ text }: { text: string }): ReactNode {
   const parts = text.split(/(hacé click acá\.?)/i);
@@ -233,53 +234,57 @@ export function CentrosVacunacionBlock({
       <div className="mx-auto w-full max-w-7xl px-5 pb-10 pt-14 md:px-8 md:pb-14 md:pt-16">
         <div className="flex flex-col gap-10 lg:grid lg:grid-cols-[1fr_1.05fr] lg:items-start lg:gap-14">
           {/* Copy */}
-          <div className="flex flex-col lg:h-full">
-            <p className="text-[10px] font-semibold uppercase leading-[16.8px] tracking-[0.13px] text-accent lg:text-[11px] lg:font-bold lg:tracking-[0.12em]">
-              {eyebrow}
-            </p>
-            <h2 className="mt-2 text-[28px] font-black leading-8 tracking-[0.07px] text-[#feeafa] lg:mt-3 lg:text-[40px] lg:leading-[1.1] lg:tracking-[0.02em] lg:text-white">
-              {title}
-            </h2>
-            <p className="mt-4 text-[16px] leading-normal tracking-[0.08px] text-white lg:max-w-md lg:leading-[1.6] lg:text-white/90">
-              {body}
-            </p>
-
-            <div className="mt-8 hidden max-w-md space-y-3 rounded-[12px] bg-[#3D2E5C] p-5 text-[10px] leading-[14px] text-white/85 lg:mt-auto lg:block">
-              {disclaimerParagraphs.map((p) => (
-                <p key={p.slice(0, 48)}>
-                  <DisclaimerText text={p} />
-                </p>
-              ))}
-            </div>
-          </div>
-
-          {/* Form: mobile on purple; desktop white card */}
-          <div className="lg:rounded-[16px] lg:bg-white lg:p-8 lg:shadow-[0_12px_40px_rgba(0,0,0,0.15)]">
-            <div className="mb-4 lg:mb-0">
-              <p className="hidden text-[12px] font-bold uppercase tracking-[0.08em] text-muted lg:block">
-                Paso {currentStep} de {totalSteps}: selección
+          <Reveal>
+            <div className="flex flex-col lg:h-full">
+              <p className="text-[10px] font-semibold uppercase leading-[16.8px] tracking-[0.13px] text-accent lg:text-[11px] lg:font-bold lg:tracking-[0.12em]">
+                {eyebrow}
               </p>
-              <div
-                className="h-[3px] w-full overflow-hidden rounded-full bg-white/35 lg:mt-3 lg:h-1.5 lg:bg-[#E8E4EC]"
-                role="progressbar"
-                aria-valuemin={1}
-                aria-valuemax={totalSteps}
-                aria-valuenow={currentStep}
-                aria-label="Progreso del buscador de centros"
-              >
-                <div
-                  className="h-full rounded-full bg-accent transition-[width] duration-500 ease-out"
-                  style={{ width: `${progress}%` }}
-                />
+              <h2 className="mt-2 text-[28px] font-black leading-8 tracking-[0.07px] text-[#feeafa] lg:mt-3 lg:text-[40px] lg:leading-[1.1] lg:tracking-[0.02em] lg:text-white">
+                {title}
+              </h2>
+              <p className="mt-4 text-[16px] leading-normal tracking-[0.08px] text-white lg:max-w-md lg:leading-[1.6] lg:text-white/90">
+                {body}
+              </p>
+
+              <div className="mt-8 hidden max-w-md space-y-3 rounded-[12px] bg-[#3D2E5C] p-5 text-[10px] leading-[14px] text-white/85 lg:mt-auto lg:block">
+                {disclaimerParagraphs.map((p) => (
+                  <p key={p.slice(0, 48)}>
+                    <DisclaimerText text={p} />
+                  </p>
+                ))}
               </div>
             </div>
+          </Reveal>
 
-            <div className="mt-8 lg:mt-8">{formInner}</div>
-          </div>
+          {/* Form: mobile on purple; desktop white card */}
+          <Reveal delay={100} from="right">
+            <div className="lg:rounded-[16px] lg:bg-white lg:p-8 lg:shadow-[0_12px_40px_rgba(0,0,0,0.15)]">
+              <div className="mb-4 lg:mb-0">
+                <p className="hidden text-[12px] font-bold uppercase tracking-[0.08em] text-muted lg:block">
+                  Paso {currentStep} de {totalSteps}: selección
+                </p>
+                <div
+                  className="h-[3px] w-full overflow-hidden rounded-full bg-white/35 lg:mt-3 lg:h-1.5 lg:bg-[#E8E4EC]"
+                  role="progressbar"
+                  aria-valuemin={1}
+                  aria-valuemax={totalSteps}
+                  aria-valuenow={currentStep}
+                  aria-label="Progreso del buscador de centros"
+                >
+                  <div
+                    className="h-full rounded-full bg-accent transition-[width] duration-500 ease-out"
+                    style={{ width: `${progress}%` }}
+                  />
+                </div>
+              </div>
+
+              <div className="mt-8 lg:mt-8">{formInner}</div>
+            </div>
+          </Reveal>
         </div>
 
-        <div id="centros-resultados" className="mt-12 scroll-mt-24 lg:mt-16">
-          <div className="flex flex-col gap-5">
+        <Reveal delay={80} className="mt-12 scroll-mt-24 lg:mt-16">
+          <div id="centros-resultados" className="flex flex-col gap-5">
             <div className="flex flex-wrap items-center gap-3">
               <h3 className="text-[22px] font-bold leading-7 text-white md:text-[28px]">
                 Resultados
@@ -372,7 +377,7 @@ export function CentrosVacunacionBlock({
               </p>
             ) : null}
           </div>
-        </div>
+        </Reveal>
       </div>
 
       <div className="mx-auto w-full max-w-7xl px-5 pb-16 lg:hidden md:px-8">
