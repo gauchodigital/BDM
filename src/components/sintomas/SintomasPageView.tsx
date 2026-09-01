@@ -74,7 +74,7 @@ export function SintomasPageView() {
               alarm={alarm}
               warningText={WARNING_SHORT}
               showWarningMarker
-              className="relative md:hidden"
+              className="relative lg:hidden"
             />
 
             <SintomasDesktopTimeline
@@ -82,7 +82,7 @@ export function SintomasPageView() {
               alarm={alarm}
               warningText={WARNING_SHORT}
               showWarningMarker
-              className="relative hidden md:block"
+              className="relative hidden lg:block"
             />
           </div>
         </div>

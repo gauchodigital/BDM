@@ -48,6 +48,8 @@ export const SINTOMA_PHASE_UI: Record<
 const DEFAULT_WARNING =
   "Ante la presencia de estos síntomas, consultá al médico o pediatra.";
 
+export { DEFAULT_WARNING };
+
 export function PhaseHeader({
   phase,
   showTimelineDot = true,
@@ -83,9 +85,11 @@ export function PhaseHeader({
 export function SymptomCard({
   item,
   phase,
+  compact = false,
 }: {
   item: SintomaData;
   phase: SintomaPhase;
+  compact?: boolean;
 }) {
   const cfg = SINTOMA_PHASE_UI[phase];
   const isSvg = item.icon.endsWith(".svg") || item.icon.startsWith("/");
@@ -93,11 +97,15 @@ export function SymptomCard({
     phase === "early" ? "border-[#E2E8F0]" : "border-[#F0C4B8]";
 
   return (
-    <div className={`rounded-[12px] border bg-white p-2 ${borderClass}`}>
+    <div
+      className={`rounded-[12px] border bg-white p-2 ${borderClass} ${
+        compact && !item.description ? "min-h-12" : ""
+      }`}
+    >
       <div
         className={`flex gap-3 ${
           item.description ? "items-start" : "items-center"
-        }`}
+        } ${compact && !item.description ? "min-h-8" : ""}`}
       >
         {isSvg ? (
           // eslint-disable-next-line @next/next/no-img-element
@@ -143,7 +151,7 @@ export function SintomasMobileTimeline({
   alarm,
   warningText = DEFAULT_WARNING,
   showWarningMarker = true,
-  className = "relative mt-10 md:hidden",
+  className = "relative mt-10 lg:hidden",
 }: {
   early: SintomaData[];
   alarm: SintomaData[];
@@ -342,6 +350,146 @@ export function SintomasMobileTimeline({
   );
 }
 
+function DesktopPhaseHeader({ phase }: { phase: SintomaPhase }) {
+  const cfg = SINTOMA_PHASE_UI[phase];
+  const isAlarm = phase === "alarm";
+
+  return (
+    <div className="mb-4">
+      <div className={isAlarm ? "mb-5 mt-2" : "mb-3"}>
+        <span
+          className={`inline-flex h-10 w-10 items-center justify-center rounded-full text-white ${cfg.line}`}
+          aria-hidden
+        >
+          <span className="material-symbols-outlined text-[20px] leading-none">
+            schedule
+          </span>
+        </span>
+      </div>
+      <p
+        className={`w-full px-4 py-2.5 text-[13px] font-bold leading-snug ${cfg.badgeRadius} ${cfg.badgeBg} ${cfg.badgeText}`}
+      >
+        {cfg.badge}
+      </p>
+      <p className="mt-3 text-[13px] leading-[1.55] text-muted">{cfg.lead}</p>
+    </div>
+  );
+}
+
+function PhasePanel({
+  phase,
+  items,
+  desktop = false,
+  active = true,
+}: {
+  phase: SintomaPhase;
+  items: SintomaData[];
+  desktop?: boolean;
+  active?: boolean;
+}) {
+  if (!items.length) return null;
+
+  const isEarly = phase === "early";
+
+  return (
+    <div
+      className={`rounded-[22px] p-6 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+        isEarly
+          ? "border-l-4 border-primary bg-[#F3F0F8]"
+          : "border-r-4 border-[#DD876E] bg-[#FDF0EC]"
+      } ${
+        active
+          ? "translate-y-0 opacity-100 shadow-[0_8px_28px_rgba(80,60,119,0.08)]"
+          : "translate-y-3 opacity-75"
+      }`}
+    >
+      {desktop ? (
+        <DesktopPhaseHeader phase={phase} />
+      ) : (
+        <PhaseHeader phase={phase} showTimelineDot={false} />
+      )}
+      <ul
+        className={`mt-4 grid grid-cols-1 gap-2 ${
+          desktop ? "" : "lg:grid-cols-2 lg:gap-3"
+        }`}
+      >
+        {items.map((s, i) => (
+          <li
+            key={s.id}
+            className={`transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+              !desktop && s.description ? "lg:col-span-2" : undefined
+            } ${
+              active
+                ? "translate-y-0 opacity-100"
+                : "translate-y-2 opacity-0"
+            }`}
+            style={{ transitionDelay: active ? `${i * 60}ms` : "0ms" }}
+          >
+            <SymptomCard item={s} phase={phase} compact={desktop} />
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+function DesktopTimelineMarker({
+  label,
+  variant,
+  active = true,
+}: {
+  label: string;
+  variant: "early" | "alarm" | "warning";
+  active?: boolean;
+}) {
+  const earlyCfg = SINTOMA_PHASE_UI.early;
+  const alarmCfg = SINTOMA_PHASE_UI.alarm;
+
+  const markerClass =
+    variant === "early"
+      ? active
+        ? earlyCfg.markerActive
+        : earlyCfg.markerIdle
+      : variant === "alarm"
+        ? active
+          ? alarmCfg.markerActive
+          : alarmCfg.markerIdle
+        : active
+          ? "bg-[#EF4444] text-white ring-[#EF4444]"
+          : "bg-white text-[#EF4444] ring-[#EF4444]";
+
+  const labelClass =
+    variant === "early"
+      ? active
+        ? "text-primary"
+        : "text-muted"
+      : variant === "alarm"
+        ? active
+          ? "text-[#DD876E]"
+          : "text-muted"
+        : active
+          ? "text-[#EF4444]"
+          : "text-muted";
+
+  return (
+    <div className="relative flex h-10 w-full items-center justify-center">
+      <span
+        className={`absolute left-1/2 z-10 flex h-10 w-10 -translate-x-1/2 items-center justify-center rounded-full ring-2 transition-all duration-500 ${markerClass}`}
+        aria-hidden
+      >
+        <span className="material-symbols-outlined text-[18px] leading-none">
+          {variant === "warning" ? "warning" : "schedule"}
+        </span>
+      </span>
+      <span
+        className={`absolute left-[calc(50%+1.375rem)] top-1/2 -translate-y-1/2 whitespace-nowrap bg-white px-0.5 text-[11px] font-bold uppercase tracking-[0.08em] transition-colors duration-500 ${labelClass}`}
+      >
+        {label}
+      </span>
+    </div>
+  );
+}
+
 function useTimelineScrollProgress(ref: RefObject<HTMLElement | null>) {
   const [fill, setFill] = useState(0);
 
@@ -380,15 +528,14 @@ function useTimelineScrollProgress(ref: RefObject<HTMLElement | null>) {
 }
 
 /**
- * Timeline desktop: línea horizontal que avanza con el scroll y conecta
- * las dos fases (0–12 h → 12 h+ → alerta).
+ * Timeline desktop (≥992px): grid 3 columnas con línea vertical central.
  */
 export function SintomasDesktopTimeline({
   early,
   alarm,
   warningText = DEFAULT_WARNING,
   showWarningMarker = true,
-  className = "relative mt-10 hidden md:block",
+  className = "relative mt-10 hidden lg:block",
 }: {
   early: SintomaData[];
   alarm: SintomaData[];
@@ -399,172 +546,113 @@ export function SintomasDesktopTimeline({
   const ref = useRef<HTMLDivElement>(null);
   const fill = useTimelineScrollProgress(ref);
 
-  const earlyActive = fill >= 0.12;
-  const alarmActive = fill >= 0.48;
-  const warningActive = fill >= 0.88;
-
-  const earlyCfg = SINTOMA_PHASE_UI.early;
-  const alarmCfg = SINTOMA_PHASE_UI.alarm;
+  const earlyActive = fill >= 0.1;
+  const alarmActive = fill >= 0.38;
+  const warningActive = fill >= 0.82;
 
   return (
     <div ref={ref} className={className}>
-      <div className="relative mx-auto mb-8 max-w-4xl px-6 lg:mb-10">
-        <div
-          aria-hidden
-          className="absolute left-[8%] right-[8%] top-5 h-0.5 rounded-full bg-[#E8E4EC] lg:left-[10%] lg:right-[10%]"
-        />
-        <div
-          aria-hidden
-          className="absolute left-[8%] top-5 h-0.5 rounded-full transition-[width] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] lg:left-[10%]"
-          style={{
-            width: `calc((84% - 0px) * ${fill})`,
-            background:
-              "linear-gradient(90deg, #503C77 0%, #503C77 42%, #DD876E 72%, #EF4444 100%)",
-          }}
-        />
+      <div className="mx-auto w-full max-w-[1180px]">
+        <div className="grid grid-cols-[minmax(0,1fr)_120px_minmax(0,1fr)] grid-rows-[auto_auto_auto] gap-x-10">
+          {/* Raíl vertical — columnas de contenido + fila de alerta */}
+          <div
+            aria-hidden
+            className="relative col-start-2 row-start-1 row-span-2 min-h-0 self-stretch justify-self-center"
+          >
+            <div className="relative h-full w-[120px]">
+              <div className="absolute bottom-4 left-1/2 top-1 w-0.5 -translate-x-1/2 rounded-full bg-[#E8E4EC]" />
+              <div
+                className="absolute left-1/2 top-1 w-0.5 -translate-x-1/2 rounded-full transition-[clip-path] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
+                style={{
+                  bottom: "1rem",
+                  background:
+                    "linear-gradient(180deg, #503C77 0%, #503C77 42%, #DD876E 68%, #EF4444 100%)",
+                  clipPath: `inset(0 0 ${Math.max(0, (1 - fill) * 100)}% 0)`,
+                }}
+              />
+              <div
+                className="absolute left-1/2 top-[58%] w-0 -translate-x-1/2 border-l-2 border-dashed border-[#EF4444]/45"
+                style={{
+                  bottom: "1rem",
+                  opacity: fill >= 0.5 ? 1 : 0.35,
+                }}
+              />
+            </div>
 
-        <div className="relative flex items-start justify-between">
-          <div className="flex w-[30%] flex-col items-center text-center">
-            <span
-              className={`flex h-10 w-10 items-center justify-center rounded-full ring-2 transition-all duration-500 ${
-                earlyActive ? earlyCfg.markerActive : earlyCfg.markerIdle
-              }`}
-              aria-hidden
-            >
-              <span className="material-symbols-outlined text-[18px] leading-none">
-                schedule
-              </span>
-            </span>
-            <p
-              className={`mt-2 text-[11px] font-bold uppercase tracking-[0.08em] transition-colors ${
-                earlyActive ? "text-primary" : "text-muted"
-              }`}
-            >
-              0–12 h
-            </p>
+            {/* Nodos 0–12 h y +12 h */}
+            {early.length > 0 ? (
+              <div className="absolute left-0 right-0 top-1 z-10">
+                <DesktopTimelineMarker
+                  label="0–12 h"
+                  variant="early"
+                  active={earlyActive}
+                />
+              </div>
+            ) : null}
+
+            {alarm.length > 0 ? (
+              <div className="absolute left-0 right-0 top-1/2 z-10 -translate-y-1/2">
+                <DesktopTimelineMarker
+                  label="+12 h"
+                  variant="alarm"
+                  active={alarmActive}
+                />
+              </div>
+            ) : null}
           </div>
 
-          <div className="flex w-[30%] flex-col items-center text-center">
-            <span
-              className={`flex h-10 w-10 items-center justify-center rounded-full ring-2 transition-all duration-500 ${
-                alarmActive ? alarmCfg.markerActive : alarmCfg.markerIdle
-              }`}
-              aria-hidden
-            >
-              <span className="material-symbols-outlined text-[18px] leading-none">
-                schedule
-              </span>
-            </span>
-            <p
-              className={`mt-2 text-[11px] font-bold uppercase tracking-[0.08em] transition-colors ${
-                alarmActive ? "text-[#DD876E]" : "text-muted"
-              }`}
-            >
-              +12 h
-            </p>
-          </div>
-
-          {showWarningMarker ? (
-            <div className="flex w-[30%] flex-col items-center text-center">
-              <span
-                className={`flex h-10 w-10 items-center justify-center rounded-full ring-2 transition-all duration-500 ${
-                  warningActive
-                    ? "bg-[#EF4444] text-white ring-[#EF4444]"
-                    : "bg-white text-[#EF4444] ring-[#EF4444]"
-                }`}
-                aria-hidden
-              >
-                <span className="material-symbols-outlined text-[18px] leading-none">
-                  warning
-                </span>
-              </span>
-              <p
-                className={`mt-2 text-[11px] font-bold uppercase tracking-[0.08em] transition-colors ${
-                  warningActive ? "text-[#EF4444]" : "text-muted"
-                }`}
-              >
-                Alerta
-              </p>
+          {/* Tarjeta violeta — arriba izquierda */}
+          {early.length > 0 ? (
+            <div className="col-start-1 row-start-1 self-start">
+              <PhasePanel
+                phase="early"
+                items={early}
+                desktop
+                active={earlyActive}
+              />
             </div>
           ) : null}
-        </div>
-      </div>
 
-      <div className="grid grid-cols-2 gap-6 lg:gap-8">
-        {early.length > 0 ? (
-          <div
-            className={`rounded-[16px] bg-[#F3F0F8] p-6 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] lg:p-8 ${
-              earlyActive
-                ? "translate-y-0 opacity-100 shadow-[0_8px_28px_rgba(80,60,119,0.08)]"
-                : "translate-y-3 opacity-70"
-            }`}
-          >
-            <PhaseHeader phase="early" showTimelineDot={false} />
-            <ul className="flex flex-col gap-3">
-              {early.map((s, i) => (
-                <li
-                  key={s.id}
-                  className={`transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-                    earlyActive
-                      ? "translate-y-0 opacity-100"
-                      : "translate-y-2 opacity-0"
-                  }`}
-                  style={{ transitionDelay: `${i * 60}ms` }}
-                >
-                  <SymptomCard item={s} phase="early" />
-                </li>
-              ))}
-            </ul>
-          </div>
-        ) : null}
+          {/* Tarjeta naranja — derecha, más abajo */}
+          {alarm.length > 0 ? (
+            <div className="col-start-3 row-start-1 z-10 mt-48 self-start lg:mt-56">
+              <PhasePanel
+                phase="alarm"
+                items={alarm}
+                desktop
+                active={alarmActive}
+              />
+            </div>
+          ) : null}
 
-        {alarm.length > 0 ? (
-          <div
-            className={`rounded-[16px] bg-[#FDF0EC] p-6 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] lg:p-8 ${
-              alarmActive
-                ? "translate-y-0 opacity-100 shadow-[0_8px_28px_rgba(221,135,110,0.12)]"
-                : "translate-y-3 opacity-70"
-            }`}
-          >
-            <PhaseHeader phase="alarm" showTimelineDot={false} />
-            <ul className="flex flex-col gap-3">
-              {alarm.map((s, i) => (
-                <li
-                  key={s.id}
-                  className={`transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-                    alarmActive
-                      ? "translate-y-0 opacity-100"
-                      : "translate-y-2 opacity-0"
-                  }`}
-                  style={{ transitionDelay: `${i * 60}ms` }}
-                >
-                  <SymptomCard item={s} phase="alarm" />
-                </li>
-              ))}
-            </ul>
-            <div
-              className={`mt-3 flex items-start gap-3 transition-all duration-700 ${
-                warningActive
-                  ? "translate-y-0 opacity-100"
-                  : "translate-y-2 opacity-0"
-              }`}
-            >
-              <span
-                className="mt-2 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#EF4444] text-white"
-                aria-hidden
+          {/* Nodo alerta — fila propia, separado del aviso */}
+          {showWarningMarker ? (
+            <div className="col-start-2 row-start-2 z-10 flex justify-center pt-6">
+              <DesktopTimelineMarker
+                label="Alerta"
+                variant="warning"
+                active={warningActive}
+              />
+            </div>
+          ) : null}
+
+          {/* Aviso médico — debajo del nodo alerta */}
+          {showWarningMarker ? (
+            <div className="col-span-3 col-start-1 row-start-3 mt-4">
+              <div
+                className={`mx-auto w-full max-w-md rounded-[10px] bg-[#FEF2F2] px-4 py-3.5 shadow-[inset_0_0_0_2px_#EF4444] transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                  warningActive
+                    ? "translate-y-0 opacity-100"
+                    : "translate-y-2 opacity-0"
+                }`}
               >
-                <span className="material-symbols-outlined text-[18px] leading-none">
-                  warning
-                </span>
-              </span>
-              <div className="flex-1 rounded-[8px] bg-[#FEF2F2] px-4 py-[14px] shadow-[inset_0_0_0_2px_#EF4444]">
-                <p className="text-[12px] font-bold leading-snug text-[#7F1D1D]">
+                <p className="text-center text-[12px] font-bold leading-snug text-[#7F1D1D] lg:text-[13px]">
                   {warningText}
                 </p>
               </div>
             </div>
-          </div>
-        ) : null}
+          ) : null}
+        </div>
       </div>
     </div>
   );

@@ -1,11 +1,24 @@
 import Link from "next/link";
 import { Reveal } from "@/components/ui/Reveal";
 
+function UrgencyBannerText({ className = "" }: { className?: string }) {
+  return (
+    <p className={className}>
+      La meningitis es una{" "}
+      <strong className="font-bold text-[#DD876E]">urgencia médica</strong> y{" "}
+      <strong className="font-bold text-white">
+        requiere consulta y hospitalización
+      </strong>{" "}
+      inmediata
+      <sup className="text-[0.65em] font-bold text-white">1</sup>.
+    </p>
+  );
+}
+
 /**
  * CTA de vacunas.
  * - Default (home): bloque violeta autotest.
- * - showUrgency (síntomas): banner urgencia + CTA calendario, antes de Referencias.
- *   Ref: Figma 1765:16266
+ * - showUrgency (síntomas): franja urgencia + CTA calendario, antes de Referencias.
  */
 export function VacunasCtaSection({
   showUrgency = false,
@@ -15,26 +28,18 @@ export function VacunasCtaSection({
   if (showUrgency) {
     return (
       <>
-        {/* Banner urgencia — Figma: barra coral izq, px 16 / py 64, “urgencia médica” en coral */}
         <section className="bg-[#503C77]">
-          <div className="mx-auto flex max-w-7xl">
+          <div className="flex md:hidden">
             <span className="w-2 shrink-0 bg-[#DD876E]" aria-hidden />
-            <p className="flex-1 px-4 py-16 text-[20px] font-medium leading-[1.4] text-white">
-              La meningitis es una{" "}
-              <strong className="font-bold text-[#DD876E]">urgencia médica</strong>{" "}
-              y{" "}
-              <strong className="font-bold text-white">
-                requiere consulta y hospitalización
-              </strong>{" "}
-              inmediata
-              <sup className="text-[0.65em] font-bold text-white">1</sup>.
-            </p>
+            <UrgencyBannerText className="flex-1 px-4 py-12 text-[17px] font-medium leading-[1.45] text-white" />
+          </div>
+          <div className="hidden px-6 py-14 md:block md:px-8 lg:py-16">
+            <UrgencyBannerText className="mx-auto max-w-3xl text-center text-[20px] font-medium leading-[1.4] text-white lg:text-[22px]" />
           </div>
         </section>
 
-        {/* CTA calendario */}
-        <section className="bg-white px-5 py-12 md:px-8 md:py-16">
-          <div className="mx-auto max-w-7xl">
+        <section className="border-t border-[#E8E4EF] bg-white px-5 py-12 md:px-8 md:py-14">
+          <div className="mx-auto max-w-7xl md:flex md:items-center md:justify-between md:gap-10">
             <Reveal>
               <div className="max-w-xl">
                 <p className="text-[11px] font-bold uppercase tracking-[0.1em] text-[#DD876E]">
@@ -46,20 +51,19 @@ export function VacunasCtaSection({
                 <p className="mt-3 text-[14px] leading-[1.55] text-[#6B6570] md:text-[16px]">
                   Protección en cada etapa de tu vida.
                 </p>
-                <Link
-                  href="/vacunacion"
-                  className="mt-8 flex w-full items-center justify-center rounded-[10px] bg-[#503C77] px-6 py-3.5 text-[15px] font-bold text-white transition hover:brightness-110 sm:inline-flex sm:w-auto"
-                >
-                  Ver calendario de vacunación
-                </Link>
               </div>
             </Reveal>
+            <Link
+              href="/vacunacion"
+              className="mt-6 flex w-full shrink-0 items-center justify-center rounded-[10px] bg-[#503C77] px-6 py-3.5 text-[15px] font-bold text-white transition hover:brightness-110 md:mt-0 md:w-auto md:px-8"
+            >
+              Ver calendario de vacunación
+            </Link>
           </div>
         </section>
       </>
     );
   }
-
   return (
     <section className="bg-[#503C77]">
       <div className="mx-auto w-full max-w-7xl px-5 py-16 md:px-8 md:py-16">

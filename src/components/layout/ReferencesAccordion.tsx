@@ -27,19 +27,19 @@ export function ReferencesAccordion() {
   const [open, setOpen] = useState(false);
 
   return (
-    <section className="bg-white py-10">
-      <div className="mx-auto w-full max-w-7xl px-6 md:px-8">
+    <section className="border-t border-[#D8D4DE] bg-[#F8F6FB]">
+      <div className="mx-auto w-full max-w-7xl px-6 py-8 md:px-8 md:py-9">
         <button
           type="button"
           aria-expanded={open}
           onClick={() => setOpen((v) => !v)}
-          className="flex w-full items-center justify-between gap-4 text-left"
+          className="flex w-full cursor-pointer items-center justify-between gap-4 text-left"
         >
-          <span className="text-[22px] font-bold leading-[28px] text-[#503C77]">
+          <span className="text-[17px] font-bold leading-tight text-[#503C77] md:text-[18px]">
             Referencias
           </span>
           <span
-            className="material-symbols-outlined text-[22px] leading-none text-[#442748]"
+            className="material-symbols-outlined text-[22px] leading-none text-[#503C77]/70"
             aria-hidden
           >
             {open ? "remove" : "add"}
@@ -47,7 +47,7 @@ export function ReferencesAccordion() {
         </button>
 
         {open && (
-          <div className="mt-4 border-t border-[#E5E5E5] pt-4">
+          <div className="mt-5 border-t border-[#E5E0EC] pt-5">
             <ol className="list-decimal space-y-4 pl-5 text-[13px] leading-[1.55] text-[#5C5670]">
               {(referencias as string[]).map((ref, i) => (
                 <li key={i} className="pl-1">

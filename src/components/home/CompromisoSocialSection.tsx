@@ -2,11 +2,10 @@ import { Reveal } from "@/components/ui/Reveal";
 
 export function CompromisoSocialSection() {
   return (
-    <section className="bg-white px-5 pb-0 pt-[22px] md:px-8">
+    <section className="bg-white px-5 pb-10 pt-[22px] md:px-8 md:pb-12 lg:px-8 lg:pb-24 lg:pt-20 xl:pb-28 xl:pt-24">
       <div className="mx-auto w-full max-w-7xl">
         <Reveal>
-          <div className="flex max-w-2xl flex-col gap-4 lg:mx-auto lg:max-w-3xl lg:text-center">
-            <div className="flex flex-col gap-2">
+          <div className="flex max-w-2xl flex-col gap-4 lg:mx-auto lg:max-w-3xl lg:gap-6 lg:text-center">            <div className="flex flex-col gap-2">
               <p className="text-[11px] font-extrabold uppercase leading-[16.8px] tracking-[1.3px] text-[#DD876E]">
                 Compromiso social
               </p>

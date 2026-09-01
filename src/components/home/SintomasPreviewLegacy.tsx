@@ -4,10 +4,8 @@ import Link from "next/link";
 import { useState } from "react";
 import { RichText } from "@/components/ui/RichText";
 import { Reveal } from "@/components/ui/Reveal";
-import {
-  SintomasDesktopTimeline,
-  SintomasMobileTimeline,
-} from "@/components/sintomas/SintomasTimeline";
+import { SintomasMobileTimeline } from "@/components/sintomas/SintomasTimeline";
+import { SintomasDesktopTimelineLegacy } from "@/components/sintomas/SintomasDesktopTimelineLegacy";
 import {
   ADULTOS_TIMELINE,
   LACTANTES_RN_TIMELINE,
@@ -18,7 +16,8 @@ import {
 const HOME_WARNING =
   "Ante la presencia de estos síntomas, consultá al médico.";
 
-export function SintomasPreview({
+/** Vista previa de síntomas con timeline desktop horizontal (versión anterior). */
+export function SintomasPreviewLegacy({
   showMoreLink = true,
   headingAs = "h2",
 }: {
@@ -81,22 +80,22 @@ export function SintomasPreview({
           early={early}
           alarm={alarm}
           warningText={HOME_WARNING}
-          className="relative mt-8 lg:hidden"
+          className="relative mt-8 md:hidden"
         />
 
-        <SintomasDesktopTimeline
-          key={`desktop-${sub}`}
+        <SintomasDesktopTimelineLegacy
+          key={`desktop-legacy-${sub}`}
           early={early}
           alarm={alarm}
           warningText={HOME_WARNING}
-          className="relative mt-10 hidden lg:block"
+          className="relative mt-10 hidden md:block"
         />
 
         {showMoreLink && (
           <Reveal delay={200}>
             <Link
               href="/sintomas"
-              className="mt-8 flex w-full items-center justify-center gap-2 rounded-[10px] bg-primary py-3.5 text-[15px] font-bold text-white transition hover:brightness-110 lg:mt-6 lg:inline-flex lg:w-auto lg:min-w-[200px] lg:px-8"
+              className="mt-8 flex w-full items-center justify-center gap-2 rounded-[10px] bg-primary py-3.5 text-[15px] font-bold text-white transition hover:brightness-110 md:inline-flex md:w-auto md:min-w-[200px] md:px-8"
             >
               Conocé más
               <span aria-hidden className="text-lg leading-none">
