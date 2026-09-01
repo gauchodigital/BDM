@@ -17,25 +17,10 @@ export default function FaqPage() {
 
   return (
     <>
-      <section className="bg-white px-5 pb-6 pt-16 md:px-8 md:pt-16">
-        <div className="mx-auto w-full max-w-7xl">
-          <div className="mx-auto max-w-2xl">
-            <h1 className="animate-fade-up text-[28px] font-[900] leading-normal text-[#503c77]">
-              Todo lo que necesitas saber sobre las vacunas y la meningitis
-            </h1>
-            <p className="animate-fade-up animate-delay-1 mt-4 text-[16px] leading-[26px] text-[#442748]">
-              Seleccioná una categoría para explorar las preguntas.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <section className="bg-white px-5 pb-10 md:px-8 md:pb-12">
-        <div className="mx-auto w-full max-w-7xl">
+      <section className="section-pad scroll-mt-16 bg-[linear-gradient(180deg,#FFFFFF_0%,#FAF9FC_50%,#FFFFFF_100%)]">
+        <div className="mx-auto w-full max-w-7xl px-5 md:px-8">
           <Reveal delay={80}>
-            <div className="mx-auto max-w-2xl">
-              <FaqAccordion items={items} />
-            </div>
+            <FaqAccordion items={items} showHeader />
           </Reveal>
         </div>
       </section>

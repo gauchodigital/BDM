@@ -16,8 +16,8 @@ export function buildWhatsappUrl(message: string): string {
   return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
 }
 
-/** CTA principal de vacunación / consulta (externo o WhatsApp) */
-export const VACUNARSE_URL = WHATSAPP_URL;
+/** CTA principal de vacunación */
+export const VACUNARSE_URL = "/vacunacion";
 
 /** Buscador / listado de centros de vacunación — placeholder */
 export const CENTROS_VACUNACION_URL = "/vacunacion";

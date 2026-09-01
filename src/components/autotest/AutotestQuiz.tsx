@@ -161,6 +161,19 @@ function VaccineCard({
 /* ── Imagen PNG ─────────────────────────────────────────────────────── */
 
 const IMG_FONT = "system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif";
+const LOGO_SRC = "/brand/logo-bdm-wordmark-white.png";
+const PURPLE = "#503C77";
+
+const SHARE_WARNING =
+  "Este resultado es orientativo y únicamente contempla las vacunas dentro del Calendario Nacional de Vacunación. Siempre consultá con el médico para confirmar qué vacunas son las recomendadas según edad y condición clínica particular.";
+
+const SHARE_LEGAL_LINES = [
+  "NP-AR-MNU-WCNT-260001 - Agosto 2026.",
+  "Para mayor información consulte a su médico.",
+  "GSK Biopharma Argentina SA Av del Libertador 7202, Piso 4, CABA, Buenos Aires, Argentina.",
+  "Para consultas sobre nuestros productos, consultas de calidad o reporte de eventos adversos puede comunicarse al 0800-220-4752. Para reportar eventos adversos de nuestros productos envíe un correo a: bua-farmacovigilancia-rx@gsk.com",
+  "© 2026 GSK y sus afiliadas o licenciantes",
+];
 
 function roundRectPath(
   ctx: CanvasRenderingContext2D,
@@ -180,71 +193,117 @@ function roundRectPath(
   ctx.closePath();
 }
 
-function buildCanvas(
-  age: string,
-  groups: { title: string; hex: string; items: Vaccine[] }[],
+function loadImage(src: string): Promise<HTMLImageElement> {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.onload = () => resolve(img);
+    img.onerror = () => reject(new Error(`No se pudo cargar ${src}`));
+    img.src = src;
+  });
+}
+
+function wrapText(
+  measure: CanvasRenderingContext2D,
+  text: string,
+  font: string,
+  maxW: number,
 ) {
+  measure.font = font;
+  const words = text.split(" ");
+  const lines: string[] = [];
+  let line = "";
+  for (const w of words) {
+    const test = line ? `${line} ${w}` : w;
+    if (measure.measureText(test).width > maxW && line) {
+      lines.push(line);
+      line = w;
+    } else line = test;
+  }
+  if (line) lines.push(line);
+  return lines;
+}
+
+async function buildCanvas(
+  pendingCount: number,
+  groups: { title: string; items: Vaccine[] }[],
+) {
+  const logo = await loadImage(LOGO_SRC);
   const scale = Math.min(3, Math.max(2, window.devicePixelRatio || 2));
   const W = 720;
-  const PAD = 40;
+  const PAD = 32;
   const contentW = W - PAD * 2;
-  const textX = PAD + 46;
-  const textMaxW = contentW - 46 - 16;
+  const cardTextX = PAD + 28;
+  const cardTextMaxW = contentW - 40;
 
   const measure = document.createElement("canvas").getContext("2d")!;
-  const fName = `700 20px ${IMG_FONT}`;
-  const fDetail = `400 15px ${IMG_FONT}`;
-  const fGroup = `800 14px ${IMG_FONT}`;
-  const wrap = (text: string, font: string, maxW: number) => {
+  const fCount = `700 16px ${IMG_FONT}`;
+  const fIntro = `400 16px ${IMG_FONT}`;
+  const fName = `700 16px ${IMG_FONT}`;
+  const fDetail = `400 14px ${IMG_FONT}`;
+  const fGroup = `800 12px ${IMG_FONT}`;
+  const fWarning = `400 13px ${IMG_FONT}`;
+  const fLegal = `400 11px ${IMG_FONT}`;
+  const fHeaderTitle = `700 17px ${IMG_FONT}`;
+  const wrap = (text: string, font: string, maxW: number) =>
+    wrapText(measure, text, font, maxW);
+  const textW = (text: string, font: string) => {
     measure.font = font;
-    const words = text.split(" ");
-    const lines: string[] = [];
-    let line = "";
-    for (const w of words) {
-      const test = line ? `${line} ${w}` : w;
-      if (measure.measureText(test).width > maxW && line) {
-        lines.push(line);
-        line = w;
-      } else line = test;
-    }
-    if (line) lines.push(line);
-    return lines;
+    return measure.measureText(text).width;
   };
 
-  const headerH = 120;
-  type Op =
-    | { t: "group"; text: string; hex: string; y: number }
-    | {
-        t: "card";
-        nameLines: string[];
-        detailLines: string[];
-        hex: string;
-        y: number;
-        h: number;
-      };
-  const ops: Op[] = [];
-  let y = headerH + 26;
+  const headerH = 72;
+  const LOGO_H = 38;
+  const LOGO_W = (logo.naturalWidth / logo.naturalHeight) * LOGO_H;
+
+  type CardOp = {
+    nameLines: string[];
+    detailLines: string[];
+    h: number;
+  };
+  type GroupOp = {
+    title: string;
+    cards: CardOp[];
+    h: number;
+  };
+
+  const groupOps: GroupOp[] = [];
   for (const g of groups) {
-    ops.push({ t: "group", text: g.title.toUpperCase(), hex: g.hex, y });
-    y += 30;
-    for (const it of g.items) {
-      const nameLines = wrap(it.name, fName, textMaxW);
-      const detailLines = wrap(it.detail, fDetail, textMaxW);
-      const h = 16 + nameLines.length * 25 + 3 + detailLines.length * 20 + 16;
-      ops.push({ t: "card", nameLines, detailLines, hex: g.hex, y, h });
-      y += h + 10;
-    }
-    y += 14;
+    const cards: CardOp[] = g.items.map((it) => {
+      const nameLines = wrap(it.name, fName, cardTextMaxW);
+      const detailLines = wrap(it.detail, fDetail, cardTextMaxW);
+      const h =
+        14 + nameLines.length * 22 + (detailLines.length ? 2 : 0) +
+        detailLines.length * 18 + 14;
+      return { nameLines, detailLines, h };
+    });
+    const cardsH = cards.reduce((sum, c, i) => sum + c.h + (i > 0 ? 10 : 0), 0);
+    const h = 22 + cardsH;
+    groupOps.push({ title: g.title.toUpperCase(), cards, h });
   }
-  const footerLines = wrap(
-    "Resultado orientativo — consultá con tu médico o pediatra para confirmar tu calendario de vacunación.",
-    fDetail,
-    contentW,
+
+  const listH =
+    groupOps.reduce((sum, g, i) => sum + g.h + (i > 0 ? 24 : 0), 0) + 8;
+
+  const warningLines = wrap(SHARE_WARNING, fWarning, contentW - 52);
+  const warningH = 18 + warningLines.length * 19 + 18;
+
+  const legalLines = SHARE_LEGAL_LINES.flatMap((t) =>
+    wrap(t, fLegal, contentW),
   );
-  y += 6;
-  const footerY = y;
-  y += footerLines.length * 20 + PAD;
-  const H = y;
+  const legalPad = 20;
+  const legalH = legalPad + 32 + 10 + legalLines.length * 15 + legalPad;
+
+  const introSub = "Revisá el listado y tomá acción.";
+  const countLabel = `${pendingCount} ${
+    pendingCount === 1 ? "vacuna" : "vacunas"
+  } por aplicar.`;
+  const introOneLine =
+    textW(countLabel, fCount) + textW(` ${introSub}`, fIntro) <= contentW;
+  const introH = introOneLine ? 24 : 48;
+  const footerGap = 32;
+
+  const H =
+    headerH + 24 + introH + 20 + listH + 20 + warningH + footerGap + legalH;
 
   const canvas = document.createElement("canvas");
   canvas.width = Math.round(W * scale);
@@ -255,53 +314,120 @@ function buildCanvas(
 
   ctx.fillStyle = "#ffffff";
   ctx.fillRect(0, 0, W, H);
-  ctx.fillStyle = "#503C77";
-  ctx.fillRect(0, 0, W, headerH);
-  ctx.fillStyle = "rgba(255,255,255,0.8)";
-  ctx.font = `800 12px ${IMG_FONT}`;
-  ctx.fillText("BASTA DE MENINGITIS", PAD, 26);
-  ctx.fillStyle = "#ffffff";
-  ctx.font = `800 26px ${IMG_FONT}`;
-  ctx.fillText("Vacunas pendientes", PAD, 48);
-  ctx.fillStyle = "rgba(255,255,255,0.85)";
-  ctx.font = `400 14px ${IMG_FONT}`;
-  ctx.fillText(age, PAD, 84);
 
-  for (const op of ops) {
-    if (op.t === "group") {
-      ctx.fillStyle = op.hex;
-      ctx.font = fGroup;
-      ctx.fillText(op.text, PAD, op.y);
-    } else {
-      ctx.fillStyle = "#F7F3FB";
-      roundRectPath(ctx, PAD, op.y, contentW, op.h, 14);
+  // Header
+  ctx.fillStyle = PURPLE;
+  ctx.fillRect(0, 0, W, headerH);
+  ctx.drawImage(logo, PAD, (headerH - LOGO_H) / 2, LOGO_W, LOGO_H);
+  ctx.fillStyle = "#ffffff";
+  ctx.font = fHeaderTitle;
+  const headerTitle = "Vacunas pendientes";
+  const headerTitleW = textW(headerTitle, fHeaderTitle);
+  ctx.fillText(headerTitle, W - PAD - headerTitleW, (headerH - 17) / 2);
+
+  // Intro
+  let y = headerH + 24;
+  ctx.fillStyle = PURPLE;
+  ctx.font = fCount;
+  ctx.fillText(countLabel, PAD, y);
+  if (introOneLine) {
+    const countW = textW(countLabel, fCount);
+    ctx.fillStyle = "#442748";
+    ctx.font = fIntro;
+    ctx.fillText(` ${introSub}`, PAD + countW, y);
+  } else {
+    ctx.fillStyle = "#442748";
+    ctx.font = fIntro;
+    ctx.fillText(introSub, PAD, y + 26);
+  }
+  y += introH + 20;
+
+  // Listado
+  for (let gi = 0; gi < groupOps.length; gi++) {
+    const g = groupOps[gi]!;
+    if (gi > 0) y += 24;
+
+    ctx.fillStyle = PURPLE;
+    ctx.beginPath();
+    ctx.arc(PAD + 5, y + 6, 4, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.font = fGroup;
+    ctx.fillText(g.title, PAD + 16, y);
+    y += 22;
+
+    for (const card of g.cards) {
+      ctx.fillStyle = "#F3F0F8";
+      roundRectPath(ctx, PAD, y, contentW, card.h, 12);
       ctx.fill();
-      ctx.fillStyle = op.hex;
+      ctx.fillStyle = PURPLE;
       ctx.beginPath();
-      ctx.arc(PAD + 23, op.y + op.h / 2, 7, 0, Math.PI * 2);
+      ctx.arc(PAD + 14, y + card.h / 2, 4, 0, Math.PI * 2);
       ctx.fill();
-      let ty = op.y + 16;
-      ctx.fillStyle = "#442748";
+
+      let ty = y + 14;
+      ctx.fillStyle = PURPLE;
       ctx.font = fName;
-      for (const l of op.nameLines) {
-        ctx.fillText(l, textX, ty);
-        ty += 25;
+      for (const l of card.nameLines) {
+        ctx.fillText(l, cardTextX, ty);
+        ty += 22;
       }
-      ty += 3;
+      ty += 2;
       ctx.fillStyle = "#6A7488";
       ctx.font = fDetail;
-      for (const l of op.detailLines) {
-        ctx.fillText(l, textX, ty);
-        ty += 20;
+      for (const l of card.detailLines) {
+        ctx.fillText(l, cardTextX, ty);
+        ty += 18;
       }
+      y += card.h + 10;
     }
   }
-  ctx.fillStyle = "#9aa0ac";
-  ctx.font = fDetail;
-  let fy = footerY;
-  for (const l of footerLines) {
-    ctx.fillText(l, PAD, fy);
-    fy += 20;
+
+  // Aviso
+  y += 10;
+  roundRectPath(ctx, PAD, y, contentW, warningH, 12);
+  ctx.fillStyle = "#FFF5F5";
+  ctx.fill();
+
+  const warnIconX = PAD + 14;
+  const warnIconY = y + 18;
+  ctx.fillStyle = "#EF4444";
+  ctx.beginPath();
+  ctx.moveTo(warnIconX + 8, warnIconY);
+  ctx.lineTo(warnIconX + 16, warnIconY + 14);
+  ctx.lineTo(warnIconX, warnIconY + 14);
+  ctx.closePath();
+  ctx.fill();
+  ctx.fillStyle = "#ffffff";
+  ctx.font = `800 10px ${IMG_FONT}`;
+  ctx.fillText("!", warnIconX + 6, warnIconY + 2);
+
+  ctx.fillStyle = "#7F1D1D";
+  ctx.font = fWarning;
+  let wy = y + 18;
+  for (const l of warningLines) {
+    ctx.fillText(l, PAD + 44, wy);
+    wy += 19;
+  }
+
+  // Pie legal
+  const legalY = y + warningH + footerGap;
+  ctx.fillStyle = PURPLE;
+  ctx.fillRect(0, legalY, W, legalH);
+  ctx.fillStyle = "#ffffff";
+  ctx.font = `800 28px ${IMG_FONT}`;
+  ctx.fillText("GSK", PAD, legalY + legalPad);
+  ctx.strokeStyle = "rgba(255,255,255,0.3)";
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(PAD, legalY + legalPad + 36);
+  ctx.lineTo(W - PAD, legalY + legalPad + 36);
+  ctx.stroke();
+  ctx.fillStyle = "rgba(255,255,255,0.75)";
+  ctx.font = fLegal;
+  let ly = legalY + legalPad + 46;
+  for (const l of legalLines) {
+    ctx.fillText(l, PAD, ly);
+    ly += 15;
   }
 
   return canvas;
@@ -521,7 +647,7 @@ export function AutotestQuiz() {
               <h2 className="mt-3 text-[24px] font-extrabold leading-tight text-[#503C77] md:text-[28px]">
                 Vacunas pendientes
               </h2>
-              <p className="mt-3 text-[15px] leading-[1.55] text-dark">
+              <p className="mt-3 text-[16px] leading-[1.5] text-[#442748]">
                 <strong className="font-bold text-[#503C77]">
                   {pendingCount}{" "}
                   {pendingCount === 1 ? "vacuna" : "vacunas"} por aplicar.
@@ -529,47 +655,68 @@ export function AutotestQuiz() {
                 Revisá el listado y tomá acción.
               </p>
 
-              <ul className="mt-5 flex flex-col gap-2.5">
-                {pendingGroups.flatMap((g) =>
-                  g.items.map((v) => (
-                    <li
-                      key={`${g.id}-${v.name}`}
-                      className="rounded-[12px] bg-[#F3F0F8] px-4 py-3"
-                    >
-                      <p className="text-[14px] font-bold text-[#503C77]">
-                        {v.name}
+              <div className="mt-5 flex flex-col gap-6">
+                {pendingGroups.map((g) => (
+                  <div key={g.id}>
+                    <div className="flex items-center gap-2">
+                      <span
+                        className="h-2 w-2 shrink-0 rounded-full bg-[#503C77]"
+                        aria-hidden
+                      />
+                      <p className="text-[12px] font-extrabold uppercase tracking-wide text-[#503C77]">
+                        {g.title}
                       </p>
-                      <p className="mt-0.5 text-[12px] text-muted">{v.detail}</p>
-                    </li>
-                  )),
-                )}
-              </ul>
+                    </div>
+                    <ul className="mt-3 flex flex-col gap-2.5">
+                      {g.items.map((v) => (
+                        <li
+                          key={`${g.id}-${v.name}`}
+                          className="flex gap-3 rounded-[12px] bg-[#F3F0F8] px-4 py-3.5"
+                        >
+                          <span
+                            className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-[#503C77]"
+                            aria-hidden
+                          />
+                          <div>
+                            <p className="text-[15px] font-bold text-[#503C77]">
+                              {v.name}
+                            </p>
+                            <p className="mt-0.5 text-[13px] text-muted">
+                              {v.detail}
+                            </p>
+                          </div>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
 
-              <div className="mt-5 flex gap-3 rounded-[12px] bg-[#FEF2F2] p-4">
+              <div className="mt-5 flex gap-3 rounded-[12px] bg-[#FFF5F5] p-4">
                 <span
-                  className="material-symbols-outlined shrink-0 text-[22px] text-[#EF4444]"
+                  className="material-symbols-outlined shrink-0 text-[20px] text-[#EF4444]"
                   aria-hidden
                 >
                   warning
                 </span>
-                <p className="text-[13px] leading-[1.5] text-[#7F1D1D]">
-                  Este resultado es orientativo. Siempre consultá con tu médico
-                  o pediatra para confirmar el calendario de vacunación.
+                <p className="text-[13px] leading-[1.55] text-[#7F1D1D]">
+                  {SHARE_WARNING}
                 </p>
               </div>
 
               <button
                 type="button"
                 onClick={() => {
-                  const canvas = buildCanvas(
-                    age,
-                    pendingGroups.map((g) => ({
-                      title: g.title,
-                      hex: TONE[g.tone].hex,
-                      items: g.items,
-                    })),
-                  );
-                  void downloadImage(canvas);
+                  void (async () => {
+                    const canvas = await buildCanvas(
+                      pendingCount,
+                      pendingGroups.map((g) => ({
+                        title: g.title,
+                        items: g.items,
+                      })),
+                    );
+                    await downloadImage(canvas);
+                  })();
                 }}
                 className="mt-6 flex w-full items-center justify-center gap-2 rounded-[10px] bg-[#503C77] py-3.5 text-[15px] font-bold text-white transition hover:brightness-110"
               >

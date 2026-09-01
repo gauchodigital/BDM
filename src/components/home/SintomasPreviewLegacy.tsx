@@ -80,7 +80,7 @@ export function SintomasPreviewLegacy({
           early={early}
           alarm={alarm}
           warningText={HOME_WARNING}
-          className="relative mt-8 md:hidden"
+          className="relative mt-8 lg:hidden"
         />
 
         <SintomasDesktopTimelineLegacy
@@ -88,20 +88,22 @@ export function SintomasPreviewLegacy({
           early={early}
           alarm={alarm}
           warningText={HOME_WARNING}
-          className="relative mt-10 hidden md:block"
+          className="relative mt-10 hidden lg:block"
         />
 
         {showMoreLink && (
           <Reveal delay={200}>
-            <Link
-              href="/sintomas"
-              className="mt-8 flex w-full items-center justify-center gap-2 rounded-[10px] bg-primary py-3.5 text-[15px] font-bold text-white transition hover:brightness-110 md:inline-flex md:w-auto md:min-w-[200px] md:px-8"
-            >
-              Conocé más
-              <span aria-hidden className="text-lg leading-none">
-                →
-              </span>
-            </Link>
+            <div className="mt-8 flex justify-center">
+              <Link
+                href="/sintomas"
+                className="flex w-full min-w-[200px] items-center justify-center gap-2 rounded-[10px] bg-primary px-8 py-3.5 text-[15px] font-bold text-white transition hover:brightness-110 md:w-auto"
+              >
+                Conocé más
+                <span aria-hidden className="text-lg leading-none">
+                  →
+                </span>
+              </Link>
+            </div>
           </Reveal>
         )}
       </div>

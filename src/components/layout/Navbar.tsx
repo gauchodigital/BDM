@@ -2,10 +2,8 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Button } from "@/components/ui/Button";
 import { LogoManito } from "@/components/layout/LogoManito";
-import { VACUNARSE_URL, SITE_NAME } from "@/lib/siteLinks";
-import { TRACK } from "@/lib/analytics";
+import { SITE_NAME } from "@/lib/siteLinks";
 import { NAV_LINKS } from "@/lib/navLinks";
 
 export function Navbar() {
@@ -114,16 +112,6 @@ export function Navbar() {
               </Link>
             );
           })}
-          <Button
-            href={VACUNARSE_URL}
-            external
-            variant="onPrimary"
-            className="!px-4 !py-2 text-xs"
-            trackEvent={TRACK.events.vacunarseClick}
-            trackLocation="navbar"
-          >
-            Vacunarse ahora
-          </Button>
         </div>
       </nav>
     </header>

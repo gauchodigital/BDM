@@ -6,7 +6,7 @@ import type { CausaData } from "@/lib/causasData";
 export function CausasPreview({ causas }: { causas: CausaData[] }) {
   return (
     <>
-      <section id="causas" className="section-pad scroll-mt-16 bg-white">
+      <section id="causas" className="section-pad scroll-mt-16 bg-[linear-gradient(180deg,#FFFFFF_0%,#F8F6FB_45%,#FFFFFF_100%)]">
         <div className="mx-auto w-full max-w-7xl px-6 md:px-8">
           <Reveal>
             <div className="max-w-2xl lg:max-w-none">
@@ -30,10 +30,10 @@ export function CausasPreview({ causas }: { causas: CausaData[] }) {
             </div>
           </Reveal>
 
-          <div className="mt-8 flex flex-col gap-4 md:grid md:grid-cols-2 md:gap-5 lg:grid-cols-4">
+          <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:mt-12 lg:gap-6 xl:grid-cols-4">
             {causas.map((causa, i) => (
               <Reveal key={causa.id} delay={i * 70} className="h-full">
-                <CausaSpotlightCard causa={causa} />
+                <CausaSpotlightCard causa={causa} ctaLabel="Leer más" />
               </Reveal>
             ))}
           </div>

@@ -3,14 +3,12 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { Section } from "@/components/ui/Section";
 import { Chip } from "@/components/ui/Chip";
-import { Button } from "@/components/ui/Button";
 import { RichText } from "@/components/ui/RichText";
 import { BacterianaPage } from "@/components/causas/BacterianaPage";
 import { FungicaPage } from "@/components/causas/FungicaPage";
 import { ParasitariaPage } from "@/components/causas/ParasitariaPage";
 import { ViralPage } from "@/components/causas/ViralPage";
 import { getCausaBySlug } from "@/lib/causasData";
-import { WHATSAPP_URL } from "@/lib/siteLinks";
 
 export const dynamic = "force-dynamic";
 
@@ -99,11 +97,6 @@ export default async function CausaDetailPage({ params }: Props) {
             <RichText text={p} />
           </p>
         ))}
-      </div>
-      <div className="mt-10">
-        <Button href={WHATSAPP_URL} external variant="primary">
-          Consultar por WhatsApp
-        </Button>
       </div>
     </Section>
   );

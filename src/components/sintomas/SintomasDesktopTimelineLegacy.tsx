@@ -25,8 +25,15 @@ function useTimelineScrollProgress(ref: RefObject<HTMLElement | null>) {
     const compute = () => {
       const rect = el.getBoundingClientRect();
       const vh = window.innerHeight;
-      const line = vh * 0.62;
-      setFill(Math.max(0, Math.min(1, (line - rect.top) / rect.height)));
+      // Completa la animación en ~40% del viewport, sin depender de toda la altura del bloque.
+      const start = vh * 0.82;
+      const end = vh * 0.38;
+      const range = start - end;
+      setFill(
+        range > 0
+          ? Math.max(0, Math.min(1, (start - rect.top) / range))
+          : 1,
+      );
     };
     const onScroll = () => {
       cancelAnimationFrame(raf);
@@ -46,13 +53,13 @@ function useTimelineScrollProgress(ref: RefObject<HTMLElement | null>) {
   return fill;
 }
 
-/** Timeline desktop anterior: línea horizontal + dos columnas. */
+/** Timeline desktop horizontal: línea con 3 nodos + dos columnas de tarjetas. */
 export function SintomasDesktopTimelineLegacy({
   early,
   alarm,
   warningText = DEFAULT_WARNING,
   showWarningMarker = true,
-  className = "relative mt-10 hidden md:block",
+  className = "relative mt-10 hidden lg:block",
 }: {
   early: SintomaData[];
   alarm: SintomaData[];
@@ -63,32 +70,33 @@ export function SintomasDesktopTimelineLegacy({
   const ref = useRef<HTMLDivElement>(null);
   const fill = useTimelineScrollProgress(ref);
 
-  const earlyActive = fill >= 0.12;
-  const alarmActive = fill >= 0.48;
-  const warningActive = fill >= 0.88;
+  const earlyActive = fill >= 0.08;
+  const alarmActive = fill >= 0.38;
+  const warningActive = fill >= 0.72;
 
   const earlyCfg = SINTOMA_PHASE_UI.early;
   const alarmCfg = SINTOMA_PHASE_UI.alarm;
 
   return (
     <div ref={ref} className={className}>
-      <div className="relative mx-auto mb-8 max-w-4xl px-6 lg:mb-10">
+      {/* Línea de tiempo horizontal — de 0–12 h (inicio) a Alerta (fin) */}
+      <div className="relative mb-8 lg:mb-10">
         <div
           aria-hidden
-          className="absolute left-[8%] right-[8%] top-5 h-0.5 rounded-full bg-[#E8E4EC] lg:left-[10%] lg:right-[10%]"
+          className="pointer-events-none absolute left-5 right-5 top-5 h-0.5 rounded-full bg-[#E8E4EC]"
         />
         <div
           aria-hidden
-          className="absolute left-[8%] top-5 h-0.5 rounded-full transition-[width] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] lg:left-[10%]"
+          className="pointer-events-none absolute left-5 top-5 h-0.5 rounded-full transition-[width] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
           style={{
-            width: `calc((84% - 0px) * ${fill})`,
+            width: `calc((100% - 2.5rem) * ${fill})`,
             background:
               "linear-gradient(90deg, #503C77 0%, #503C77 42%, #DD876E 72%, #EF4444 100%)",
           }}
         />
 
         <div className="relative flex items-start justify-between">
-          <div className="flex w-[30%] flex-col items-center text-center">
+          <div className="flex flex-col items-center text-center">
             <span
               className={`flex h-10 w-10 items-center justify-center rounded-full ring-2 transition-all duration-500 ${
                 earlyActive ? earlyCfg.markerActive : earlyCfg.markerIdle
@@ -108,7 +116,7 @@ export function SintomasDesktopTimelineLegacy({
             </p>
           </div>
 
-          <div className="flex w-[30%] flex-col items-center text-center">
+          <div className="flex flex-col items-center text-center">
             <span
               className={`flex h-10 w-10 items-center justify-center rounded-full ring-2 transition-all duration-500 ${
                 alarmActive ? alarmCfg.markerActive : alarmCfg.markerIdle
@@ -129,7 +137,7 @@ export function SintomasDesktopTimelineLegacy({
           </div>
 
           {showWarningMarker ? (
-            <div className="flex w-[30%] flex-col items-center text-center">
+            <div className="flex flex-col items-center text-center">
               <span
                 className={`flex h-10 w-10 items-center justify-center rounded-full ring-2 transition-all duration-500 ${
                   warningActive
@@ -154,17 +162,18 @@ export function SintomasDesktopTimelineLegacy({
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-6 lg:gap-8">
+      {/* Tarjetas lado a lado */}
+      <div className="grid grid-cols-2 gap-5 lg:gap-6">
         {early.length > 0 ? (
           <div
-            className={`rounded-[16px] bg-[#F3F0F8] p-6 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] lg:p-8 ${
+            className={`rounded-[20px] border-l-4 border-primary bg-[#F3F0F8] p-6 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] lg:p-6 ${
               earlyActive
                 ? "translate-y-0 opacity-100 shadow-[0_8px_28px_rgba(80,60,119,0.08)]"
                 : "translate-y-3 opacity-70"
             }`}
           >
             <PhaseHeader phase="early" showTimelineDot={false} />
-            <ul className="flex flex-col gap-3">
+            <ul className="mt-4 flex flex-col gap-2">
               {early.map((s, i) => (
                 <li
                   key={s.id}
@@ -173,9 +182,9 @@ export function SintomasDesktopTimelineLegacy({
                       ? "translate-y-0 opacity-100"
                       : "translate-y-2 opacity-0"
                   }`}
-                  style={{ transitionDelay: `${i * 60}ms` }}
+                  style={{ transitionDelay: earlyActive ? `${i * 60}ms` : "0ms" }}
                 >
-                  <SymptomCard item={s} phase="early" />
+                  <SymptomCard item={s} phase="early" compact />
                 </li>
               ))}
             </ul>
@@ -184,14 +193,14 @@ export function SintomasDesktopTimelineLegacy({
 
         {alarm.length > 0 ? (
           <div
-            className={`rounded-[16px] bg-[#FDF0EC] p-6 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] lg:p-8 ${
+            className={`rounded-[20px] border-r-4 border-[#DD876E] bg-[#FDF0EC] p-6 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] lg:p-6 ${
               alarmActive
                 ? "translate-y-0 opacity-100 shadow-[0_8px_28px_rgba(221,135,110,0.12)]"
                 : "translate-y-3 opacity-70"
             }`}
           >
             <PhaseHeader phase="alarm" showTimelineDot={false} />
-            <ul className="flex flex-col gap-3">
+            <ul className="mt-4 flex flex-col gap-2">
               {alarm.map((s, i) => (
                 <li
                   key={s.id}
@@ -200,38 +209,32 @@ export function SintomasDesktopTimelineLegacy({
                       ? "translate-y-0 opacity-100"
                       : "translate-y-2 opacity-0"
                   }`}
-                  style={{ transitionDelay: `${i * 60}ms` }}
+                  style={{ transitionDelay: alarmActive ? `${i * 60}ms` : "0ms" }}
                 >
-                  <SymptomCard item={s} phase="alarm" />
+                  <SymptomCard item={s} phase="alarm" compact />
                 </li>
               ))}
             </ul>
-            {showWarningMarker ? (
-              <div
-                className={`mt-3 flex items-start gap-3 transition-all duration-700 ${
-                  warningActive
-                    ? "translate-y-0 opacity-100"
-                    : "translate-y-2 opacity-0"
-                }`}
-              >
-                <span
-                  className="mt-2 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#EF4444] text-white"
-                  aria-hidden
-                >
-                  <span className="material-symbols-outlined text-[18px] leading-none">
-                    warning
-                  </span>
-                </span>
-                <div className="flex-1 rounded-[8px] bg-[#FEF2F2] px-4 py-[14px] shadow-[inset_0_0_0_2px_#EF4444]">
-                  <p className="text-[12px] font-bold leading-snug text-[#7F1D1D]">
-                    {warningText}
-                  </p>
-                </div>
-              </div>
-            ) : null}
           </div>
         ) : null}
       </div>
+
+      {/* Aviso médico — debajo, centrado */}
+      {showWarningMarker ? (
+        <div
+          className={`mx-auto mt-6 max-w-md transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+            warningActive
+              ? "translate-y-0 opacity-100"
+              : "translate-y-2 opacity-0"
+          }`}
+        >
+          <div className="rounded-[10px] bg-[#FEF2F2] px-4 py-3.5 shadow-[inset_0_0_0_2px_#EF4444]">
+            <p className="text-center text-[12px] font-bold leading-snug text-[#7F1D1D] lg:text-[13px]">
+              {warningText}
+            </p>
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 }

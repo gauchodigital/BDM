@@ -3,53 +3,14 @@
 import { useState } from "react";
 import type { VacunaEtapa } from "@/lib/vacunacionData";
 
-/** Idle/active usan prefijo lg: — en mobile el activo sigue siendo primary. */
-const ETAPA_STYLE: Record<
-  string,
-  { idle: string; active: string; dot: string }
-> = {
-  embarazadas: {
-    idle: "lg:border-0 lg:bg-[#F8E4DE] lg:text-[#8B4A3C]",
-    active:
-      "lg:bg-[#F0C4B8] lg:text-[#442748] lg:ring-2 lg:ring-[#E07A6A]/35",
-    dot: "bg-[#E07A6A]",
-  },
-  "recien-nacidos": {
-    idle: "lg:border-0 lg:bg-[#D6E4EF] lg:text-primary",
-    active: "lg:bg-light lg:text-primary lg:ring-2 lg:ring-primary/25",
-    dot: "bg-light",
-  },
-  "hasta-1-anio": {
-    idle: "lg:border-0 lg:bg-[#E8E2F0] lg:text-primary",
-    active: "lg:bg-primary lg:text-white lg:ring-2 lg:ring-primary/30",
-    dot: "bg-primary",
-  },
-  "hasta-2-anios": {
-    idle: "lg:border-0 lg:bg-[#D4EBE8] lg:text-[#2F6B64]",
-    active: "lg:bg-[#5BA8A0] lg:text-white lg:ring-2 lg:ring-[#5BA8A0]/35",
-    dot: "bg-[#5BA8A0]",
-  },
-  "nacidos-2021": {
-    idle: "lg:border-0 lg:bg-[#F5EDC8] lg:text-[#6B5A1A]",
-    active: "lg:bg-[#E8C84A] lg:text-[#442748] lg:ring-2 lg:ring-[#E8C84A]/40",
-    dot: "bg-[#E8C84A]",
-  },
-  "nacidos-2018": {
-    idle: "lg:border-0 lg:bg-[#EDEAF2] lg:text-primary",
-    active: "lg:bg-[#C8C0D8] lg:text-primary lg:ring-2 lg:ring-secondary/35",
-    dot: "bg-secondary",
-  },
-  "jovenes-adultos": {
-    idle: "lg:border-0 lg:bg-[#E8E8EC] lg:text-dark",
-    active: "lg:bg-[#9A96A8] lg:text-white lg:ring-2 lg:ring-[#9A96A8]/35",
-    dot: "bg-[#9A96A8]",
-  },
-};
-
-const FALLBACK = {
-  idle: "",
-  active: "lg:bg-primary lg:text-white",
-  dot: "bg-primary",
+const ETAPA_THEME: Record<string, string> = {
+  embarazadas: "bg-[#F8E4DE] text-[#8B4A3C]",
+  "recien-nacidos": "bg-[#D6E4EF] text-primary",
+  "hasta-1-anio": "bg-[#E8E2F0] text-primary",
+  "hasta-2-anios": "bg-[#D4EBE8] text-[#2F6B64]",
+  "nacidos-2021": "bg-[#F5EDC8] text-[#6B5A1A]",
+  "nacidos-2018": "bg-[#EDEAF2] text-primary",
+  "jovenes-adultos": "bg-[#E8E8EC] text-dark",
 };
 
 function chipLabel(etapa: VacunaEtapa, desktop: boolean) {
@@ -60,6 +21,36 @@ function chipLabel(etapa: VacunaEtapa, desktop: boolean) {
   if (etapa.id === "nacidos-2021") return "Nacidos en 2021";
   if (etapa.id === "nacidos-2018") return "Nacidos en 2015";
   return etapa.label;
+}
+
+function VacunaCards({
+  vacunas,
+  columns = false,
+}: {
+  vacunas: VacunaEtapa["grupos"][number]["vacunas"];
+  columns?: boolean;
+}) {
+  return (
+    <ul
+      className={`flex flex-col gap-2 ${columns ? "lg:grid lg:grid-cols-2 lg:gap-3" : ""}`}
+    >
+      {vacunas.map((v) => (
+        <li
+          key={v.nombre}
+          className="rounded-[12px] border border-[#E8E4EC] bg-white px-4 py-3"
+        >
+          <p className="text-[15px] font-bold leading-snug text-accent lg:text-[16px]">
+            {v.nombre}
+          </p>
+          {v.detalle ? (
+            <p className="mt-0.5 text-[14px] leading-[1.45] text-muted">
+              {v.detalle}
+            </p>
+          ) : null}
+        </li>
+      ))}
+    </ul>
+  );
 }
 
 export function VacunasEtapasPanel({
@@ -80,40 +71,67 @@ export function VacunasEtapasPanel({
 
   if (!active) return null;
 
-  const activeStyle = ETAPA_STYLE[active.id] ?? FALLBACK;
-
   return (
     <div className="mt-8 flex flex-col gap-6 lg:mt-10">
       <p className="text-[11px] font-bold uppercase leading-normal tracking-[1.3px] text-muted">
         {selectLabel}
       </p>
 
-      <div className="flex flex-wrap gap-2 lg:gap-3">
+      {/* Mobile tabs */}
+      <div className="flex flex-wrap gap-2 lg:hidden">
         {etapas.map((etapa) => {
           const isActive = etapa.id === active.id;
-          const style = ETAPA_STYLE[etapa.id] ?? FALLBACK;
-
           return (
             <button
               key={etapa.id}
               type="button"
               onClick={() => setActiveId(etapa.id)}
-              className={`inline-flex h-9 items-center gap-1.5 rounded-[22px] px-3 py-1.5 text-[13px] font-bold leading-[16.8px] transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] lg:h-10 lg:px-4 ${
+              className={`inline-flex h-9 items-center gap-1.5 rounded-[22px] px-3 py-1.5 text-[13px] font-bold leading-[16.8px] transition-all duration-300 ${
                 isActive
-                  ? `scale-[1.03] bg-primary text-white shadow-[0_4px_14px_rgba(80,60,119,0.28)] max-lg:bg-primary max-lg:text-white ${style.active}`
-                  : `border border-light bg-white text-dark/50 hover:scale-[1.02] hover:text-dark/80 max-lg:border max-lg:border-light max-lg:bg-white ${style.idle}`
+                  ? "scale-[1.03] bg-primary text-white shadow-[0_4px_14px_rgba(80,60,119,0.28)]"
+                  : "border border-light bg-white text-dark/50 hover:text-dark/80"
               }`}
             >
-              <span className="material-symbols-outlined text-[22px] leading-none transition-transform duration-300 lg:text-[24px]">
+              <span className="material-symbols-outlined text-[22px] leading-none">
                 {etapa.icon}
               </span>
-              <span className="lg:hidden">{chipLabel(etapa, false)}</span>
-              <span className="hidden lg:inline">{chipLabel(etapa, true)}</span>
+              <span>{chipLabel(etapa, false)}</span>
             </button>
           );
         })}
       </div>
 
+      {/* Desktop tabs — bandeja gris con píldoras de color */}
+      <div className="hidden rounded-[14px] bg-[#F0EDF5] p-2.5 lg:block">
+        <div className="flex flex-wrap gap-2" role="tablist">
+          {etapas.map((etapa) => {
+            const isActive = etapa.id === active.id;
+            const theme = ETAPA_THEME[etapa.id] ?? "bg-white text-dark";
+
+            return (
+              <button
+                key={etapa.id}
+                type="button"
+                role="tab"
+                aria-selected={isActive}
+                onClick={() => setActiveId(etapa.id)}
+                className={`inline-flex h-10 items-center gap-2 rounded-full px-4 text-[12px] font-bold leading-tight transition-all duration-200 xl:text-[13px] ${
+                  isActive
+                    ? "bg-primary text-white shadow-[0_4px_14px_rgba(80,60,119,0.3)]"
+                    : theme
+                }`}
+              >
+                <span className="material-symbols-outlined text-[20px] leading-none xl:text-[22px]">
+                  {etapa.icon}
+                </span>
+                <span>{chipLabel(etapa, true)}</span>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Mobile content */}
       <div key={active.id} className="animate-fade-up flex flex-col gap-4 lg:hidden">
         <div className="rounded-xl bg-primary p-4">
           <div className="flex items-start gap-3">
@@ -143,72 +161,37 @@ export function VacunasEtapasPanel({
               >
                 {grupo.badge}
               </span>
-              <ul className="flex flex-col gap-2">
-                {grupo.vacunas.map((v) => (
-                  <li
-                    key={`${grupo.id}-${v.nombre}`}
-                    className="rounded-xl border border-light bg-white p-3"
-                  >
-                    <p className="text-[16px] font-bold leading-[22px] text-primary">
-                      {v.nombre}
-                    </p>
-                    {v.detalle ? (
-                      <p className="text-[15px] leading-6 text-dark">
-                        {v.detalle}
-                      </p>
-                    ) : null}
-                  </li>
-                ))}
-              </ul>
+              <VacunaCards vacunas={grupo.vacunas} />
             </div>
           ))}
         </div>
       </div>
 
-      <div
+      {/* Desktop content — panel único con grilla 2 columnas */}
+      <article
         key={`desktop-${active.id}`}
-        className={`animate-fade-up hidden gap-6 lg:grid ${
-          active.grupos.length > 1
-            ? "lg:grid-cols-2"
-            : "lg:max-w-2xl lg:grid-cols-1"
-        }`}
+        className="animate-fade-up hidden rounded-[16px] border border-[#E8E4EC] bg-white p-6 shadow-[0_4px_24px_rgba(80,60,119,0.06)] lg:block xl:p-7"
       >
         {active.grupos.map((grupo, idx) => (
-          <article
+          <div
             key={grupo.id}
-            className="flex flex-col gap-5 rounded-[16px] border border-[#E8E4EC] bg-white p-6 shadow-[0_4px_20px_rgba(68,39,75,0.06)]"
+            className={
+              idx > 0 ? "mt-8 border-t border-[#F0EDF5] pt-8" : undefined
+            }
           >
-            <div className="flex items-center gap-3">
+            <div className="mb-5 flex items-center gap-3">
               <span
-                className={`size-3 shrink-0 rounded-full ${
-                  idx === 0 ? activeStyle.dot : "bg-primary"
-                }`}
+                className="size-3 shrink-0 rounded-full bg-primary"
                 aria-hidden
               />
-              <h3 className="text-[18px] font-bold uppercase tracking-[0.04em] text-primary">
+              <h3 className="text-[15px] font-bold uppercase tracking-[0.06em] text-primary xl:text-[16px]">
                 {grupo.badge}
               </h3>
             </div>
-            <ul className="flex flex-col gap-3">
-              {grupo.vacunas.map((v) => (
-                <li
-                  key={`${grupo.id}-${v.nombre}`}
-                  className="rounded-xl border border-[#E5E5E5] bg-white p-4"
-                >
-                  <p className="text-[16px] font-bold leading-[22px] text-accent">
-                    {v.nombre}
-                  </p>
-                  {v.detalle ? (
-                    <p className="mt-1 text-[14px] leading-[1.5] text-muted">
-                      {v.detalle}
-                    </p>
-                  ) : null}
-                </li>
-              ))}
-            </ul>
-          </article>
+            <VacunaCards vacunas={grupo.vacunas} columns />
+          </div>
         ))}
-      </div>
+      </article>
     </div>
   );
 }

@@ -4,10 +4,8 @@ import Link from "next/link";
 import { useState } from "react";
 import { RichText } from "@/components/ui/RichText";
 import { Reveal } from "@/components/ui/Reveal";
-import {
-  SintomasDesktopTimeline,
-  SintomasMobileTimeline,
-} from "@/components/sintomas/SintomasTimeline";
+import { SintomasMobileTimeline } from "@/components/sintomas/SintomasTimeline";
+import { SintomasDesktopTimelineLegacy } from "@/components/sintomas/SintomasDesktopTimelineLegacy";
 import {
   ADULTOS_TIMELINE,
   LACTANTES_RN_TIMELINE,
@@ -84,7 +82,7 @@ export function SintomasPreview({
           className="relative mt-8 lg:hidden"
         />
 
-        <SintomasDesktopTimeline
+        <SintomasDesktopTimelineLegacy
           key={`desktop-${sub}`}
           early={early}
           alarm={alarm}
@@ -94,15 +92,17 @@ export function SintomasPreview({
 
         {showMoreLink && (
           <Reveal delay={200}>
-            <Link
-              href="/sintomas"
-              className="mt-8 flex w-full items-center justify-center gap-2 rounded-[10px] bg-primary py-3.5 text-[15px] font-bold text-white transition hover:brightness-110 lg:mt-6 lg:inline-flex lg:w-auto lg:min-w-[200px] lg:px-8"
-            >
-              Conocé más
-              <span aria-hidden className="text-lg leading-none">
-                →
-              </span>
-            </Link>
+            <div className="mt-8 flex justify-center lg:mt-6">
+              <Link
+                href="/sintomas"
+                className="flex w-full min-w-[200px] items-center justify-center gap-2 rounded-[10px] bg-primary px-8 py-3.5 text-[15px] font-bold text-white transition hover:brightness-110 lg:w-auto"
+              >
+                Conocé más
+                <span aria-hidden className="text-lg leading-none">
+                  →
+                </span>
+              </Link>
+            </div>
           </Reveal>
         )}
       </div>

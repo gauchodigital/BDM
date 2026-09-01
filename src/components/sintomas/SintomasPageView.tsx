@@ -3,10 +3,8 @@
 import { useState } from "react";
 import { RichText } from "@/components/ui/RichText";
 import { Reveal } from "@/components/ui/Reveal";
-import {
-  SintomasDesktopTimeline,
-  SintomasMobileTimeline,
-} from "@/components/sintomas/SintomasTimeline";
+import { SintomasMobileTimeline } from "@/components/sintomas/SintomasTimeline";
+import { SintomasDesktopTimelineLegacy } from "@/components/sintomas/SintomasDesktopTimelineLegacy";
 import {
   ADULTOS_TIMELINE,
   LACTANTES_RN_TIMELINE,
@@ -77,7 +75,7 @@ export function SintomasPageView() {
               className="relative lg:hidden"
             />
 
-            <SintomasDesktopTimeline
+            <SintomasDesktopTimelineLegacy
               early={early}
               alarm={alarm}
               warningText={WARNING_SHORT}

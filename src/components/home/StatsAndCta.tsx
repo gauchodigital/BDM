@@ -2,7 +2,6 @@ import { Button } from "@/components/ui/Button";
 import { Section } from "@/components/ui/Section";
 import { VACUNARSE_URL } from "@/lib/siteLinks";
 import { TRACK } from "@/lib/analytics";
-
 export function StatsSection() {
   return (
     <Section tone="white">
@@ -38,12 +37,10 @@ export function FinalCtaSection() {
         <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
           <Button
             href={VACUNARSE_URL}
-            external
             variant="primary"
             trackEvent={TRACK.events.vacunarseClick}
             trackLocation="final-cta"
-          >
-            Vacunarse ahora
+          >            Vacunarse ahora
           </Button>
           <Button href="/vacunacion" variant="secondary">
             Ver información

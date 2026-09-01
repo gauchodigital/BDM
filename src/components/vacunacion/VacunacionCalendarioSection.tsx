@@ -40,7 +40,7 @@ export function VacunacionCalendarioSection({
               <a
                 href={calendarioPdfUrl}
                 download="calendario-vacunacion-gsk-2026.pdf"
-                className="inline-flex h-[52px] w-full items-center justify-center gap-2 rounded-lg bg-[#DD876E] px-5 text-[15px] font-bold text-[#442748] transition hover:brightness-105 sm:w-auto sm:min-w-[240px]"
+                className="inline-flex h-[52px] w-full items-center justify-center gap-2 rounded-lg bg-[#DD876E] px-5 text-[15px] font-bold text-white transition hover:brightness-105 sm:w-auto sm:min-w-[240px]"
               >
                 Descargar calendario
                 <span className="material-symbols-outlined text-[20px] leading-none">
