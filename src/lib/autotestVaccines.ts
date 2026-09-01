@@ -1,4 +1,4 @@
-/** Vacunas orientativas por edad — Calendario Nacional AR. Validar con cliente. */
+/** Vacunas orientativas por edad — alineado al Calendario Nacional / Figma GSK 2026. */
 
 export type Vaccine = { name: string; detail: string };
 export type VaccineReco = { calendario: Vaccine[]; recomendadas: Vaccine[] };
@@ -19,255 +19,353 @@ export function ageBadge(months: number): string {
   return `${years} ${years === 1 ? "año" : "años"}`;
 }
 
+const MEN_B: Vaccine = {
+  name: "Meningococo B",
+  detail: "Vacunación particular · consultar esquema con tu pediatra",
+};
+
+const COVID: Vaccine = {
+  name: "COVID-19",
+  detail: "Según esquema vigente",
+};
+
+const SEXTUPLE_1: Vaccine = {
+  name: "Séxtuple",
+  detail: "1ª dosis · difteria, tétanos, tos convulsa, Hib, hepatitis B y polio",
+};
+
+const SEXTUPLE_2: Vaccine = {
+  name: "Séxtuple",
+  detail: "2ª dosis",
+};
+
+const SEXTUPLE_3: Vaccine = {
+  name: "Séxtuple",
+  detail: "3ª dosis (6 meses)",
+};
+
+const ROTAVIRUS_1: Vaccine = {
+  name: "Rotavirus",
+  detail: "1ª dosis (vía oral)",
+};
+
+const ROTAVIRUS_2: Vaccine = {
+  name: "Rotavirus",
+  detail: "2ª dosis",
+};
+
+const NEUMO_1: Vaccine = {
+  name: "Neumococo conjugada",
+  detail: "1ª dosis",
+};
+
+const NEUMO_2: Vaccine = {
+  name: "Neumococo conjugada",
+  detail: "2ª dosis",
+};
+
+const NEUMO_REF: Vaccine = {
+  name: "Neumococo conjugada",
+  detail: "Refuerzo (12 meses)",
+};
+
+const MEN_ACWY_1: Vaccine = {
+  name: "Meningococo conjugada tetravalente (ACWY)",
+  detail: "1ª dosis (3 meses)",
+};
+
+const MEN_ACWY_2: Vaccine = {
+  name: "Meningococo conjugada tetravalente (ACWY)",
+  detail: "2ª dosis (5 meses)",
+};
+
+const MEN_ACWY_REF: Vaccine = {
+  name: "Meningococo conjugada tetravalente (ACWY)",
+  detail: "Refuerzo (15 meses)",
+};
+
 export function recommendVaccines(months: number): VaccineReco {
   const years = Math.floor(months / 12);
 
-  if (months < 2)
+  // Recién nacido
+  if (months < 2) {
     return {
       calendario: [
-        { name: "BCG", detail: "Tuberculosis · dosis única al nacer" },
         {
           name: "Hepatitis B",
           detail: "Dentro de las primeras 12 horas de vida",
         },
+        { name: "BCG", detail: "Tuberculosis · dosis única al nacer" },
       ],
       recomendadas: [],
     };
+  }
 
-  if (months < 4)
+  // 2 meses
+  if (months < 3) {
     return {
-      calendario: [
-        {
-          name: "Pentavalente (5 en 1)",
-          detail:
-            "1ª dosis · difteria, tétanos, tos convulsa, Hib y hepatitis B",
-        },
-        { name: "Salk (IPV)", detail: "Poliomielitis · 1ª dosis" },
-        { name: "Neumococo conjugada", detail: "1ª dosis" },
-        { name: "Rotavirus", detail: "1ª dosis (vía oral)" },
-        {
-          name: "Meningococo ACYW",
-          detail: "1ª dosis (desde los 3 meses)",
-        },
-      ],
-      recomendadas: [
-        {
-          name: "Meningococo B",
-          detail: "Vacunación particular · consultar esquema",
-        },
-      ],
+      calendario: [ROTAVIRUS_1, NEUMO_1, SEXTUPLE_1],
+      recomendadas: [],
     };
+  }
 
-  if (months < 6)
+  // 3 meses
+  if (months < 4) {
     return {
-      calendario: [
-        { name: "Pentavalente (5 en 1)", detail: "2ª dosis" },
-        { name: "Salk (IPV)", detail: "2ª dosis" },
-        { name: "Neumococo conjugada", detail: "2ª dosis" },
-        { name: "Rotavirus", detail: "2ª dosis" },
-        {
-          name: "Meningococo ACYW",
-          detail: "2ª dosis (a los 5 meses)",
-        },
-      ],
-      recomendadas: [
-        {
-          name: "Meningococo B",
-          detail: "Vacunación particular · consultar esquema",
-        },
-      ],
+      calendario: [MEN_ACWY_1],
+      recomendadas: [MEN_B],
     };
+  }
 
-  if (months < 12)
+  // 4 meses
+  if (months < 5) {
     return {
-      calendario: [
-        { name: "Pentavalente (5 en 1)", detail: "3ª dosis (6 meses)" },
-        { name: "Salk (IPV)", detail: "3ª dosis (6 meses)" },
-        {
-          name: "Gripe",
-          detail: "Anual · 2 dosis el primer año (desde los 6 meses)",
-        },
-      ],
-      recomendadas: [
-        { name: "COVID-19", detail: "Según esquema vigente" },
-        {
-          name: "Meningococo B",
-          detail: "Vacunación particular · consultar esquema",
-        },
-      ],
+      calendario: [ROTAVIRUS_2, NEUMO_2, SEXTUPLE_2],
+      recomendadas: [],
     };
+  }
 
-  if (months < 15)
+  // 5 meses
+  if (months < 6) {
+    return {
+      calendario: [MEN_ACWY_2],
+      recomendadas: [MEN_B],
+    };
+  }
+
+  // 6–11 meses
+  if (months < 12) {
     return {
       calendario: [
+        { name: "Antigripal", detail: "Anual · desde los 6 meses" },
+        SEXTUPLE_3,
+      ],
+      recomendadas: [COVID],
+    };
+  }
+
+  // 12–14 meses
+  if (months < 15) {
+    return {
+      calendario: [
+        NEUMO_REF,
+        { name: "Hepatitis A", detail: "Dosis única (12 meses)" },
         {
-          name: "Triple viral (SRP)",
+          name: "Triple viral",
           detail: "1ª dosis · sarampión, rubéola y paperas",
         },
-        { name: "Neumococo conjugada", detail: "Refuerzo" },
-        { name: "Hepatitis A", detail: "Dosis única (12 meses)" },
-        { name: "Gripe", detail: "Dosis anual" },
       ],
-      recomendadas: [
-        {
-          name: "Meningococo B",
-          detail: "Vacunación particular · consultar esquema",
-        },
-      ],
+      recomendadas: [],
     };
+  }
 
-  if (months < 24)
+  // 15–17 meses
+  if (months < 18) {
     return {
       calendario: [
-        { name: "Meningococo ACYW", detail: "Refuerzo (15 meses)" },
-        {
-          name: "Cuádruple / Quíntuple bacteriana",
-          detail: "1er refuerzo (15-18 meses)",
-        },
         { name: "Varicela", detail: "1ª dosis (15 meses)" },
-        {
-          name: "Hepatitis A",
-          detail: "Si no la recibió a los 12 meses",
-        },
+        MEN_ACWY_REF,
       ],
-      recomendadas: [
-        { name: "Gripe", detail: "Dosis anual" },
-        {
-          name: "Meningococo B",
-          detail: "Vacunación particular · consultar esquema",
-        },
-      ],
+      recomendadas: [MEN_B],
     };
+  }
 
-  if (years < 5)
+  // 18–23 meses
+  if (months < 24) {
     return {
       calendario: [
         {
-          name: "Refuerzos pendientes",
-          detail: "Completá el esquema de los primeros 2 años",
+          name: "Quíntuple",
+          detail: "1er refuerzo (15–18 meses)",
         },
-      ],
-      recomendadas: [
-        { name: "Gripe", detail: "Dosis anual (grupos de riesgo)" },
-        { name: "COVID-19", detail: "Según esquema vigente" },
         {
-          name: "Meningococo B",
-          detail: "Vacunación particular · consultar esquema",
+          name: "Triple viral",
+          detail: "2ª dosis (15–18 meses)",
+        },
+        {
+          name: "Fiebre amarilla",
+          detail: "18 meses · residentes en zona de riesgo",
         },
       ],
+      recomendadas: [],
     };
+  }
 
-  if (years <= 6)
+  // 2–4 años — completar esquema infantil
+  if (years < 5) {
     return {
       calendario: [
         {
-          name: "Triple viral (SRP)",
-          detail: "2ª dosis (ingreso escolar)",
+          name: "Antigripal",
+          detail: "Dosis anual",
         },
         {
-          name: "Triple bacteriana celular (DTP)",
+          name: "Esquema infantil",
+          detail: "Verificá que estén completas las dosis de los primeros 2 años",
+        },
+      ],
+      recomendadas: [],
+    };
+  }
+
+  // 5 años (ingreso escolar)
+  if (years < 6) {
+    return {
+      calendario: [
+        { name: "Varicela", detail: "2ª dosis (ingreso escolar)" },
+        {
+          name: "Triple viral",
           detail: "Refuerzo (ingreso escolar)",
         },
-        { name: "Salk (IPV)", detail: "Refuerzo (ingreso escolar)" },
-        { name: "Varicela", detail: "2ª dosis" },
-      ],
-      recomendadas: [
-        { name: "Gripe", detail: "Dosis anual" },
         {
-          name: "Meningococo B",
-          detail: "Vacunación particular · consultar esquema",
+          name: "Polio inyectable (Salk)",
+          detail: "Refuerzo (ingreso escolar)",
+        },
+        {
+          name: "Triple bacteriana acelular",
+          detail: "Refuerzo (ingreso escolar)",
         },
       ],
+      recomendadas: [],
     };
+  }
 
-  if (years <= 10)
+  // 6–10 años
+  if (years < 11) {
     return {
       calendario: [
+        {
+          name: "Antigripal",
+          detail: "Dosis anual (grupos de riesgo)",
+        },
         {
           name: "Esquema al día",
           detail: "Verificá que estén completas las dosis previas",
         },
       ],
-      recomendadas: [
-        { name: "Gripe", detail: "Dosis anual (grupos de riesgo)" },
-        { name: "COVID-19", detail: "Según esquema vigente" },
-      ],
+      recomendadas: [],
     };
+  }
 
-  if (years <= 17)
+  // 11 años
+  if (years < 12) {
     return {
       calendario: [
         {
-          name: "VPH",
-          detail: "2 dosis desde los 11 años · virus del papiloma humano",
+          name: "Meningococo conjugada tetravalente (ACWY)",
+          detail: "Dosis a los 11 años",
         },
         {
-          name: "Triple bacteriana acelular (dTpa)",
+          name: "Triple bacteriana acelular",
           detail: "Refuerzo a los 11 años",
         },
-        { name: "Meningococo ACYW", detail: "Dosis a los 11 años" },
-        { name: "Triple viral (SRP)", detail: "Completar las 2 dosis" },
-        { name: "Hepatitis B", detail: "Completar esquema si falta" },
-      ],
-      recomendadas: [
-        { name: "Gripe", detail: "Dosis anual (grupos de riesgo)" },
-        { name: "COVID-19", detail: "Según esquema vigente" },
         {
-          name: "Meningococo B",
-          detail: "Vacunación particular · consultar esquema",
+          name: "HPV",
+          detail: "Virus del papiloma humano",
+        },
+        {
+          name: "Fiebre amarilla",
+          detail: "Residentes en zona de riesgo",
         },
       ],
+      recomendadas: [],
     };
+  }
 
-  if (years < 65)
+  // 12–14 años
+  if (years < 15) {
     return {
       calendario: [
         {
-          name: "Doble bacteriana (dT)",
+          name: "Triple viral",
+          detail: "Completar las 2 dosis",
+        },
+        {
+          name: "Hepatitis B",
+          detail: "Completar esquema si falta",
+        },
+        {
+          name: "Antigripal",
+          detail: "Dosis anual (grupos de riesgo)",
+        },
+      ],
+      recomendadas: [COVID],
+    };
+  }
+
+  // 15–17 años
+  if (years < 18) {
+    return {
+      calendario: [
+        {
+          name: "Fiebre hemorrágica argentina",
+          detail: "Residentes y/o trabajadores en zona de riesgo",
+        },
+        {
+          name: "Triple bacteriana acelular",
+          detail: "Refuerzo",
+        },
+        {
+          name: "HPV",
+          detail: "Completar esquema si falta",
+        },
+      ],
+      recomendadas: [COVID],
+    };
+  }
+
+  // 18–64 años (adultos)
+  if (years < 65) {
+    return {
+      calendario: [
+        { name: "Hepatitis B", detail: "Esquema completo de 3 dosis" },
+        {
+          name: "Triple viral",
+          detail: "2 dosis (nacidos después de 1965)",
+        },
+        {
+          name: "Doble bacteriana",
           detail: "Refuerzo cada 10 años · difteria y tétanos",
         },
         {
-          name: "Triple viral (SRP)",
-          detail: "2 dosis (nacidos después de 1965)",
+          name: "Triple bacteriana acelular",
+          detail: "Según indicación médica",
         },
-        { name: "Hepatitis B", detail: "Esquema completo de 3 dosis" },
+        {
+          name: "HPV",
+          detail: "Según indicación y edad",
+        },
       ],
       recomendadas: [
         {
-          name: "Gripe",
-          detail: "Dosis anual (embarazo y grupos de riesgo)",
+          name: "Herpes zóster",
+          detail: "Recomendada según edad e indicación médica",
         },
-        { name: "COVID-19", detail: "Refuerzos según esquema vigente" },
-        {
-          name: "Fiebre amarilla",
-          detail: "Si viajás a zonas de riesgo",
-        },
-        {
-          name: "Hepatitis A",
-          detail: "Según riesgo o indicación médica",
-        },
-        {
-          name: "Meningococo ACYW",
-          detail: "En brotes, viajes o factores de riesgo",
-        },
+        COVID,
       ],
     };
+  }
 
+  // 65 años y más
   return {
     calendario: [
-      { name: "Neumococo", detail: "Esquema secuencial (VCN13 + VPN23)" },
-      { name: "Gripe", detail: "Dosis anual" },
+      { name: "Antigripal anual", detail: "Dosis anual" },
+      { name: "Neumococo", detail: "Esquema secuencial" },
       {
-        name: "Doble bacteriana (dT)",
+        name: "Doble bacteriana",
         detail: "Refuerzo cada 10 años",
       },
     ],
     recomendadas: [
       {
         name: "Herpes zóster",
-        detail: "Recomendada a partir de los 50 años",
+        detail: "Recomendada a partir de los 65 años",
       },
-      { name: "COVID-19", detail: "Refuerzos según esquema vigente" },
+      COVID,
+      {
+        name: "VSR",
+        detail: "Según indicación médica y esquema vigente",
+      },
     ],
   };
 }

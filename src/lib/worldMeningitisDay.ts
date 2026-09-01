@@ -1,4 +1,8 @@
 import { isCampaignPreviewMode } from "@/lib/popupPreview";
+import {
+  dismissPopupForToday,
+  shouldShowPopupOncePerDay,
+} from "@/lib/popupFrequency";
 
 const STORAGE_KEY = "bdm-world-meningitis-day-dismissed";
 
@@ -17,24 +21,15 @@ export function shouldShowWorldMeningitisDayPopup(): boolean {
   const preview = params.get("wmd") === "1" || isCampaignPreviewMode();
 
   if (!preview && !isWorldMeningitisDayCampaignActive()) return false;
-  if (preview) return true;
 
-  try {
-    return localStorage.getItem(STORAGE_KEY) !== "1";
-  } catch {
-    return true;
-  }
+  return shouldShowPopupOncePerDay(STORAGE_KEY, preview);
 }
 
 export function dismissWorldMeningitisDayPopup(): void {
   if (isCampaignPreviewMode()) return;
   const params = new URLSearchParams(window.location.search);
   if (params.get("wmd") === "1") return;
-  try {
-    localStorage.setItem(STORAGE_KEY, "1");
-  } catch {
-    /* ignore */
-  }
+  dismissPopupForToday(STORAGE_KEY);
 }
 
 export const HOLD_DURATION_MS = 5000;

@@ -1,6 +1,10 @@
 import { isPediatraPreviewMode } from "@/lib/popupPreview";
+import {
+  dismissPopupForToday,
+  shouldShowPopupOncePerDay,
+} from "@/lib/popupFrequency";
 
-const SESSION_KEY = "bdm-pediatra-consult-popup";
+const STORAGE_KEY = "bdm-pediatra-consult-popup";
 
 /** Sección «Meningitis en primera persona» en el home. */
 export const PEDIATRA_SECTION_ID = "testimonios";
@@ -9,21 +13,12 @@ export type PediatraAnswer = "yes" | "no";
 
 export function shouldShowPediatraConsultPopup(): boolean {
   if (typeof window === "undefined") return false;
-  if (isPediatraPreviewMode()) return true;
-  try {
-    return sessionStorage.getItem(SESSION_KEY) === null;
-  } catch {
-    return true;
-  }
+  return shouldShowPopupOncePerDay(STORAGE_KEY, isPediatraPreviewMode());
 }
 
-export function dismissPediatraConsultPopup(answer?: PediatraAnswer): void {
+export function dismissPediatraConsultPopup(_answer?: PediatraAnswer): void {
   if (isPediatraPreviewMode()) return;
-  try {
-    sessionStorage.setItem(SESSION_KEY, answer ?? "dismissed");
-  } catch {
-    /* ignore */
-  }
+  dismissPopupForToday(STORAGE_KEY);
 }
 
 export function hasOpenCampaignPopup(): boolean {

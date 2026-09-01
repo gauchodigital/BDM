@@ -101,7 +101,7 @@ export function WorldMeningitisDayPopup() {
     <div
       className="fixed inset-0 z-[300] flex items-center justify-center p-4"
       role="presentation"
-      data-campaign-popup-open={phase !== "hidden" ? "" : undefined}
+      data-campaign-popup-open=""
     >
       <CampaignPopupClouds />
 
@@ -240,10 +240,8 @@ export function WorldMeningitisDayPopup() {
                     start();
                   }}
                   onPointerUp={() => {
-                    if (phase !== "complete") {
-                      stop();
-                      setPhase("intro");
-                    }
+                    stop();
+                    setPhase("intro");
                   }}
                   onPointerLeave={() => {
                     if (phase === "holding" && progress < 1) {
