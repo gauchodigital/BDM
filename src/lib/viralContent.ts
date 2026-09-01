@@ -39,7 +39,7 @@ export const VIRAL = {
   prevencion: {
     eyebrow: "PREVENCIÓN",
     title: "¿Cuándo buscar atención médica de emergencia?",
-    body: "Cualquier persona con síntomas de meningitis debe consultar a un profesional de la salud de inmediato. Solo un profesional de la salud puede determinar si tiene meningitis, cuál es la causa y determinar cuál es el mejor tratamiento para su caso[4].",
+    body: "Cualquier persona con síntomas de meningitis debe consultar a un profesional de la salud de inmediato. Solo un profesional de la salud puede asegurar si tiene meningitis, cuál es la causa y determinar cuál es el mejor tratamiento para su caso[4].",
     ctaLabel: "Conocer más sobre los síntomas",
     ctaHref: "/sintomas",
   },

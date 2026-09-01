@@ -69,15 +69,15 @@ export function FaqAccordion({
               key={item.id}
               className="relative overflow-hidden rounded-xl border border-[#e2e8f0] bg-white shadow-[2px_2px_6px_rgba(54,50,118,0.1)]"
             >
-              {open ? (
-                <span
-                  className="absolute bottom-0 left-0 top-0 w-1.5 bg-[#A6C0D6]"
-                  aria-hidden
-                />
-              ) : null}
+              <span
+                className={`absolute bottom-0 left-0 top-0 w-1.5 bg-[#A6C0D6] transition-opacity duration-300 ease-out ${
+                  open ? "opacity-100" : "opacity-0"
+                }`}
+                aria-hidden
+              />
               <button
                 type="button"
-                className={`flex w-full items-start justify-between gap-3 py-4 text-left ${
+                className={`flex w-full items-start justify-between gap-3 py-4 text-left transition-[padding] duration-300 ease-out ${
                   open ? "pl-5 pr-3" : "px-3"
                 }`}
                 aria-expanded={open}
@@ -87,44 +87,59 @@ export function FaqAccordion({
                   {item.question}
                 </span>
                 <span
-                  className="material-symbols-outlined mt-0.5 shrink-0 text-[20px] leading-none text-[#503c77]"
+                  className={`material-symbols-outlined mt-0.5 shrink-0 text-[20px] leading-none text-[#503c77] transition-transform duration-300 ease-out ${
+                    open ? "rotate-45" : "rotate-0"
+                  }`}
                   aria-hidden
                 >
-                  {open ? "remove" : "add"}
+                  add
                 </span>
               </button>
-              {open ? (
-                <div className="space-y-3 border-t border-[#e2e8f0] py-4 pl-5 pr-3 animate-fade-in">
-                  {item.answer.split(/\n\n+/).map((block) => {
-                    const lines = block.split("\n").filter(Boolean);
-                    const isList = lines.every((l) => l.trim().startsWith("- "));
-                    if (isList) {
-                      return (
-                        <ul
-                          key={block.slice(0, 40)}
-                          className="list-disc space-y-1 pl-5 text-[14px] leading-[1.55] text-[#442748]/85"
-                        >
-                          {lines.map((l) => (
-                            <li key={l}>{l.replace(/^\-\s*/, "")}</li>
-                          ))}
-                        </ul>
+              <div
+                className={`grid transition-[grid-template-rows] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+                  open ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+                }`}
+                aria-hidden={!open}
+              >
+                <div className="min-h-0 overflow-hidden">
+                  <div
+                    className={`space-y-3 border-t border-[#e2e8f0] py-4 pl-5 pr-3 transition-opacity duration-300 ease-out ${
+                      open ? "opacity-100" : "opacity-0"
+                    }`}
+                  >
+                    {item.answer.split(/\n\n+/).map((block) => {
+                      const lines = block.split("\n").filter(Boolean);
+                      const isList = lines.every((l) =>
+                        l.trim().startsWith("- "),
                       );
-                    }
-                    return (
-                      <p
-                        key={block.slice(0, 48)}
-                        className={
-                          block.trimStart().startsWith("*")
-                            ? "text-[12px] italic leading-[1.5] text-[#442748]/70"
-                            : "text-[14px] leading-[1.55] text-[#442748]/85"
-                        }
-                      >
-                        <RichText text={block} />
-                      </p>
-                    );
-                  })}
+                      if (isList) {
+                        return (
+                          <ul
+                            key={block.slice(0, 40)}
+                            className="list-disc space-y-1 pl-5 text-[14px] leading-[1.55] text-[#442748]/85"
+                          >
+                            {lines.map((l) => (
+                              <li key={l}>{l.replace(/^\-\s*/, "")}</li>
+                            ))}
+                          </ul>
+                        );
+                      }
+                      return (
+                        <p
+                          key={block.slice(0, 48)}
+                          className={
+                            block.trimStart().startsWith("*")
+                              ? "text-[12px] italic leading-[1.5] text-[#442748]/70"
+                              : "text-[14px] leading-[1.55] text-[#442748]/85"
+                          }
+                        >
+                          <RichText text={block} />
+                        </p>
+                      );
+                    })}
+                  </div>
                 </div>
-              ) : null}
+              </div>
             </div>
           );
         })}

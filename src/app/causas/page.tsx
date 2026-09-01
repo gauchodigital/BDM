@@ -31,7 +31,7 @@ export default function CausasPage() {
               La meningitis puede ser clasificada por su causa: bacteriana (la
               más grave), viral (la más común), por hongos o parásitos. Si bien
               hay tipos más frecuentes o más graves que otros, es{" "}
-              <strong className="font-bold text-[#442748]">
+              <strong className="font-semibold text-[#442748]">
                 imprescindible la visita a un médico
               </strong>{" "}
               para que pueda determinar la causa y el tratamiento

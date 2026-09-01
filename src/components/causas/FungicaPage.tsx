@@ -96,7 +96,7 @@ export function FungicaPage() {
                 className="rounded-[12px] bg-[#EEECF2] p-4"
               >
                 <p className="text-[14px] leading-[22px] text-[#442748]">
-                  <span className="font-bold text-[#503c77]">{item.lead}</span>
+                  <span className="font-semibold text-[#442748]">{item.lead}</span>
                   {item.rest}
                 </p>
               </div>
@@ -128,7 +128,7 @@ export function FungicaPage() {
             role="note"
             className="rounded-[12px] border border-[#ef4444] bg-white p-4"
           >
-            <p className="text-[14px] font-bold leading-5 text-[#ef4444]">
+            <p className="text-[14px] font-bold leading-5 text-[#442748]">
               {d.tratamiento.alert.title}
             </p>
             <p className="mt-1 text-[13px] leading-5 text-[#442748]">
@@ -144,15 +144,15 @@ export function FungicaPage() {
           <div className="flex flex-col gap-4">
             <div className="flex flex-col gap-2">
               <Eyebrow>{d.prevencion.eyebrow}</Eyebrow>
-              <h2 className="text-[22px] font-bold leading-7 text-white">
+              <h2 className="text-[22px] !font-bold leading-[28px] tracking-normal text-white">
                 {d.prevencion.title}
               </h2>
             </div>
-            <p className="text-[14px] leading-[19.6px] text-white">
+            <p className="text-[14px] font-normal leading-normal text-white/90">
               <RichText
                 text={d.prevencion.body}
-                strongClassName="font-bold text-white"
-                citeClassName="ml-0.5 text-[0.85em] font-[inherit] leading-none text-white"
+                strongClassName="font-bold text-white/90"
+                citeClassName="ml-0.5 text-[0.85em] font-[inherit] leading-none text-white/90"
               />
             </p>
           </div>

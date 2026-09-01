@@ -31,7 +31,7 @@ export function VacunacionCalendarioSection({
             <div className="animate-fade-up animate-delay-1 flex flex-col gap-4 text-[16px] leading-[26px] text-dark">
               {heroParagraphs.map((p) => (
                 <p key={p.slice(0, 40)}>
-                  <RichText text={p} strongClassName="font-bold text-[#442748]" />
+                  <RichText text={p} strongClassName="font-semibold text-[#442748]" />
                 </p>
               ))}
             </div>

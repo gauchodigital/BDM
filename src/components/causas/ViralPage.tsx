@@ -132,15 +132,15 @@ export function ViralPage() {
           <div className="flex flex-col gap-4">
             <div className="flex flex-col gap-2">
               <Eyebrow>{d.prevencion.eyebrow}</Eyebrow>
-              <h2 className="text-[22px] font-bold leading-7 text-white">
+              <h2 className="text-[22px] !font-bold leading-[28px] tracking-normal text-white">
                 {d.prevencion.title}
               </h2>
             </div>
-            <p className="text-[14px] leading-[19.6px] text-white">
+            <p className="text-[14px] font-normal leading-normal text-white/90">
               <RichText
                 text={d.prevencion.body}
-                strongClassName="font-bold text-white"
-                citeClassName="ml-0.5 text-[0.85em] font-[inherit] leading-none text-white"
+                strongClassName="font-bold text-white/90"
+                citeClassName="ml-0.5 text-[0.85em] font-[inherit] leading-none text-white/90"
               />
             </p>
           </div>

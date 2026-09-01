@@ -6,12 +6,12 @@ import type { ReactNode } from "react";
 export function RichText({
   text,
   className = "",
-  strongClassName = "font-bold text-primary",
+  strongClassName = "font-semibold text-[#442748]",
   citeClassName = "ml-0.5 text-[0.85em] font-[inherit] leading-none text-[#503C77]",
 }: {
   text: string;
   className?: string;
-  /** Classes for `**bold**` spans (default keeps brand purple). */
+  /** Classes for `**bold**` spans (default: Figma “oscuro”). */
   strongClassName?: string;
   /** Classes for citation superscripts like [1]. */
   citeClassName?: string;

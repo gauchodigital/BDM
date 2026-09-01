@@ -1,69 +1,9 @@
-import Image from "next/image";
 import { Reveal } from "@/components/ui/Reveal";
-
-const legendItems = [
-  {
-    id: "craneo",
-    title: "Cráneo",
-    subtitle: "Protección ósea externa",
-    dotClass: "bg-[#E8E4EC]",
-  },
-  {
-    id: "meninges",
-    title: "Meninges",
-    subtitle: "3 capas de membrana protectora",
-    dotClass: "bg-meninges border border-meninges-stroke",
-    badge: "SE INFLAMAN",
-  },
-  {
-    id: "cerebro",
-    title: "Cerebro",
-    subtitle: "Órgano afectado por la inflamación",
-    dotClass: "bg-cerebro",
-  },
-] as const;
-
-function LegendList() {
-  return (
-    <ul className="overflow-hidden rounded-[12px] border border-[#E5E5E5] bg-white">
-      {legendItems.map((item, i) => (
-        <li
-          key={item.id}
-          className={`flex items-start gap-3 px-4 py-3.5 ${
-            i > 0 ? "border-t border-[#E5E5E5]" : ""
-          }`}
-        >
-          <span
-            className={`mt-0.5 size-8 shrink-0 rounded-full ${item.dotClass}`}
-            aria-hidden
-          />
-          <div className="min-w-0 flex-1">
-            <div className="flex flex-wrap items-center gap-2">
-              <p className="text-[15px] font-bold leading-snug text-[#442748]">
-                {item.title}
-              </p>
-              {"badge" in item && item.badge ? (
-                <span className="rounded-md bg-accent px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-white">
-                  {item.badge}
-                </span>
-              ) : null}
-            </div>
-            <p className="mt-0.5 text-[13px] leading-snug text-muted">
-              {item.subtitle}
-            </p>
-          </div>
-        </li>
-      ))}
-    </ul>
-  );
-}
+import { AnatomyInteractive } from "@/components/home/AnatomyInteractive";
 
 export function IntroSection() {
   return (
-    <section
-      id="que-es"
-      className="section-pad scroll-mt-16 bg-white"
-    >
+    <section id="que-es" className="section-pad scroll-mt-16 bg-white">
       <div className="mx-auto w-full max-w-7xl px-6 md:px-8">
         {/* Mobile */}
         <div className="lg:hidden">
@@ -79,7 +19,7 @@ export function IntroSection() {
             <div className="mt-6 space-y-5 text-[16px] leading-[26px] text-dark">
               <p>
                 La meningitis es una enfermedad que{" "}
-                <strong className="font-bold text-primary">
+                <strong className="font-semibold text-[#442748]">
                   afecta a las membranas que recubren el cerebro, el cerebelo y
                   la médula espinal.
                 </strong>{" "}
@@ -97,19 +37,7 @@ export function IntroSection() {
             </div>
           </Reveal>
           <Reveal delay={100} className="mt-8">
-            <LegendList />
-          </Reveal>
-          <Reveal delay={120} className="mt-8">
-            <div className="overflow-hidden">
-              <Image
-                src="/home/anatomia-meninges.png"
-                alt="Ilustración: el cráneo, las meninges y el cerebro."
-                width={1200}
-                height={700}
-                className="h-auto w-full"
-                sizes="100vw"
-              />
-            </div>
+            <AnatomyInteractive />
           </Reveal>
         </div>
 
@@ -124,13 +52,13 @@ export function IntroSection() {
             </h2>
           </Reveal>
 
-          <div className="mt-10 grid grid-cols-[1.15fr_0.85fr] items-start gap-14">
+          <div className="mt-10 grid grid-cols-[1fr_1fr] items-start gap-14">
             <div>
               <Reveal delay={80}>
                 <div className="max-w-xl space-y-5 text-[16px] leading-[26px] text-dark">
                   <p>
                     La meningitis es una enfermedad que{" "}
-                    <strong className="font-bold text-primary">
+                    <strong className="font-semibold text-[#442748]">
                       afecta a las membranas que recubren el cerebro, el
                       cerebelo y la médula espinal.
                     </strong>{" "}
@@ -148,20 +76,10 @@ export function IntroSection() {
                   </p>
                 </div>
               </Reveal>
-              <Reveal delay={120} className="mt-10 max-w-xl">
-                <Image
-                  src="/home/anatomia-meninges.png"
-                  alt="Ilustración: el cráneo, las meninges y el cerebro."
-                  width={1200}
-                  height={700}
-                  className="h-auto w-full"
-                  sizes="36rem"
-                />
-              </Reveal>
             </div>
 
-            <Reveal delay={100} from="right" className="pt-2">
-              <LegendList />
+            <Reveal delay={100} from="right" className="flex justify-center pt-2">
+              <AnatomyInteractive className="w-full max-w-md" />
             </Reveal>
           </div>
         </div>

@@ -75,7 +75,7 @@ export const BACTERIANA = {
   meningococo: {
     eyebrow: "informate sobre el meningococo",
     title: "Meningitis por Meningococo",
-    body: "El **meningococo** o Neisseria meningitidis es una de las principales causas de meningitis en todo el mundo. Esta bacteria es la responsable de la **Enfermedad Meningocócica Invasiva (EMI)**, que ocurre cuando el meningococo invade la vía sanguínea (\"septicemia\").[10]",
+    body: "El **meningococo** o **Neisseria meningitidis** es una de las principales causas de meningitis en todo el mundo. Esta bacteria es la responsable de la **Enfermedad Meningocócica Invasiva (EMI)**, que ocurre cuando el meningococo invade la vía sanguínea (\"septicemia\").[10]",
     serogruposTitle: "Serogrupos",
     serogruposBody: [
       "El meningococo se clasifica en 12 tipos (\"serogrupos\"), de los cuales 6 son los causantes de la meningitis por meningococo[11].",
@@ -94,7 +94,6 @@ export const BACTERIANA = {
     malbranStat: {
       pct: "95%",
       text: "de los casos de meningococo en **menores de 1 año** fue por el **serogrupo B**, en el período 2022–2024 en Argentina.[14]",
-      source: "Fuente: Instituto Malbrán",
     },
   },
   secuelas: {
@@ -137,6 +136,7 @@ export const BACTERIANA = {
       label: "sobrevivientes pueden tener secuelas permanentes.[5]",
       total: 5,
       active: 1,
+      highlightIndex: 1,
       activeIcon: "/causas/bacteriana/person-active-coral.svg",
       inactiveIcon: "/causas/bacteriana/person-inactive-secondary.svg",
     },
@@ -177,7 +177,7 @@ export const BACTERIANA = {
     ],
     serogrupoB: {
       title: "Vacuna para el serogrupo B",
-      body: "Existe además otra vacuna para el serogrupo B, la cual está incluida en Calendario desde el año 2020 destinada a personas que presenten las siguientes condiciones de riesgo:[13]",
+      body: "Existe además otra **vacuna para la prevención contra el serogrupo B** que está disponible según indicación médica. En el Calendario Nacional de Vacunación se encuentra disponible para aquellas personas que presenten las siguientes condiciones de riesgo:[13]",
       conditions: [
         "Asplenia anatómica o funcional",
         "Déficit de factores terminales del complemento (C5–C9)",

@@ -32,6 +32,7 @@ function PersonStat({
   activeIcon,
   inactiveIcon,
   tone = "light",
+  highlightIndex,
 }: {
   ratio: string;
   label: string;
@@ -40,31 +41,37 @@ function PersonStat({
   activeIcon: string;
   inactiveIcon: string;
   tone?: "light" | "dark" | "plain";
+  /** 0-based index of the first highlighted person (default: start of the row). */
+  highlightIndex?: number;
 }) {
   const dark = tone === "dark";
   const plain = tone === "plain";
+  const start = highlightIndex ?? 0;
   return (
     <div
-      className={`flex flex-col items-center gap-2 overflow-hidden px-5 py-6 ${
+      className={`flex flex-col items-center gap-2 overflow-hidden py-6 ${
         dark
-          ? "rounded-2xl bg-[#503c77]"
+          ? "rounded-2xl bg-[#503c77] px-5"
           : plain
-            ? "bg-transparent"
-            : "rounded-2xl bg-[#e9eff5]"
+            ? "bg-transparent px-0"
+            : "rounded-2xl bg-[#e9eff5] px-5"
       }`}
     >
       <div className="flex items-end justify-center gap-1.5">
-        {Array.from({ length: total }, (_, i) => (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            key={i}
-            src={i < active ? activeIcon : inactiveIcon}
-            alt=""
-            width={28}
-            height={plain ? 30 : 28}
-            className={plain ? "h-[30px] w-7 shrink-0" : "size-7 shrink-0"}
-          />
-        ))}
+        {Array.from({ length: total }, (_, i) => {
+          const isActive = i >= start && i < start + active;
+          return (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              key={i}
+              src={isActive ? activeIcon : inactiveIcon}
+              alt=""
+              width={28}
+              height={plain ? 30 : 28}
+              className={plain ? "h-[30px] w-7 shrink-0" : "size-7 shrink-0"}
+            />
+          );
+        })}
       </div>
       <div className="w-full text-center">
         <p
@@ -76,7 +83,11 @@ function PersonStat({
         </p>
         <p
           className={`mt-1 text-[13px] font-normal leading-5 ${
-            dark ? "text-white/80" : plain ? "text-[#6D6AAE]" : "text-[#442748]"
+            dark
+              ? "text-white/80"
+              : plain
+                ? "whitespace-nowrap text-[#6D6AAE]"
+                : "text-[#442748]"
           }`}
         >
           <RichText text={label} />
@@ -114,10 +125,21 @@ export function BacterianaPage() {
               {d.title}
             </h1>
           </div>
-          <div className="animate-fade-up animate-delay-1 flex flex-col gap-1 text-[16px] leading-[26px] text-[#442748]">
-            {d.intro.map((p) => (
-              <p key={p.slice(0, 48)}>
-                <RichText text={p} />
+          <div className="animate-fade-up animate-delay-1 flex flex-col gap-1">
+            {d.intro.map((p, i) => (
+              <p
+                key={p.slice(0, 48)}
+                className={
+                  i === 0
+                    ? "text-[18px] font-semibold leading-[26px] text-[#442748]"
+                    : "text-[16px] leading-[26px] text-[#442748]"
+                }
+              >
+                <RichText
+                  text={p}
+                  strongClassName="font-semibold text-[#442748]"
+                  citeClassName="ml-0.5 text-[0.85em] font-[inherit] leading-none text-[#442748]"
+                />
               </p>
             ))}
           </div>
@@ -294,7 +316,7 @@ export function BacterianaPage() {
 
           <div className="flex flex-col gap-6">
             <div className="flex flex-col gap-4">
-              <h3 className="text-[18px] font-bold text-[#442748]">
+              <h3 className="text-[18px] font-bold text-[#503C77]">
                 {d.meningococo.serogruposTitle}
               </h3>
               <div className="flex flex-col gap-2 text-[16px] leading-[25px] text-[#442748]">
@@ -334,9 +356,6 @@ export function BacterianaPage() {
               />
             </p>
           </div>
-          <p className="text-right text-[10px] leading-[14px] text-white/55">
-            {d.meningococo.malbranStat.source}
-          </p>
         </div>
         </Reveal>
       </section>
@@ -404,10 +423,10 @@ export function BacterianaPage() {
       {/* Quote evolución */}
       <section className="bg-[#503c77] px-5 py-16 md:px-8">
         <Reveal delay={100}>
-        <p className="mx-auto max-w-2xl text-[18px] font-medium leading-[28px] text-white">
+        <p className="mx-auto max-w-2xl text-center text-[22px] font-medium leading-[28px] text-white">
           <RichText
             text={d.quote}
-            strongClassName="font-bold text-white"
+            strongClassName="font-semibold text-white"
             citeClassName="ml-0.5 text-[0.85em] font-[inherit] leading-none text-white"
           />
         </p>
@@ -472,7 +491,7 @@ export function BacterianaPage() {
                     idx === 0 ? "border-b border-[#dbe1e7] pb-5" : ""
                   }`}
                 >
-                  <span className="w-fit rounded-br-lg rounded-tl-lg bg-[#DD876E] px-3 py-1.5 text-[11px] font-bold text-white">
+                  <span className="w-fit rounded-[20px] bg-[#DD876E] px-3 py-1.5 text-[11px] font-bold uppercase leading-none text-white">
                     {esquema.badge}
                   </span>
                   <ul className="flex flex-col gap-2">
@@ -498,7 +517,10 @@ export function BacterianaPage() {
               {d.vacunacion.serogrupoB.title}
             </h3>
             <p className="text-[15px] leading-6 text-[#442748]">
-              <RichText text={d.vacunacion.serogrupoB.body} />
+              <RichText
+                text={d.vacunacion.serogrupoB.body}
+                strongClassName="font-semibold text-[#442748]"
+              />
             </p>
             <ul className="flex flex-col gap-3 rounded-[14px] border border-[#e2e8f0] bg-[rgba(80,60,119,0.1)] px-5 py-[18px]">
               {d.vacunacion.serogrupoB.conditions.map((c) => (

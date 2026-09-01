@@ -49,13 +49,13 @@ export const FUNGICA = {
     ],
     alert: {
       title: "No hay vacunas disponibles",
-      body: "No existe vacuna para proteger contra la meningitis fúngica.[12]",
+      body: "No existe vacuna para proteger contra la meningitis fúngica.[17]",
     },
   },
   prevencion: {
     eyebrow: "PREVENCIÓN",
     title: "¿Cuándo buscar atención médica de emergencia?",
-    body: "Cualquier persona con síntomas de meningitis debe consultar a un profesional de la salud de inmediato. Solo un profesional de la salud puede determinar si tiene meningitis, cuál es la causa y determinar cuál es el mejor tratamiento para su caso[4].",
+    body: "Cualquier persona con síntomas de meningitis debe consultar a un profesional de la salud de inmediato. Solo un profesional de la salud puede asegurar si tiene meningitis, cuál es la causa y determinar cuál es el mejor tratamiento para su caso[4].",
     ctaLabel: "Conocer más sobre los síntomas",
     ctaHref: "/sintomas",
   },
