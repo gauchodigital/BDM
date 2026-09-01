@@ -5,8 +5,7 @@ import { useState } from "react";
 import { RichText } from "@/components/ui/RichText";
 import { Reveal } from "@/components/ui/Reveal";
 import {
-  PhaseHeader,
-  SymptomCard,
+  SintomasDesktopTimeline,
   SintomasMobileTimeline,
 } from "@/components/sintomas/SintomasTimeline";
 import {
@@ -85,53 +84,13 @@ export function SintomasPreview({
           className="relative mt-8 md:hidden"
         />
 
-        {/* Desktop: two tinted panels */}
-        <div className="mt-10 hidden gap-6 md:grid md:grid-cols-2 lg:gap-8">
-          {early.length > 0 && (
-            <Reveal key={`early-${sub}`} delay={80}>
-              <div className="rounded-[16px] bg-[#F3F0F8] p-6 lg:p-8">
-                <PhaseHeader phase="early" showTimelineDot={false} />
-                <ul className="flex flex-col gap-3">
-                  {early.map((s) => (
-                    <li key={s.id}>
-                      <SymptomCard item={s} phase="early" />
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </Reveal>
-          )}
-
-          {alarm.length > 0 && (
-            <Reveal key={`alarm-${sub}`} delay={150} from="right">
-              <div className="rounded-[16px] bg-[#FDF0EC] p-6 lg:p-8">
-                <PhaseHeader phase="alarm" showTimelineDot={false} />
-                <ul className="flex flex-col gap-3">
-                  {alarm.map((s) => (
-                    <li key={s.id}>
-                      <SymptomCard item={s} phase="alarm" />
-                    </li>
-                  ))}
-                </ul>
-                <div className="mt-3 flex items-start gap-3">
-                  <span
-                    className="mt-2 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#EF4444] text-white"
-                    aria-hidden
-                  >
-                    <span className="material-symbols-outlined text-[18px] leading-none">
-                      warning
-                    </span>
-                  </span>
-                  <div className="flex-1 rounded-[8px] bg-[#FEF2F2] px-4 py-[14px] shadow-[inset_0_0_0_2px_#EF4444]">
-                    <p className="text-[12px] font-bold leading-snug text-[#7F1D1D]">
-                      {HOME_WARNING}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </Reveal>
-          )}
-        </div>
+        <SintomasDesktopTimeline
+          key={`desktop-${sub}`}
+          early={early}
+          alarm={alarm}
+          warningText={HOME_WARNING}
+          className="relative mt-10 hidden md:block"
+        />
 
         {showMoreLink && (
           <Reveal delay={200}>

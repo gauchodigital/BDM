@@ -24,7 +24,26 @@ function thumbFor(item: TestimonioData): string | null {
   return id ? `https://i.ytimg.com/vi/${id}/hqdefault.jpg` : null;
 }
 
-export function TestimonialsTabs({ items }: { items: TestimonioData[] }) {
+function NameBadge({
+  item,
+  className = "",
+}: {
+  item: TestimonioData;
+  className?: string;
+}) {
+  return (
+    <div
+      className={`rounded-[10px] bg-white px-3.5 py-2.5 shadow-[0_4px_16px_rgba(0,0,0,0.14)] ${className}`}
+    >
+      <p className="text-[13px] font-bold leading-snug text-[#DD876E] lg:text-[14px]">
+        {item.name}
+        <span className="font-medium text-[#5C5670]"> | {item.role}</span>
+      </p>
+    </div>
+  );
+}
+
+function TestimonialsMobile({ items }: { items: TestimonioData[] }) {
   const [tab, setTab] = useState<TestimonioCategory>("medico");
   const [index, setIndex] = useState(0);
   const trackRef = useRef<HTMLDivElement>(null);
@@ -56,11 +75,10 @@ export function TestimonialsTabs({ items }: { items: TestimonioData[] }) {
   }, [tab]);
 
   return (
-    <div className="lg:grid lg:grid-cols-[minmax(0,20rem)_minmax(0,1fr)] lg:items-center lg:gap-14">
-      {/* Figma: track púrpura, tab activo blanco con borde */}
+    <div className="lg:hidden">
       <div
         role="tablist"
-        className="flex h-12 items-center gap-1 rounded-[12px] bg-[#503C77] p-1 lg:h-auto lg:flex-col lg:items-stretch lg:gap-2 lg:self-start lg:rounded-2xl lg:p-2"
+        className="flex w-full items-center gap-0.5 rounded-full bg-[#F0EDF5] p-1 sm:mx-auto sm:w-fit"
       >
         {TABS.map((t) => {
           const active = t.id === tab;
@@ -71,10 +89,10 @@ export function TestimonialsTabs({ items }: { items: TestimonioData[] }) {
               role="tab"
               aria-selected={active}
               onClick={() => setTab(t.id)}
-              className={`flex h-full flex-1 items-center justify-center rounded-[10px] px-2 text-center leading-tight transition-colors lg:h-auto lg:flex-none lg:justify-start lg:px-5 lg:py-4 lg:text-left ${
+              className={`flex flex-1 items-center justify-center rounded-full px-3 py-2 text-center text-[12px] leading-tight transition-all duration-200 sm:flex-none sm:px-4 sm:py-1.5 sm:text-[13px] ${
                 active
-                  ? "border border-[#503C77] bg-white text-[13px] font-bold text-[#503C77] shadow-[0_1px_3px_rgba(68,39,72,0.12)] lg:text-[15px]"
-                  : "text-[13px] font-normal text-white/75 hover:text-white/90 lg:text-[15px]"
+                  ? "bg-white font-medium text-[#503C77] shadow-[0_1px_4px_rgba(68,39,72,0.08)]"
+                  : "font-normal text-[#7A7585] hover:text-[#503C77]"
               }`}
             >
               {t.label}
@@ -84,110 +102,75 @@ export function TestimonialsTabs({ items }: { items: TestimonioData[] }) {
       </div>
 
       {filtered.length === 0 ? (
-        <p className="mt-8 text-center text-sm text-muted lg:mt-0">
+        <p className="mt-8 text-center text-sm text-muted">
           Pronto vas a poder ver los testimonios de esta categoría.
         </p>
       ) : (
-        <div className="lg:min-w-0">
-          <div className="relative mt-6 lg:mt-0">
-            <div
-              ref={trackRef}
-              className="flex touch-pan-x snap-x snap-mandatory gap-3 overflow-x-auto scroll-smooth [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-              onScroll={() => {
-                if (scrollingRef.current) return;
-                const el = trackRef.current;
-                if (!el || !el.clientWidth) return;
-                const children = Array.from(el.children) as HTMLElement[];
-                let closest = 0;
-                let minDist = Infinity;
-                children.forEach((child, i) => {
-                  const dist = Math.abs(child.offsetLeft - el.scrollLeft);
-                  if (dist < minDist) {
-                    minDist = dist;
-                    closest = i;
-                  }
-                });
-                if (closest !== index) setIndex(closest);
-              }}
-            >
-              {filtered.map((item) => {
-                const thumb = thumbFor(item);
-                return (
-                  <article
-                    key={item.id}
-                    className="relative w-[92%] min-w-[92%] shrink-0 snap-center overflow-hidden rounded-[12px] bg-black/30 shadow-[0_8px_24px_rgba(68,39,72,0.14)] sm:w-full sm:min-w-full"
-                  >
-                    <div className="relative aspect-video">
-                      {thumb ? (
-                        // eslint-disable-next-line @next/next/no-img-element
-                        <img
-                          src={thumb}
-                          alt=""
-                          draggable={false}
-                          className="pointer-events-none absolute inset-0 h-full w-full object-cover"
-                        />
-                      ) : (
-                        <div className="absolute inset-0 bg-[#5a3d62]" />
-                      )}
-                      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-transparent" />
-
-                      {item.videoUrl ? (
-                        <a
-                          href={item.videoUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="absolute top-1/2 left-1/2 z-10 flex h-14 w-14 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-[#FF0000] text-white shadow-lg"
-                          aria-label={`Ver video de ${item.name}`}
-                        >
-                          <span className="material-symbols-outlined text-[32px] leading-none">
-                            play_arrow
-                          </span>
-                        </a>
-                      ) : (
-                        <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-                          <span className="rounded-full bg-black/50 px-4 py-2 text-[12px] font-semibold text-white/80">
-                            Video pendiente
-                          </span>
-                        </div>
-                      )}
-
-                      {/* Badge nombre — Figma: blanco, nombre coral + rol */}
-                      <div className="pointer-events-none absolute bottom-3 left-3 z-10 max-w-[78%] rounded-[8px] bg-white px-3 py-2 shadow-[0_2px_8px_rgba(0,0,0,0.18)]">
-                        <p className="text-[13px] font-bold leading-snug text-[#DD876E]">
-                          {item.name}
-                          <span className="font-normal text-[#5C5670]">
-                            {" "}
-                            | {item.role}
-                          </span>
-                        </p>
-                      </div>
-
-                      {item.videoUrl ? (
-                        <a
-                          href={item.videoUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="absolute bottom-3 right-3 z-10 flex items-center gap-1.5 rounded bg-black/70 px-2 py-1 text-[11px] font-semibold text-white backdrop-blur-sm"
-                          aria-label="Mirar en YouTube"
-                        >
-                          <svg
-                            viewBox="0 0 24 24"
-                            className="h-3.5 w-3.5 fill-[#FF0000]"
-                            aria-hidden
-                          >
-                            <path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31.5 31.5 0 0 0 0 12a31.5 31.5 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31.5 31.5 0 0 0 24 12a31.5 31.5 0 0 0-.5-5.8zM9.75 15.5v-7l6.5 3.5-6.5 3.5z" />
-                          </svg>
-                          Mirar en YouTube
-                        </a>
-                      ) : null}
-                    </div>
-                  </article>
-                );
-              })}
-            </div>
+        <div className="mt-6">
+          <div
+            ref={trackRef}
+            className="flex touch-pan-x snap-x snap-mandatory gap-3 overflow-x-auto scroll-smooth [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+            onScroll={() => {
+              if (scrollingRef.current) return;
+              const el = trackRef.current;
+              if (!el || !el.clientWidth) return;
+              const children = Array.from(el.children) as HTMLElement[];
+              let closest = 0;
+              let minDist = Infinity;
+              children.forEach((child, i) => {
+                const dist = Math.abs(child.offsetLeft - el.scrollLeft);
+                if (dist < minDist) {
+                  minDist = dist;
+                  closest = i;
+                }
+              });
+              if (closest !== index) setIndex(closest);
+            }}
+          >
+            {filtered.map((item) => {
+              const thumb = thumbFor(item);
+              return (
+                <article
+                  key={item.id}
+                  className="relative w-[92%] min-w-[92%] shrink-0 snap-center overflow-hidden rounded-[12px] bg-black/30 shadow-[0_8px_24px_rgba(68,39,72,0.14)] sm:w-full sm:min-w-full"
+                >
+                  <div className="relative aspect-video">
+                    {thumb ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={thumb}
+                        alt=""
+                        draggable={false}
+                        className="pointer-events-none absolute inset-0 h-full w-full object-cover"
+                      />
+                    ) : (
+                      <div className="absolute inset-0 bg-[#5a3d62]" />
+                    )}
+                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-transparent" />
+                    {item.videoUrl ? (
+                      <a
+                        href={item.videoUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="absolute top-1/2 left-1/2 z-10 flex h-14 w-14 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-[#FF0000] text-white shadow-lg"
+                        aria-label={`Ver video de ${item.name}`}
+                      >
+                        <span className="material-symbols-outlined text-[32px] leading-none">
+                          play_arrow
+                        </span>
+                      </a>
+                    ) : null}
+                    <NameBadge
+                      item={item}
+                      className="pointer-events-none absolute bottom-3 left-3 z-10 max-w-[78%]"
+                    />
+                  </div>
+                </article>
+              );
+            })}
           </div>
 
-          {filtered.length > 1 && (
+          {filtered.length > 1 ? (
             <div className="mt-5 flex items-center justify-center gap-2">
               {filtered.map((item, i) => (
                 <button
@@ -203,9 +186,150 @@ export function TestimonialsTabs({ items }: { items: TestimonioData[] }) {
                 />
               ))}
             </div>
-          )}
+          ) : null}
         </div>
       )}
     </div>
+  );
+}
+
+function TestimonialsDesktop({ items }: { items: TestimonioData[] }) {
+  const [tab, setTab] = useState<TestimonioCategory>("medico");
+  const [index, setIndex] = useState(0);
+
+  const filtered = useMemo(
+    () => items.filter((t) => t.category === tab),
+    [items, tab],
+  );
+
+  useEffect(() => {
+    setIndex(0);
+  }, [tab]);
+
+  const active = filtered[index] ?? filtered[0];
+  const videoId = active ? youtubeId(active.videoUrl) : null;
+
+  return (
+    <div className="hidden lg:block">
+      <div
+        role="tablist"
+        className="mx-auto inline-flex items-center gap-0.5 rounded-full bg-[#F0EDF5] p-1"
+      >
+        {TABS.map((t) => {
+          const isActive = t.id === tab;
+          return (
+            <button
+              key={t.id}
+              type="button"
+              role="tab"
+              aria-selected={isActive}
+              onClick={() => setTab(t.id)}
+              className={`rounded-full px-4 py-1.5 text-[13px] transition-all duration-200 xl:px-5 ${
+                isActive
+                  ? "bg-white font-medium text-[#503C77] shadow-[0_1px_4px_rgba(68,39,72,0.08)]"
+                  : "font-normal text-[#7A7585] hover:text-[#503C77]"
+              }`}
+            >
+              {t.label}
+            </button>
+          );
+        })}
+      </div>
+
+      {filtered.length === 0 ? (
+        <p className="mt-10 text-center text-[15px] text-muted">
+          Pronto vas a poder ver los testimonios de esta categoría.
+        </p>
+      ) : active ? (
+        <div className="mt-10 grid grid-cols-[minmax(0,1fr)_minmax(0,200px)] items-stretch gap-5 xl:grid-cols-[minmax(0,1fr)_minmax(0,228px)] xl:gap-6">
+          <article className="relative overflow-hidden rounded-[20px] bg-[#1a1228] shadow-[0_20px_56px_rgba(80,60,119,0.2)] ring-1 ring-[#7A78BB]/15">
+            <div className="relative aspect-video w-full">
+              {videoId ? (
+                <iframe
+                  key={`${tab}-${active.id}`}
+                  src={`https://www.youtube-nocookie.com/embed/${videoId}?rel=0&modestbranding=1`}
+                  title={`Video de ${active.name}`}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                  className="absolute inset-0 h-full w-full border-0"
+                />
+              ) : (
+                <div className="absolute inset-0 flex items-center justify-center bg-[#503C77]/30">
+                  <p className="text-sm font-medium text-white/80">
+                    Video pendiente
+                  </p>
+                </div>
+              )}
+            </div>
+          </article>
+
+          <aside className="flex h-full min-h-0 flex-col gap-3">
+            {filtered.map((item, i) => {
+              const thumb = thumbFor(item);
+              const selected = i === index;
+              return (
+                <button
+                  key={item.id}
+                  type="button"
+                  onClick={() => setIndex(i)}
+                  aria-label={`Ver video de ${item.name}`}
+                  className={`group flex min-h-0 flex-1 flex-col text-left transition-all duration-300 ${
+                    selected ? "opacity-100" : "opacity-75 hover:opacity-100"
+                  }`}
+                >
+                  <div
+                    className={`relative min-h-0 flex-1 overflow-hidden rounded-[14px] transition-all duration-300 ${
+                      selected
+                        ? "shadow-[0_12px_28px_rgba(80,60,119,0.22)] ring-2 ring-[#7A78BB]"
+                        : "shadow-[0_6px_18px_rgba(68,39,72,0.12)] ring-1 ring-[#E5E0EC] group-hover:ring-[#7A78BB]/50"
+                    }`}
+                  >
+                    {thumb ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={thumb}
+                        alt=""
+                        className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                      />
+                    ) : (
+                      <div className="absolute inset-0 bg-[#5a3d62]" />
+                    )}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+                    {!selected ? (
+                      <span className="absolute inset-0 flex items-center justify-center bg-black/20 opacity-0 transition-opacity group-hover:opacity-100">
+                        <span className="flex size-9 items-center justify-center rounded-full bg-[#FF0000] text-white shadow-lg xl:size-10">
+                          <span className="material-symbols-outlined text-[20px] leading-none xl:text-[22px]">
+                            play_arrow
+                          </span>
+                        </span>
+                      </span>
+                    ) : null}
+                  </div>
+                  <p className="mt-1.5 line-clamp-2 h-8 shrink-0 px-0.5 text-[11px] leading-snug xl:text-[12px]">
+                    <span
+                      className={`font-bold ${
+                        selected ? "text-[#DD876E]" : "text-[#503C77]"
+                      }`}
+                    >
+                      {item.name}
+                    </span>
+                    <span className="text-[#6B6570]"> · {item.role}</span>
+                  </p>
+                </button>
+              );
+            })}
+          </aside>
+        </div>
+      ) : null}
+    </div>
+  );
+}
+
+export function TestimonialsTabs({ items }: { items: TestimonioData[] }) {
+  return (
+    <>
+      <TestimonialsMobile items={items} />
+      <TestimonialsDesktop items={items} />
+    </>
   );
 }

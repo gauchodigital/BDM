@@ -2,10 +2,13 @@ import Link from "next/link";
 import { ReferencesAccordion } from "@/components/layout/ReferencesAccordion";
 
 const legalLinks = [
-  { href: "/terminos", label: "Términos" },
-  { href: "/privacidad", label: "Privacidad" },
-  { href: "/cookies", label: "Cookies" },
+  { href: "/cookies", label: "Política de cookies" },
+  { href: "/terminos", label: "Términos y condiciones" },
+  { href: "/privacidad", label: "Política de privacidad" },
 ];
+
+const PHONE = "0800-220-4752";
+const EMAIL = "bua-farmacovigilancia-rx@gsk.com";
 
 export function Footer() {
   return (
@@ -22,17 +25,40 @@ export function Footer() {
               <Link
                 key={l.href}
                 href={l.href}
-                className="text-[12px] font-normal uppercase tracking-[0.06em] text-white hover:text-white/80"
+                className="text-[12px] font-normal text-white/75 underline-offset-2 hover:text-white hover:underline"
               >
                 {l.label}
               </Link>
             ))}
           </nav>
-          <p className="mt-6 max-w-3xl text-[11px] leading-relaxed text-white/80">
-            © {new Date().getFullYear()} GSK group of companies o su
-            licenciante. Todos los derechos reservados. Este sitio es solo para
-            residentes de Argentina. PM-AR-SGM-WCNT-230001
-          </p>
+
+          <div className="mt-6 max-w-3xl space-y-3 text-[11px] leading-relaxed text-white/75 md:text-[12px] md:leading-relaxed">
+            <p>NP-AR-MNU-WCNT-260001 - Agosto 2026.</p>
+            <p>Para mayor información consulte a su médico.</p>
+            <p>
+              GSK Biopharma Argentina SA Av del Libertador 7202, Piso 4, CABA,
+              Buenos Aires, Argentina.
+            </p>
+            <p>
+              Para consultas sobre nuestros productos, consultas de calidad o
+              reporte de eventos adversos puede comunicarse al{" "}
+              <a
+                href={`tel:${PHONE.replace(/-/g, "")}`}
+                className="text-white underline underline-offset-2 hover:text-white/90"
+              >
+                {PHONE}
+              </a>
+              . Para reportar eventos adversos de nuestros productos envíe un
+              correo a:{" "}
+              <a
+                href={`mailto:${EMAIL}`}
+                className="break-all text-white underline underline-offset-2 hover:text-white/90"
+              >
+                {EMAIL}
+              </a>
+            </p>
+            <p>© 2026 GSK y sus afiliadas o licenciantes</p>
+          </div>
         </div>
       </footer>
     </>

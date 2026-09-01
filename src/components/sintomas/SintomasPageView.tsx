@@ -4,8 +4,7 @@ import { useState } from "react";
 import { RichText } from "@/components/ui/RichText";
 import { Reveal } from "@/components/ui/Reveal";
 import {
-  PhaseHeader,
-  SymptomCard,
+  SintomasDesktopTimeline,
   SintomasMobileTimeline,
 } from "@/components/sintomas/SintomasTimeline";
 import {
@@ -78,52 +77,13 @@ export function SintomasPageView() {
               className="relative md:hidden"
             />
 
-            <div className="hidden gap-6 md:grid md:grid-cols-2 lg:gap-8">
-              {early.length > 0 ? (
-                <Reveal delay={80}>
-                  <div className="rounded-[16px] bg-[#F3F0F8] p-6 lg:p-8">
-                    <PhaseHeader phase="early" showTimelineDot={false} />
-                    <ul className="flex flex-col gap-3">
-                      {early.map((s) => (
-                        <li key={s.id}>
-                          <SymptomCard item={s} phase="early" />
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </Reveal>
-              ) : null}
-
-              {alarm.length > 0 ? (
-                <Reveal delay={150} from="right">
-                  <div className="rounded-[16px] bg-[#FDF0EC] p-6 lg:p-8">
-                    <PhaseHeader phase="alarm" showTimelineDot={false} />
-                    <ul className="flex flex-col gap-3">
-                      {alarm.map((s) => (
-                        <li key={s.id}>
-                          <SymptomCard item={s} phase="alarm" />
-                        </li>
-                      ))}
-                    </ul>
-                    <div className="mt-3 flex items-start gap-3">
-                      <span
-                        className="mt-2 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#EF4444] text-white"
-                        aria-hidden
-                      >
-                        <span className="material-symbols-outlined text-[18px] leading-none">
-                          warning
-                        </span>
-                      </span>
-                      <div className="flex-1 rounded-[8px] bg-[#FEF2F2] px-4 py-[14px] shadow-[inset_0_0_0_2px_#EF4444]">
-                        <p className="text-[12px] font-bold leading-snug text-[#7F1D1D]">
-                          {WARNING_SHORT}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </Reveal>
-              ) : null}
-            </div>
+            <SintomasDesktopTimeline
+              early={early}
+              alarm={alarm}
+              warningText={WARNING_SHORT}
+              showWarningMarker
+              className="relative hidden md:block"
+            />
           </div>
         </div>
       </section>
