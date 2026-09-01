@@ -56,11 +56,11 @@ export function TestimonialsTabs({ items }: { items: TestimonioData[] }) {
   }, [tab]);
 
   return (
-    <div>
+    <div className="lg:grid lg:grid-cols-[minmax(0,20rem)_minmax(0,1fr)] lg:items-center lg:gap-14">
       {/* Figma: track púrpura, tab activo blanco con borde */}
       <div
         role="tablist"
-        className="flex h-12 items-center gap-1 rounded-[12px] bg-[#503C77] p-1 lg:max-w-xl"
+        className="flex h-12 items-center gap-1 rounded-[12px] bg-[#503C77] p-1 lg:h-auto lg:flex-col lg:items-stretch lg:gap-2 lg:self-start lg:rounded-2xl lg:p-2"
       >
         {TABS.map((t) => {
           const active = t.id === tab;
@@ -71,10 +71,10 @@ export function TestimonialsTabs({ items }: { items: TestimonioData[] }) {
               role="tab"
               aria-selected={active}
               onClick={() => setTab(t.id)}
-              className={`flex h-full flex-1 items-center justify-center rounded-[10px] px-2 text-center leading-tight transition-colors ${
+              className={`flex h-full flex-1 items-center justify-center rounded-[10px] px-2 text-center leading-tight transition-colors lg:h-auto lg:flex-none lg:justify-start lg:px-5 lg:py-4 lg:text-left ${
                 active
-                  ? "border border-[#503C77] bg-white text-[13px] font-bold text-[#503C77] shadow-[0_1px_3px_rgba(68,39,72,0.12)]"
-                  : "text-[13px] font-normal text-white/75 hover:text-white/90"
+                  ? "border border-[#503C77] bg-white text-[13px] font-bold text-[#503C77] shadow-[0_1px_3px_rgba(68,39,72,0.12)] lg:text-[15px]"
+                  : "text-[13px] font-normal text-white/75 hover:text-white/90 lg:text-[15px]"
               }`}
             >
               {t.label}
@@ -84,12 +84,12 @@ export function TestimonialsTabs({ items }: { items: TestimonioData[] }) {
       </div>
 
       {filtered.length === 0 ? (
-        <p className="mt-8 text-center text-sm text-muted">
+        <p className="mt-8 text-center text-sm text-muted lg:mt-0">
           Pronto vas a poder ver los testimonios de esta categoría.
         </p>
       ) : (
-        <>
-          <div className="relative mt-6 lg:max-w-4xl">
+        <div className="lg:min-w-0">
+          <div className="relative mt-6 lg:mt-0">
             <div
               ref={trackRef}
               className="flex touch-pan-x snap-x snap-mandatory gap-3 overflow-x-auto scroll-smooth [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
@@ -204,7 +204,7 @@ export function TestimonialsTabs({ items }: { items: TestimonioData[] }) {
               ))}
             </div>
           )}
-        </>
+        </div>
       )}
     </div>
   );

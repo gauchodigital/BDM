@@ -5,7 +5,7 @@ export function CompromisoSocialSection() {
     <section className="bg-white px-5 pb-0 pt-[22px] md:px-8">
       <div className="mx-auto w-full max-w-7xl">
         <Reveal>
-          <div className="flex max-w-2xl flex-col gap-4">
+          <div className="flex max-w-2xl flex-col gap-4 lg:mx-auto lg:max-w-3xl lg:text-center">
             <div className="flex flex-col gap-2">
               <p className="text-[11px] font-extrabold uppercase leading-[16.8px] tracking-[1.3px] text-[#DD876E]">
                 Compromiso social
@@ -14,7 +14,7 @@ export function CompromisoSocialSection() {
                 Por un mundo sin meningitis
               </h2>
             </div>
-            <p className="text-[16px] leading-[26px] text-[#442748]">
+            <p className="text-[16px] leading-[26px] text-[#442748] lg:text-[18px]">
               Nos unimos al compromiso de la Organización Mundial de la Salud
               para poner fin a la meningitis para el 2030
               <sup className="text-[10px] leading-[26px] text-[#442748]">

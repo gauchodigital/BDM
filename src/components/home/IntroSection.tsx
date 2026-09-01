@@ -3,7 +3,12 @@ import { AnatomyInteractive } from "@/components/home/AnatomyInteractive";
 
 export function IntroSection() {
   return (
-    <section id="que-es" className="section-pad scroll-mt-16 bg-white">
+    <section
+      id="que-es"
+      /* py-16/md:py-24 replican section-pad; en desktop la sección ocupa
+         la pantalla completa y centra su contenido. */
+      className="scroll-mt-16 bg-white py-16 md:py-24 lg:flex lg:min-h-[100svh] lg:items-center lg:py-8"
+    >
       <div className="mx-auto w-full max-w-7xl px-6 md:px-8">
         {/* Mobile */}
         <div className="lg:hidden">

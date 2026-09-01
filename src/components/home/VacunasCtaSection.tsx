@@ -64,8 +64,8 @@ export function VacunasCtaSection({
     <section className="bg-[#503C77]">
       <div className="mx-auto w-full max-w-7xl px-5 py-16 md:px-8 md:py-16">
         <Reveal>
-          <div className="flex max-w-2xl flex-col gap-6 text-left">
-            <div className="flex flex-col gap-4">
+          <div className="flex max-w-2xl flex-col gap-6 text-left lg:max-w-none lg:flex-row lg:items-center lg:justify-between lg:gap-16">
+            <div className="flex flex-col gap-4 lg:max-w-2xl">
               <div className="flex flex-col gap-2">
                 <p className="text-[11px] font-bold uppercase leading-[16.8px] tracking-[1.3px] text-[#DD876E]">
                   Chequeá tu calendario de vacunación
@@ -80,7 +80,7 @@ export function VacunasCtaSection({
             </div>
             <Link
               href="/autotest"
-              className="flex h-[52px] w-full items-center justify-center rounded-[10px] bg-white px-6 text-[16px] font-semibold text-[#503C77] transition hover:bg-white/95"
+              className="flex h-[52px] w-full items-center justify-center rounded-[10px] bg-white px-6 text-[16px] font-semibold text-[#503C77] transition hover:bg-white/95 lg:w-auto lg:shrink-0 lg:px-14"
             >
               Comenzar
             </Link>
