@@ -7,6 +7,7 @@ import { TestimonialsSection } from "@/components/home/TestimonialsSection";
 import { DatosSection } from "@/components/home/DatosSection";
 import { VacunasCtaSection } from "@/components/home/VacunasCtaSection";
 import { CompromisoSocialSection } from "@/components/home/CompromisoSocialSection";
+import { PediatraConsultPopup } from "@/components/engagement/PediatraConsultPopup";
 import { readCausas } from "@/lib/causasData";
 import { readTestimonios } from "@/lib/testimoniosData";
 import { readDatos } from "@/lib/datosData";
@@ -29,6 +30,7 @@ export default function HomePage() {
       <DatosSection items={datos} />
       <VacunasCtaSection />
       <CompromisoSocialSection />
+      <PediatraConsultPopup />
     </>
   );
 }
