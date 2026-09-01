@@ -13,6 +13,7 @@ const LAYERS: {
   dotClass: string;
   rowActive: string;
   diagramBg: string;
+  diagramBgActive: string;
   diagramText: string;
   /** Vertical share of the circular stack (percent). */
   heightPct: number;
@@ -22,8 +23,9 @@ const LAYERS: {
     title: "Cráneo",
     subtitle: "Protección ósea externa",
     dotClass: "bg-[#E8E4EC]",
-    rowActive: "bg-[#F4F2F6]",
+    rowActive: "bg-[#EBE6F0]",
     diagramBg: "bg-[#E6E6E8]",
+    diagramBgActive: "bg-[#CFCFD6]",
     diagramText: "text-[#503C77]",
     heightPct: 22,
   },
@@ -33,8 +35,9 @@ const LAYERS: {
     subtitle: "3 capas de membrana protectora",
     badge: "SE INFLAMAN",
     dotClass: "bg-meninges",
-    rowActive: "bg-[#EAF7FC]",
+    rowActive: "bg-[#CFEFFB]",
     diagramBg: "bg-[#B9E5F8]",
+    diagramBgActive: "bg-[#6ECFF6]",
     diagramText: "text-white",
     heightPct: 18,
   },
@@ -43,8 +46,9 @@ const LAYERS: {
     title: "Cerebro",
     subtitle: "Órgano afectado por la inflamación",
     dotClass: "bg-cerebro",
-    rowActive: "bg-[#FBEFEA]",
+    rowActive: "bg-[#F5D5CC]",
     diagramBg: "bg-[#F5CFC4]",
+    diagramBgActive: "bg-[#E8A898]",
     diagramText: "text-white",
     heightPct: 60,
   },
@@ -73,18 +77,22 @@ function LayerStack({
                 type="button"
                 onClick={() => onSelect(layer.id)}
                 aria-pressed={selected}
-                className={`relative flex min-h-0 w-full items-center justify-center overflow-hidden transition-all duration-300 ease-out ${layer.diagramBg}`}
+                className={`relative flex min-h-0 w-full items-center justify-center overflow-hidden transition-all duration-300 ease-out ${
+                  selected ? layer.diagramBgActive : layer.diagramBg
+                } ${selected ? "shadow-[inset_0_0_0_2px_rgba(122,120,187,0.45)]" : ""}`}
                 style={{ flex: `${layer.heightPct} 1 0%` }}
               >
                 {!selected ? (
                   <span
                     aria-hidden
-                    className="pointer-events-none absolute inset-0 bg-white/25 transition-opacity duration-300"
+                    className="pointer-events-none absolute inset-0 bg-white/35 transition-opacity duration-300"
                   />
                 ) : null}
                 <span
                   className={`relative z-10 text-[13px] uppercase tracking-[0.08em] transition-all duration-300 sm:text-[14px] ${layer.diagramText} ${
-                    selected ? "font-extrabold" : "font-bold opacity-60"
+                    selected
+                      ? "font-extrabold drop-shadow-[0_1px_1px_rgba(0,0,0,0.12)]"
+                      : "font-bold opacity-45"
                   }`}
                 >
                   {layer.title}
@@ -127,17 +135,17 @@ export function AnatomyInteractive({ className = "" }: { className?: string }) {
                   i > 0 ? "border-t border-[#E5E5E5]" : ""
                 } ${
                   selected
-                    ? item.rowActive
-                    : "bg-white opacity-50 hover:opacity-75"
+                    ? `${item.rowActive} ring-1 ring-inset ring-[#7A78BB]/25`
+                    : "bg-white opacity-45 hover:opacity-70"
                 }`}
               >
                 <span
                   className={`mt-0.5 size-8 shrink-0 rounded-full box-border transition-all duration-300 ${item.dotClass} ${
                     selected
-                      ? "scale-105 border border-solid border-[#7A78BB]"
+                      ? "scale-110 border-2 border-solid border-[#7A78BB] shadow-[0_0_0_3px_rgba(122,120,187,0.2)]"
                       : item.id === "meninges"
-                        ? "scale-95 border border-solid border-meninges-stroke opacity-70"
-                        : "scale-95 border border-solid border-transparent opacity-70"
+                        ? "scale-95 border border-solid border-meninges-stroke opacity-60"
+                        : "scale-95 border border-solid border-transparent opacity-60"
                   }`}
                   aria-hidden
                 />
