@@ -3,16 +3,6 @@
 import { useState } from "react";
 import type { VacunaEtapa } from "@/lib/vacunacionData";
 
-const ETAPA_THEME: Record<string, string> = {
-  embarazadas: "bg-[#F8E4DE] text-[#8B4A3C]",
-  "recien-nacidos": "bg-[#D6E4EF] text-primary",
-  "hasta-1-anio": "bg-[#E8E2F0] text-primary",
-  "hasta-2-anios": "bg-[#D4EBE8] text-[#2F6B64]",
-  "nacidos-2021": "bg-[#F5EDC8] text-[#6B5A1A]",
-  "nacidos-2018": "bg-[#EDEAF2] text-primary",
-  "jovenes-adultos": "bg-[#E8E8EC] text-dark",
-};
-
 function chipLabel(etapa: VacunaEtapa, desktop: boolean) {
   if (!desktop) return etapa.label;
   if (etapa.id === "embarazadas") return etapa.bannerTitle;
@@ -101,12 +91,11 @@ export function VacunasEtapasPanel({
         })}
       </div>
 
-      {/* Desktop tabs — bandeja gris con píldoras de color */}
+      {/* Desktop tabs — mismo estilo que mobile */}
       <div className="hidden rounded-[14px] bg-[#F0EDF5] p-2.5 lg:block">
         <div className="flex flex-wrap gap-2" role="tablist">
           {etapas.map((etapa) => {
             const isActive = etapa.id === active.id;
-            const theme = ETAPA_THEME[etapa.id] ?? "bg-white text-dark";
 
             return (
               <button
@@ -115,10 +104,10 @@ export function VacunasEtapasPanel({
                 role="tab"
                 aria-selected={isActive}
                 onClick={() => setActiveId(etapa.id)}
-                className={`inline-flex h-10 items-center gap-2 rounded-full px-4 text-[12px] font-bold leading-tight transition-all duration-200 xl:text-[13px] ${
+                className={`inline-flex h-10 items-center gap-2 rounded-[22px] px-4 text-[12px] font-bold leading-tight transition-all duration-300 xl:text-[13px] ${
                   isActive
-                    ? "bg-primary text-white shadow-[0_4px_14px_rgba(80,60,119,0.3)]"
-                    : theme
+                    ? "scale-[1.03] bg-primary text-white shadow-[0_4px_14px_rgba(80,60,119,0.28)]"
+                    : "border border-light bg-white text-dark/50 hover:text-dark/80"
                 }`}
               >
                 <span className="material-symbols-outlined text-[20px] leading-none xl:text-[22px]">

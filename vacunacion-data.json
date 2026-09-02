@@ -181,27 +181,19 @@
           "badge": "NACIDOS EN 2021",
           "vacunas": [
             {
-              "nombre": "Fiebre amarilla",
+              "nombre": "Bacteriana Celular",
               "detalle": ""
             },
             {
-              "nombre": "Triple Viral SRP",
+              "nombre": "Triple Viral",
               "detalle": ""
             },
             {
-              "nombre": "Antigripal",
+              "nombre": "IPV",
               "detalle": ""
             },
             {
               "nombre": "Varicela",
-              "detalle": ""
-            },
-            {
-              "nombre": "Meningococo ACWY",
-              "detalle": ""
-            },
-            {
-              "nombre": "Quíntuple",
               "detalle": ""
             }
           ]
@@ -241,7 +233,7 @@
             },
             {
               "nombre": "Fiebre amarilla",
-              "detalle": "Residentes en zona de riesgo si la recibieron la última vez antes de los 2 años."
+              "detalle": "Residentes en zona de riesgo si la 1° dosis la recibió antes de los 2 años."
             }
           ]
         }
