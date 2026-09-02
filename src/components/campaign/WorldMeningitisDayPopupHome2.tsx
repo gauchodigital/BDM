@@ -29,20 +29,24 @@ function SideArt({
   countdown: number;
 }) {
   return (
-    <div className="relative flex h-full min-h-[200px] flex-col items-center justify-center overflow-hidden px-6 py-8 md:min-h-[340px]">
+    <div className="relative flex h-full min-h-[180px] flex-col items-center justify-center overflow-hidden px-6 py-8 md:min-h-0 md:py-10">
       <span
         aria-hidden
-        className="absolute left-[18%] top-[22%] size-1.5 rounded-full bg-white/70"
+        className="absolute left-[18%] top-[22%] size-1.5 rounded-full bg-white"
       />
       <span
         aria-hidden
-        className="absolute right-[22%] top-[30%] size-1 rounded-full bg-white/50"
+        className="absolute right-[22%] top-[30%] size-1 rounded-full bg-white"
       />
       <span
         aria-hidden
-        className="absolute left-[28%] top-[58%] size-1 rounded-full bg-white/45"
+        className="absolute left-[28%] top-[58%] size-1 rounded-full bg-white"
       />
-      <div aria-hidden className="absolute inset-6 rounded-full border border-white/20" />
+      <div
+        aria-hidden
+        className="absolute inset-6 rounded-full border border-white"
+        style={{ opacity: 0.35 }}
+      />
 
       {phase === "tease" ? (
         <span
@@ -55,7 +59,7 @@ function SideArt({
 
       {phase === "question" ? (
         <div className="relative text-center">
-          <p className="text-[13px] font-bold uppercase tracking-[0.16em] text-white/80">
+          <p className="text-[13px] font-bold uppercase tracking-[0.16em] text-white">
             Tu turno
           </p>
           <p className="mt-2 text-[28px] font-black text-white">A · B · C</p>
@@ -63,10 +67,10 @@ function SideArt({
       ) : null}
 
       {phase === "result" ? (
-        <div className="popup-logo-pop relative flex size-[112px] items-center justify-center rounded-full bg-white/20 shadow-[0_0_56px_rgba(255,255,255,0.5)] ring-2 ring-white/35 md:size-[128px]">
+        <div className="popup-logo-pop relative flex size-[112px] items-center justify-center rounded-full bg-white shadow-[0_0_40px_rgba(80,60,119,0.2)] ring-2 ring-white md:size-[128px]">
           <LogoManito
-            variant="white"
-            className="h-[68px] w-auto drop-shadow-[0_4px_16px_rgba(80,60,119,0.35)] md:h-[78px]"
+            variant="purple"
+            className="h-[68px] w-auto md:h-[78px]"
             width={78}
             height={86}
           />
@@ -153,7 +157,8 @@ export function WorldMeningitisDayPopupHome2() {
       <button
         type="button"
         aria-label="Cerrar"
-        className="absolute inset-0 bg-[#120f18]/55 backdrop-blur-[1px]"
+        className="absolute inset-0 bg-[#120f18]"
+        style={{ opacity: 0.72 }}
         onClick={close}
       />
 
@@ -161,12 +166,13 @@ export function WorldMeningitisDayPopupHome2() {
         role="dialog"
         aria-modal="true"
         aria-labelledby="wmd-home2-popup-title"
-        className="relative z-10 w-full max-w-[820px] overflow-hidden rounded-[24px] bg-white shadow-[0_24px_80px_rgba(18,15,24,0.45)]"
+        className="relative z-10 w-full max-w-[920px] overflow-hidden rounded-[24px] shadow-[0_24px_80px_rgba(18,15,24,0.55)]"
+        style={{ backgroundColor: "#ffffff" }}
       >
         {result ? <PopupFireworks key={fireworksKey} /> : null}
-        <div className="relative flex flex-col md:flex-row">
+        <div className="relative flex flex-col md:min-h-[320px] md:flex-row">
           <div
-            className="relative md:w-[36%]"
+            className="relative shrink-0 md:w-[34%] md:self-stretch"
             style={{
               background:
                 "linear-gradient(180deg, #B8B5E8 0%, #C9A8E8 38%, #FEC4B3 100%)",
@@ -175,44 +181,47 @@ export function WorldMeningitisDayPopupHome2() {
             <SideArt phase={phase} countdown={countdown} />
           </div>
 
-          <div className="relative flex flex-1 flex-col px-6 pb-7 pt-8 md:px-8 md:pb-8 md:pt-9">
+          <div
+            className="relative flex flex-1 flex-col justify-center px-6 py-8 md:px-8 md:py-9"
+            style={{ backgroundColor: "#ffffff" }}
+          >
             <button
               type="button"
               onClick={close}
-              className="absolute right-3 top-3 flex size-9 items-center justify-center rounded-full text-[#503C77]/55 transition hover:bg-[#503C77]/8 hover:text-[#503C77]"
+              className="absolute right-3 top-3 z-10 flex size-9 items-center justify-center rounded-full text-[#503C77] transition hover:bg-[#EEECF2]"
               aria-label="Cerrar aviso"
             >
               <span className="material-symbols-outlined text-[20px]">close</span>
             </button>
 
             {phase === "tease" ? (
-              <div className="animate-fade-in">
+              <div className="animate-fade-in pr-6">
                 <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-[#DD876E]">
                   {QUIZ_COPY.eyebrow}
                 </p>
                 <h2
                   id="wmd-home2-popup-title"
-                  className="mt-2 max-w-[360px] text-[24px] font-black leading-tight text-[#503C77] md:text-[28px]"
+                  className="mt-2 max-w-[380px] text-[24px] font-black leading-tight text-[#503C77] md:text-[28px]"
                 >
                   {QUIZ_COPY.teaseTitle}
                 </h2>
-                <p className="mt-4 text-[15px] font-medium text-[#442748]/85">
+                <p className="mt-4 text-[15px] font-medium text-[#442748]">
                   {QUIZ_COPY.teaseHint}
                 </p>
-                <p className="mt-6 text-[13px] text-[#442748]/55">
+                <p className="mt-5 text-[13px] text-[#6B6578]">
                   El desafío empieza en {countdown}…
                 </p>
               </div>
             ) : null}
 
             {phase === "question" ? (
-              <div className="animate-fade-in">
+              <div className="animate-fade-in pr-4">
                 <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-[#DD876E]">
                   {QUIZ_COPY.eyebrow}
                 </p>
                 <h2
                   id="wmd-home2-popup-title"
-                  className="mt-2 text-[18px] font-black leading-snug text-[#503C77] md:text-[20px]"
+                  className="mt-2 text-[17px] font-black leading-snug text-[#503C77] md:text-[19px]"
                 >
                   {QUIZ_COPY.question}
                 </h2>
@@ -222,13 +231,13 @@ export function WorldMeningitisDayPopupHome2() {
                       key={opt.id}
                       type="button"
                       onClick={() => answer(opt.id)}
-                      className="rounded-[12px] border border-[#503C77]/12 bg-[#F7F5FA] px-3.5 py-3 text-left transition hover:border-[#503C77]/35 hover:bg-[#EEECF2]"
+                      className="rounded-[12px] border border-[#E4DFEC] bg-[#F7F5FA] px-3 py-2.5 text-left transition hover:border-[#503C77] hover:bg-[#EEECF2]"
                     >
-                      <span className="flex gap-3">
+                      <span className="flex items-center gap-2.5">
                         <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-[#503C77] text-[13px] font-black text-white">
                           {opt.id}
                         </span>
-                        <span className="text-[14px] font-medium leading-snug text-[#442748]">
+                        <span className="whitespace-nowrap text-[12px] font-medium leading-none text-[#442748] md:text-[13px]">
                           {opt.label}
                         </span>
                       </span>
@@ -239,24 +248,24 @@ export function WorldMeningitisDayPopupHome2() {
             ) : null}
 
             {result && selected ? (
-              <div className="animate-fade-in">
+              <div className="animate-fade-in pr-6">
                 <h2
                   id="wmd-home2-popup-title"
-                  className="max-w-[360px] text-[24px] font-black leading-tight text-[#503C77] md:text-[26px]"
+                  className="max-w-[400px] text-[24px] font-black leading-tight text-[#503C77] md:text-[26px]"
                 >
                   {correct ? QUIZ_COPY.correctTitle : QUIZ_COPY.wrongTitle}
                 </h2>
-                <p className="mt-3 max-w-[380px] text-[14px] leading-[1.55] text-[#442748]/85">
+                <p className="mt-3 max-w-[400px] text-[14px] leading-[1.55] text-[#442748]">
                   {correct ? QUIZ_COPY.correctBody : QUIZ_COPY.wrongBody}
                 </p>
-                <p className="mt-3 text-[13px] font-semibold text-[#503C77]/90">
+                <p className="mt-3 text-[13px] font-semibold text-[#503C77]">
                   {correct ? QUIZ_COPY.correctFooter : QUIZ_COPY.wrongFooter}
                 </p>
 
                 <Link
                   href={QUIZ_CTA_HREF}
                   onClick={close}
-                  className="mt-6 inline-flex h-[52px] w-full items-center justify-center gap-2 rounded-[12px] bg-[#503C77] px-5 text-[14px] font-bold text-white transition hover:brightness-110"
+                  className="mt-6 inline-flex h-[48px] w-full max-w-[420px] items-center justify-center gap-2 rounded-[12px] bg-[#503C77] px-4 text-[13px] font-bold text-white transition hover:brightness-110 md:text-[14px]"
                 >
                   {QUIZ_CTA_LABEL}
                   <span
