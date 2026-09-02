@@ -1,6 +1,6 @@
 /** Contenido de prueba del quiz de campaña — se puede editar sin tocar la UI. */
 
-export const QUIZ_COUNTDOWN_SECONDS = 3;
+export const QUIZ_COUNTDOWN_SECONDS = 5;
 
 export const QUIZ_CTA_HREF = "/causas/bacteriana";
 export const QUIZ_CTA_LABEL = "Conocé más sobre meningitis bacteriana";
