@@ -2,11 +2,15 @@ import type { ReactNode } from "react";
 import Link from "next/link";
 import { Chip } from "@/components/ui/Chip";
 import { RichText } from "@/components/ui/RichText";
-import { Reveal } from "@/components/ui/Reveal";
+import { RevealSection } from "@/components/ui/RevealSection";
 import { CausaOtrasCausas } from "@/components/causas/CausaOtrasCausas";
 import { CasosChart } from "@/components/causas/CasosChart";
 import { SerogruposBadges } from "@/components/causas/SerogruposBadges";
 import { BACTERIANA } from "@/lib/bacterianaContent";
+
+const WRAP = "mx-auto w-full max-w-7xl px-5 md:px-8";
+const PANEL =
+  "rounded-[12px] border border-[#D8D4DE] bg-transparent p-6 md:p-8";
 
 function Eyebrow({ children }: { children: string }) {
   return (
@@ -18,7 +22,7 @@ function Eyebrow({ children }: { children: string }) {
 
 function SectionTitle({ children }: { children: ReactNode }) {
   return (
-    <h2 className="text-[28px] font-black leading-8 text-[#503c77]">
+    <h2 className="text-[28px] font-black leading-8 text-[#503c77] lg:text-[32px] lg:leading-9">
       {children}
     </h2>
   );
@@ -41,7 +45,6 @@ function PersonStat({
   activeIcon: string;
   inactiveIcon: string;
   tone?: "light" | "dark" | "plain";
-  /** 0-based index of the first highlighted person (default: start of the row). */
   highlightIndex?: number;
 }) {
   const dark = tone === "dark";
@@ -49,15 +52,21 @@ function PersonStat({
   const start = highlightIndex ?? 0;
   return (
     <div
-      className={`flex flex-col items-center gap-2 overflow-hidden py-6 ${
+      className={`flex flex-col items-center overflow-hidden ${
+        plain ? "gap-3 py-6 lg:gap-5 lg:py-10" : "gap-2 py-6"
+      } ${
         dark
           ? "rounded-2xl bg-[#503c77] px-5"
           : plain
             ? "bg-transparent px-0"
-            : "rounded-2xl bg-[#e9eff5] px-5"
+            : "rounded-2xl border border-[#D8D4DE] bg-[#EEECF2] px-5"
       }`}
     >
-      <div className="flex items-end justify-center gap-1.5">
+      <div
+        className={`flex items-end justify-center ${
+          plain ? "gap-2 lg:gap-3.5" : "gap-1.5"
+        }`}
+      >
         {Array.from({ length: total }, (_, i) => {
           const isActive = i >= start && i < start + active;
           return (
@@ -68,25 +77,33 @@ function PersonStat({
               alt=""
               width={28}
               height={plain ? 30 : 28}
-              className={plain ? "h-[30px] w-7 shrink-0" : "size-7 shrink-0"}
+              className={
+                plain
+                  ? "h-[30px] w-7 shrink-0 lg:h-[44px] lg:w-10"
+                  : "size-7 shrink-0"
+              }
             />
           );
         })}
       </div>
       <div className="w-full text-center">
         <p
-          className={`text-[22px] font-black ${
-            dark ? "text-white" : "text-[#503c77]"
-          }`}
+          className={`font-black ${
+            plain ? "text-[22px] lg:text-[40px] lg:leading-none" : "text-[22px]"
+          } ${dark ? "text-white" : "text-[#503c77]"}`}
         >
           {ratio}
         </p>
         <p
-          className={`mt-1 text-[13px] font-normal leading-5 ${
+          className={`font-normal ${
+            plain
+              ? "mt-2 text-[13px] leading-5 lg:mt-3 lg:text-[16px] lg:leading-6"
+              : "mt-1 text-[13px] leading-5"
+          } ${
             dark
               ? "text-white/80"
               : plain
-                ? "whitespace-nowrap text-[#6D6AAE]"
+                ? "text-[#6D6AAE] lg:whitespace-nowrap"
                 : "text-[#442748]"
           }`}
         >
@@ -97,18 +114,68 @@ function PersonStat({
   );
 }
 
+function TocNav({
+  items,
+}: {
+  items: typeof BACTERIANA.toc;
+}) {
+  return (
+    <nav className="flex flex-col gap-2 rounded-[12px] bg-[#EEECF2] px-5 py-4 text-[13px] leading-5 text-[#503c77]">
+      {items.map((item) => (
+        <div key={item.id} className="flex flex-col gap-2">
+          <a
+            href={`#${item.id}`}
+            className="inline-flex items-center gap-1.5 hover:opacity-80"
+          >
+            <span
+              className="material-symbols-outlined shrink-0 text-[9px] leading-none no-underline"
+              aria-hidden
+            >
+              arrow_forward
+            </span>
+            <span className="underline underline-offset-2">{item.label}</span>
+          </a>
+          {"children" in item && item.children ? (
+            <div className="ml-4 flex flex-col gap-2">
+              {item.children.map((child) => (
+                <a
+                  key={`${item.id}-${child.id}-${child.label}`}
+                  href={`#${child.id}`}
+                  className="inline-flex items-center gap-1.5 hover:opacity-80"
+                >
+                  <span
+                    className="material-symbols-outlined shrink-0 text-[9px] leading-none no-underline"
+                    aria-hidden
+                  >
+                    arrow_forward
+                  </span>
+                  <span className="underline underline-offset-2">
+                    {child.label}
+                  </span>
+                </a>
+              ))}
+            </div>
+          ) : null}
+        </div>
+      ))}
+    </nav>
+  );
+}
+
 export function BacterianaPage() {
   const d = BACTERIANA;
 
   return (
     <>
-      {/* Breadcrumb */}
       <nav
         aria-label="Breadcrumb"
-        className="border-b border-[#e2e8f0] bg-white px-5 py-3 md:px-8"
+        className="border-b border-[#e2e8f0] bg-white py-3"
       >
-        <div className="mx-auto flex max-w-2xl items-center gap-2 text-[13px]">
-          <Link href="/causas" className="font-medium text-[#503c77] hover:underline">
+        <div className={`${WRAP} flex items-center gap-2 text-[13px]`}>
+          <Link
+            href="/causas"
+            className="font-medium text-[#503c77] underline underline-offset-2 hover:opacity-90"
+          >
             Causas
           </Link>
           <span className="text-[#94a3b8]">/</span>
@@ -117,138 +184,98 @@ export function BacterianaPage() {
       </nav>
 
       {/* Hero + TOC */}
-      <section className="bg-white px-5 pb-10 pt-6 md:px-8">
-        <div className="mx-auto flex max-w-2xl flex-col gap-6">
-          <div className="animate-fade-up flex flex-col gap-3">
-            <Chip label={d.badge} color="accent" />
-            <h1 className="text-[34px] font-black leading-tight text-[#503c77] md:text-[40px]">
-              {d.title}
-            </h1>
-          </div>
-          <div className="animate-fade-up animate-delay-1 flex flex-col gap-1">
-            {d.intro.map((p, i) => (
-              <p
-                key={p.slice(0, 48)}
-                className={
-                  i === 0
-                    ? "text-[18px] font-semibold leading-[26px] text-[#442748]"
-                    : "text-[16px] leading-[26px] text-[#442748]"
-                }
-              >
-                <RichText
-                  text={p}
-                  strongClassName="font-semibold text-[#442748]"
-                  citeClassName="ml-0.5 text-[0.85em] font-[inherit] leading-none text-[#442748]"
-                />
-              </p>
-            ))}
+      <section className="bg-white pb-10 pt-6">
+        <div
+          className={`${WRAP} flex flex-col gap-8 lg:grid lg:grid-cols-[minmax(0,1fr)_300px] lg:items-start lg:gap-12`}
+        >
+          <div className="flex flex-col gap-6">
+            <div className="animate-fade-up flex flex-col gap-3">
+              <Chip label={d.badge} color="accent" />
+              <h1 className="text-[34px] font-black leading-tight text-[#503c77] md:text-[40px] lg:text-[44px]">
+                {d.title}
+              </h1>
+            </div>
+            <div className="animate-fade-up animate-delay-1 flex flex-col gap-4 text-[15px] leading-6 text-[#442748] lg:text-[16px] lg:leading-[26px]">
+              {d.intro.map((p) => (
+                <p key={p.slice(0, 48)}>
+                  <RichText
+                    text={p}
+                    strongClassName="font-semibold text-[#442748]"
+                    citeClassName="ml-0.5 text-[0.85em] font-[inherit] leading-none text-[#442748]"
+                  />
+                </p>
+              ))}
+            </div>
           </div>
 
-          <div className="animate-fade-up animate-delay-2 flex flex-col gap-2">
+          <aside className="animate-fade-up animate-delay-2 flex flex-col gap-2 lg:sticky lg:top-24">
             <Eyebrow>EN ESTA PÁGINA</Eyebrow>
-            <nav className="flex flex-col gap-2 rounded-lg bg-[#e9eff5] px-5 py-4 text-[13px] leading-5 text-[#503c77]">
-              {d.toc.map((item) => (
-                <div key={item.id} className="flex flex-col gap-2">
-                  <a
-                    href={`#${item.id}`}
-                    className="inline-flex items-center gap-1.5"
-                  >
-                    <span
-                      className="material-symbols-outlined shrink-0 text-[9px] leading-none no-underline"
-                      aria-hidden
-                    >
-                      arrow_forward
-                    </span>
-                    <span className="underline underline-offset-2">
-                      {item.label}
-                    </span>
-                  </a>
-                  {"children" in item && item.children ? (
-                    <div className="ml-4 flex flex-col gap-2">
-                      {item.children.map((child) => (
-                        <a
-                          key={`${item.id}-${child.id}-${child.label}`}
-                          href={`#${child.id}`}
-                          className="inline-flex items-center gap-1.5"
-                        >
-                          <span
-                            className="material-symbols-outlined shrink-0 text-[9px] leading-none no-underline"
-                            aria-hidden
-                          >
-                            arrow_forward
-                          </span>
-                          <span className="underline underline-offset-2">
-                            {child.label}
-                          </span>
-                        </a>
-                      ))}
-                    </div>
-                  ) : null}
-                </div>
-              ))}
-            </nav>
-          </div>
+            <TocNav items={d.toc} />
+          </aside>
         </div>
       </section>
 
-      {/* ¿Qué es? */}
-      <section id="que-es" className="scroll-mt-20 bg-white px-5 pb-10 md:px-8">
-        <Reveal delay={80}>
-        <div className="mx-auto flex max-w-2xl flex-col gap-4">
-          <div className="flex flex-col gap-2">
-            <Eyebrow>{d.queEs.eyebrow}</Eyebrow>
-            <SectionTitle>{d.queEs.title}</SectionTitle>
-          </div>
-          <div className="text-[16px] leading-[25px] text-[#442748]">
-            {d.queEs.paragraphs.map((p) => (
-              <p key={p.slice(0, 40)}>
-                <RichText text={p} />
-              </p>
-            ))}
-            <p className="mt-1">
-              <RichText text={d.queEs.bacteriaIntro} />
-            </p>
-            <ul className="mt-4 list-disc space-y-0 pl-6">
-              {d.queEs.bacterias.map((b) => (
-                <li key={b}>{b}</li>
-              ))}
-            </ul>
-          </div>
-          <PersonStat {...d.queEs.stat} />
-        </div>
-        </Reveal>
-      </section>
-
-      {/* Síntomas */}
-      <section
-        id="sintomas"
-        className="scroll-mt-20 bg-white px-5 py-12 md:px-8 md:py-16"
+      {/* ¿Qué es? + Síntomas */}
+      <RevealSection
+        className="scroll-mt-20 bg-white pb-16"
+        delay={80}
       >
-        <Reveal delay={100}>
-        <div className="mx-auto flex max-w-2xl flex-col gap-4">
-          <div className="flex flex-col gap-2">
-            <Eyebrow>{d.sintomas.eyebrow}</Eyebrow>
-            <SectionTitle>{d.sintomas.title}</SectionTitle>
-          </div>
-          <div className="text-[16px] leading-[26px] text-[#442748]">
-            <p>
-              <RichText text={d.sintomas.body} />
-            </p>
-            <ul className="mt-4 list-disc space-y-0 pl-6">
-              {d.sintomas.items.map((item) => (
-                <li key={item}>{item}</li>
+        <div className={`${WRAP} grid gap-8 lg:grid-cols-2 lg:gap-10`}>
+          <div id="que-es" className={`${PANEL} flex flex-col gap-6`}>
+            <div className="flex flex-col gap-2">
+              <Eyebrow>{d.queEs.eyebrow}</Eyebrow>
+              <SectionTitle>{d.queEs.title}</SectionTitle>
+            </div>
+            <div className="text-[16px] leading-[25px] text-[#442748]">
+              {d.queEs.paragraphs.map((p) => (
+                <p key={p.slice(0, 40)}>
+                  <RichText text={p} />
+                </p>
               ))}
-            </ul>
+              <p className="mt-4">
+                <RichText text={d.queEs.bacteriaIntro} />
+              </p>
+              <ul className="mt-3 list-disc space-y-1 pl-6">
+                {d.queEs.bacterias.map((b) => (
+                  <li key={b}>{b}</li>
+                ))}
+              </ul>
+            </div>
+            <PersonStat {...d.queEs.stat} />
+          </div>
+
+          <div id="sintomas" className={`${PANEL} flex flex-col gap-4`}>
+            <div className="flex flex-col gap-2">
+              <Eyebrow>{d.sintomas.eyebrow}</Eyebrow>
+              <SectionTitle>{d.sintomas.title}</SectionTitle>
+            </div>
+            <div className="text-[16px] leading-[26px] text-[#442748]">
+              <p>
+                <RichText text={d.sintomas.body} />
+              </p>
+              <ul className="mt-4 list-disc space-y-1 pl-6">
+                {d.sintomas.items.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </div>
+            <Link
+              href="/sintomas"
+              className="mt-2 inline-flex items-center gap-1.5 text-[14px] font-bold text-[#503c77] underline-offset-2 hover:underline"
+            >
+              Conocer más sobre los síntomas
+              <span aria-hidden className="text-lg leading-none">
+                →
+              </span>
+            </Link>
           </div>
         </div>
-        </Reveal>
-      </section>
+      </RevealSection>
 
       {/* Urgency bar */}
-      <section className="bg-[#503c77]">
-        <Reveal delay={150}>
-        <div className="mx-auto flex max-w-7xl border-l-4 border-[#DD876E] px-4 py-16 md:px-8">
-          <p className="max-w-2xl text-[20px] font-medium leading-snug text-white">
+      <RevealSection className="bg-[#503c77]" delay={150}>
+        <div className={`${WRAP} border-l-4 border-[#DD876E] py-14 md:py-16 lg:border-l-0 lg:py-12`}>
+          <p className="mx-auto max-w-4xl text-center text-[18px] font-medium leading-snug text-white md:text-[20px] lg:text-[22px] lg:leading-[30px]">
             La meningitis es una{" "}
             <strong className="font-bold text-[#DD876E]">urgencia médica</strong>{" "}
             y{" "}
@@ -262,17 +289,16 @@ export function BacterianaPage() {
             .
           </p>
         </div>
-        </Reveal>
-      </section>
+      </RevealSection>
 
       {/* Grupos de riesgo */}
-      <section
+      <RevealSection
         id="grupos-riesgo"
-        className="scroll-mt-20 bg-white px-5 py-16 md:px-8"
+        className="scroll-mt-20 bg-white py-16"
+        delay={80}
       >
-        <Reveal delay={80}>
-        <div className="mx-auto flex max-w-2xl flex-col gap-6">
-          <div className="flex flex-col gap-4">
+        <div className={`${WRAP} flex flex-col gap-8`}>
+          <div className="max-w-3xl flex flex-col gap-4">
             <div className="flex flex-col gap-2">
               <Eyebrow>{d.gruposRiesgo.eyebrow}</Eyebrow>
               <SectionTitle>{d.gruposRiesgo.title}</SectionTitle>
@@ -281,99 +307,102 @@ export function BacterianaPage() {
               <RichText text={d.gruposRiesgo.body} />
             </p>
           </div>
-          <div className="flex flex-col gap-6 rounded-[12px] border border-[#e2e8f0] bg-white p-4 shadow-[2px_2px_6px_rgba(54,50,118,0.1)]">
+          <div className="grid gap-5 lg:grid-cols-3">
             {d.gruposRiesgo.items.map((item) => (
-              <div key={item.title} className="flex flex-col gap-1">
-                <h3 className="text-[16px] font-bold leading-6 text-[#503c77]">
+              <div
+                key={item.title}
+                className="rounded-[12px] border border-[#e2e8f0] bg-white p-5 shadow-[2px_2px_4px_rgba(51,51,51,0.08)]"
+              >
+                <h3 className="text-[15px] font-bold leading-6 text-[#503c77]">
                   {item.title}
                 </h3>
-                <p className="text-[14px] leading-5 text-[#442748]">
+                <p className="mt-2 text-[13px] leading-5 text-[#442748]">
                   {item.body}
                 </p>
               </div>
             ))}
           </div>
         </div>
-        </Reveal>
-      </section>
+      </RevealSection>
 
       {/* Meningococo */}
-      <section
+      <RevealSection
         id="meningococo"
-        className="scroll-mt-20 bg-[rgba(166,192,214,0.25)] px-5 py-16 md:px-8"
+        className="scroll-mt-20 bg-[#EEECF2] py-16"
+        delay={100}
       >
-        <Reveal delay={100}>
-        <div className="mx-auto flex max-w-2xl flex-col gap-8">
-          <div className="flex flex-col gap-4">
-            <div className="flex flex-col gap-2">
-              <Eyebrow>{d.meningococo.eyebrow}</Eyebrow>
-              <SectionTitle>{d.meningococo.title}</SectionTitle>
-            </div>
-            <p className="text-[16px] leading-[26px] text-[#442748]">
-              <RichText text={d.meningococo.body} />
-            </p>
-          </div>
-
-          <div className="flex flex-col gap-6">
-            <div className="flex flex-col gap-4">
-              <h3 className="text-[18px] font-bold text-[#503C77]">
-                {d.meningococo.serogruposTitle}
-              </h3>
-              <div className="flex flex-col gap-2 text-[16px] leading-[25px] text-[#442748]">
-                {d.meningococo.serogruposBody.map((p) => (
-                  <p key={p.slice(0, 40)}>
-                    <RichText text={p} />
-                  </p>
-                ))}
+        <div className={WRAP}>
+          <div className="grid gap-10 lg:grid-cols-2 lg:items-start">
+            <div className="flex flex-col gap-8">
+              <div className="flex flex-col gap-4">
+                <div className="flex flex-col gap-2">
+                  <Eyebrow>{d.meningococo.eyebrow}</Eyebrow>
+                  <SectionTitle>{d.meningococo.title}</SectionTitle>
+                </div>
+                <p className="text-[16px] leading-[26px] text-[#442748]">
+                  <RichText text={d.meningococo.body} />
+                </p>
               </div>
-              <SerogruposBadges
-                letters={d.meningococo.serogrupos}
-                highlight={d.meningococo.highlightSerogrupo}
+
+              <div className="flex flex-col gap-6">
+                <div className="flex flex-col gap-4">
+                  <h3 className="text-[18px] font-bold text-[#503C77]">
+                    {d.meningococo.serogruposTitle}
+                  </h3>
+                  <div className="flex flex-col gap-2 text-[16px] leading-[25px] text-[#442748]">
+                    {d.meningococo.serogruposBody.map((p) => (
+                      <p key={p.slice(0, 40)}>
+                        <RichText text={p} />
+                      </p>
+                    ))}
+                  </div>
+                </div>
+                <SerogruposBadges
+                  letters={d.meningococo.serogrupos}
+                  highlight={d.meningococo.highlightSerogrupo}
+                />
+              </div>
+            </div>
+
+            <div className="self-start">
+              <CasosChart
+                title={d.meningococo.chartTitle}
+                rows={d.meningococo.chart}
               />
             </div>
-
-            <CasosChart
-              title={d.meningococo.chartTitle}
-              rows={d.meningococo.chart}
-            />
           </div>
         </div>
-        </Reveal>
-      </section>
+      </RevealSection>
 
       {/* 95% Malbrán */}
-      <section className="bg-[#503c77] px-5 py-12 md:px-8">
-        <Reveal delay={150}>
-        <div className="mx-auto flex max-w-2xl flex-col gap-3">
-          <div className="flex items-center gap-2.5">
-            <p className="shrink-0 text-[40px] font-black leading-[42px] text-[#dd876e]">
-              {d.meningococo.malbranStat.pct}
-            </p>
-            <p className="text-[16px] leading-[26px] text-white">
-              <RichText
-                text={d.meningococo.malbranStat.text}
-                strongClassName="font-bold text-white"
-              />
-            </p>
-          </div>
+      <RevealSection className="bg-[#503c77] py-12" delay={150}>
+        <div className={`${WRAP} flex items-center justify-center gap-4 lg:gap-6`}>
+          <p className="shrink-0 text-[40px] font-black leading-none text-[#dd876e] md:text-[48px]">
+            {d.meningococo.malbranStat.pct}
+          </p>
+          <p className="max-w-3xl text-[15px] leading-[26px] text-white md:text-[16px]">
+            <RichText
+              text={d.meningococo.malbranStat.text}
+              strongClassName="font-bold text-white"
+            />
+          </p>
         </div>
-        </Reveal>
-      </section>
+      </RevealSection>
 
       {/* Secuelas */}
-      <section
+      <RevealSection
         id="secuelas"
-        className="scroll-mt-20 bg-[#EEECF2] px-5 py-16 md:px-8"
+        className="scroll-mt-20 bg-white py-16"
+        delay={80}
       >
-        <Reveal delay={80}>
-        <div className="mx-auto flex max-w-2xl flex-col gap-6">
+        <div className={`${WRAP} flex flex-col gap-10`}>
           <div className="flex flex-col gap-2">
             <Eyebrow>{d.secuelas.eyebrow}</Eyebrow>
             <SectionTitle>
               <RichText text={d.secuelas.title} />
             </SectionTitle>
           </div>
-          <ul className="grid grid-cols-3 gap-y-10">
+          <ul className="grid grid-cols-3 gap-x-4 gap-y-10 lg:grid-cols-6 lg:gap-x-6">
             {d.secuelas.items.map((item) => (
               <li
                 key={item.label}
@@ -410,57 +439,55 @@ export function BacterianaPage() {
                     </>
                   )}
                 </div>
-                <p className="text-[13px] leading-5 text-[#442748]">
+                <p className="text-[12px] leading-5 text-[#442748] md:text-[13px]">
                   {item.label}
                 </p>
               </li>
             ))}
           </ul>
         </div>
-        </Reveal>
-      </section>
+      </RevealSection>
 
       {/* Quote evolución */}
-      <section className="bg-[#503c77] px-5 py-16 md:px-8">
-        <Reveal delay={100}>
-        <p className="mx-auto max-w-2xl text-center text-[22px] font-medium leading-[28px] text-white">
+      <RevealSection className="bg-[#503c77] py-16" delay={100}>
+        <p className={`${WRAP} mx-auto max-w-4xl text-center text-[20px] font-medium leading-[28px] text-white md:text-[22px]`}>
           <RichText
             text={d.quote}
             strongClassName="font-semibold text-white"
             citeClassName="ml-0.5 text-[0.85em] font-[inherit] leading-none text-white"
           />
         </p>
-        </Reveal>
-      </section>
+      </RevealSection>
 
       {/* Stat secuelas */}
-      <section className="bg-white px-5 py-12 md:px-8">
-        <Reveal delay={150}>
-        <div className="mx-auto max-w-2xl">
+      <RevealSection className="bg-white py-12" delay={150}>
+        <div className={WRAP}>
           <PersonStat {...d.secuelas.stat} tone="plain" />
         </div>
-        </Reveal>
-      </section>
+      </RevealSection>
 
       {/* Vacunación */}
-      <section
+      <RevealSection
         id="vacunacion"
-        className="scroll-mt-20 bg-[#EEECF2] px-5 py-16 md:px-8"
+        className="scroll-mt-20 bg-[#EEECF2] py-16 lg:py-20"
+        delay={80}
       >
-        <Reveal delay={80}>
-        <div className="mx-auto flex max-w-2xl flex-col gap-8">
-          <div className="flex flex-col gap-4">
-            <div className="flex flex-col gap-2">
-              <Eyebrow>{d.vacunacion.eyebrow}</Eyebrow>
-              <SectionTitle>{d.vacunacion.title}</SectionTitle>
-            </div>
-            <div className="flex flex-col gap-4 text-[15px] leading-6 text-[#442748]">
+        <div
+          className={`${WRAP} grid items-start gap-10 lg:grid-cols-[2fr_3fr] lg:gap-12`}
+        >
+          {/* Columna izquierda — solo texto */}
+          <div className="flex flex-col gap-5">
+            <Eyebrow>{d.vacunacion.eyebrow}</Eyebrow>
+            <h2 className="text-[26px] font-black leading-tight text-[#503c77] lg:text-[30px] lg:leading-[1.15]">
+              {d.vacunacion.title}
+            </h2>
+            <div className="flex flex-col gap-4 text-[15px] leading-[1.65] text-[#442748]">
               {d.vacunacion.paragraphs.map((p) => (
                 <p key={p.slice(0, 40)}>
                   <RichText text={p} />
                 </p>
               ))}
-              <ul className="flex flex-col gap-2">
+              <ul className="flex flex-col gap-3">
                 {d.vacunacion.bullets.map((b) => (
                   <li key={b.title} className="flex gap-2.5">
                     <span
@@ -479,29 +506,29 @@ export function BacterianaPage() {
             </div>
           </div>
 
-          <div className="flex flex-col gap-4">
-            <h3 className="text-[18px] font-bold text-[#503c77]">
+          {/* Columna derecha — esquemas + serogrupo B */}
+          <div className="flex flex-col gap-5">
+            <h3 className="text-[16px] font-bold text-[#503c77] lg:text-[18px]">
               <RichText text={d.vacunacion.esquemasTitle} />
             </h3>
-            <div className="flex flex-col gap-5 rounded-[12px] border border-[#e2e8f0] bg-[rgba(80,60,119,0.1)] p-5">
-              {d.vacunacion.esquemas.map((esquema, idx) => (
+
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              {d.vacunacion.esquemas.map((esquema) => (
                 <div
                   key={esquema.badge}
-                  className={`flex flex-col gap-4 ${
-                    idx === 0 ? "border-b border-[#dbe1e7] pb-5" : ""
-                  }`}
+                  className="flex h-full flex-col gap-4 rounded-[12px] border border-[#E2E8F0] bg-white p-5 shadow-[2px_2px_4px_rgba(51,51,51,0.06)]"
                 >
-                  <span className="w-fit rounded-[20px] bg-[#DD876E] px-3 py-1.5 text-[11px] font-bold uppercase leading-none text-white">
+                  <span className="w-fit rounded-[20px] bg-[#DD876E] px-3 py-1.5 text-[10px] font-bold uppercase leading-none tracking-wide text-white sm:text-[11px]">
                     {esquema.badge}
                   </span>
-                  <ul className="flex flex-col gap-2">
+                  <ul className="flex flex-1 flex-col gap-2.5">
                     {esquema.doses.map((dose) => (
                       <li key={dose} className="flex gap-2.5">
                         <span
                           className="mt-1.5 size-1.5 shrink-0 rounded-full bg-[#503c77]"
                           aria-hidden
                         />
-                        <span className="text-[14px] leading-5 text-[#442748]">
+                        <span className="text-[13px] leading-5 text-[#442748] sm:text-[14px]">
                           {dose}
                         </span>
                       </li>
@@ -510,65 +537,66 @@ export function BacterianaPage() {
                 </div>
               ))}
             </div>
-          </div>
 
-          <div className="flex flex-col gap-4">
-            <h3 className="text-[18px] font-bold text-[#503c77]">
-              {d.vacunacion.serogrupoB.title}
-            </h3>
-            <p className="text-[15px] leading-6 text-[#442748]">
-              <RichText
-                text={d.vacunacion.serogrupoB.body}
-                strongClassName="font-semibold text-[#442748]"
-              />
-            </p>
-            <ul className="flex flex-col gap-3 rounded-[14px] border border-[#e2e8f0] bg-[rgba(80,60,119,0.1)] px-5 py-[18px]">
-              {d.vacunacion.serogrupoB.conditions.map((c) => (
-                <li key={c} className="flex gap-2.5">
-                  <span
-                    className="mt-2 size-2 shrink-0 rounded-full bg-[#503c77]"
-                    aria-hidden
-                  />
-                  <span className="text-[14px] leading-5 text-[#442748]">
-                    {c}
-                  </span>
-                </li>
-              ))}
-            </ul>
+            <div className="flex flex-col gap-4 rounded-[12px] border border-[#E2E8F0] bg-white p-5 shadow-[2px_2px_4px_rgba(51,51,51,0.06)] lg:p-6">
+              <h3 className="text-[16px] font-bold text-[#503c77] lg:text-[18px]">
+                {d.vacunacion.serogrupoB.title}
+              </h3>
+              <p className="text-[15px] leading-[1.65] text-[#442748]">
+                <RichText
+                  text={d.vacunacion.serogrupoB.body}
+                  strongClassName="font-semibold text-[#442748]"
+                />
+              </p>
+              <ul className="flex flex-col gap-3">
+                {d.vacunacion.serogrupoB.conditions.map((c) => (
+                  <li key={c} className="flex gap-2.5">
+                    <span
+                      className="mt-2 size-2 shrink-0 rounded-full bg-[#503c77]"
+                      aria-hidden
+                    />
+                    <span className="text-[14px] leading-5 text-[#442748]">
+                      {c}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
-        </Reveal>
-      </section>
+      </RevealSection>
 
-      {/* Prevención */}
-      <section
+      {/* Prevención CTA */}
+      <RevealSection
         id="prevencion"
-        className="scroll-mt-20 bg-[#EEECF2] px-5 py-16 md:px-8"
+        className="scroll-mt-20 bg-[#503c77] py-16"
+        delay={100}
       >
-        <Reveal delay={100}>
-        <div className="mx-auto flex max-w-2xl flex-col gap-6">
-          <div className="flex flex-col gap-4">
-            <div className="flex flex-col gap-2">
-              <Eyebrow>{d.prevencion.eyebrow}</Eyebrow>
-              <SectionTitle>{d.prevencion.title}</SectionTitle>
-            </div>
-            <p className="text-[16px] leading-[26px] text-[#442748]">
-              <RichText text={d.prevencion.body} />
-            </p>
+        <div
+          className={`${WRAP} flex flex-col items-center gap-8 text-center`}
+        >
+          <div className="flex flex-col gap-2">
+            <Eyebrow>{d.prevencion.eyebrow}</Eyebrow>
+            <h2 className="text-[22px] font-bold leading-[28px] text-white md:text-[24px]">
+              {d.prevencion.title}
+            </h2>
           </div>
           <Link
             href={d.prevencion.ctaHref}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex h-[52px] w-full items-center justify-center rounded-[12px] bg-white text-[15px] font-bold text-[#503c77] shadow-[0_1px_2px_rgba(0,0,0,0.06)] transition hover:bg-white/90"
+            className="flex h-[52px] w-full max-w-md items-center justify-center gap-2 rounded-[12px] bg-white px-6 text-[15px] font-bold text-[#503c77] transition hover:bg-white/95"
           >
             {d.prevencion.ctaLabel}
+            <span
+              aria-hidden
+              className="material-symbols-outlined text-[18px] leading-none"
+            >
+              arrow_forward
+            </span>
           </Link>
         </div>
-        </Reveal>
-      </section>
+      </RevealSection>
 
-      <CausaOtrasCausas items={d.otrasCausas} />
+      <CausaOtrasCausas items={d.otrasCausas} containerClassName="max-w-7xl" />
     </>
   );
 }

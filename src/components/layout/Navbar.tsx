@@ -4,14 +4,15 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { LogoManito } from "@/components/layout/LogoManito";
 import { SITE_NAME } from "@/lib/siteLinks";
-import { NAV_LINKS } from "@/lib/navLinks";
+import { NAV_LINKS, isHomeHeroRoute } from "@/lib/navLinks";
 
 export function Navbar() {
   const pathname = usePathname();
 
   if (pathname.startsWith("/admin")) return null;
 
-  const isHome = pathname === "/";
+  const isHome = isHomeHeroRoute(pathname);
+  const queEsHref = pathname === "/home2" ? "/home2#que-es" : "/#que-es";
 
   if (isHome) {
     return (
@@ -50,16 +51,18 @@ export function Navbar() {
 
             <div className="flex items-center gap-8">
               {NAV_LINKS.map((link) => {
-                const pathOnly = link.href.split("#")[0] || "/";
+                const href =
+                  link.href === "/#que-es" ? queEsHref : link.href;
+                const pathOnly = href.split("#")[0] || "/";
                 const active =
-                  pathOnly === "/"
-                    ? pathname === "/"
+                  pathOnly === "/" || pathOnly === "/home2"
+                    ? pathname === pathOnly
                     : pathname === pathOnly ||
                       pathname.startsWith(pathOnly + "/");
                 return (
                   <Link
                     key={link.href}
-                    href={link.href}
+                    href={href}
                     className={`text-[14px] font-medium transition-colors ${
                       active
                         ? "text-white"
@@ -95,15 +98,16 @@ export function Navbar() {
 
         <div className="hidden items-center gap-7 lg:flex">
           {NAV_LINKS.map((link) => {
-            const pathOnly = link.href.split("#")[0] || "/";
+            const href = link.href === "/#que-es" ? queEsHref : link.href;
+            const pathOnly = href.split("#")[0] || "/";
             const active =
-              pathOnly === "/"
-                ? pathname === "/"
+              pathOnly === "/" || pathOnly === "/home2"
+                ? pathname === pathOnly
                 : pathname === pathOnly || pathname.startsWith(pathOnly + "/");
             return (
               <Link
                 key={link.href}
-                href={link.href}
+                href={href}
                 className={`text-sm font-medium transition-colors ${
                   active ? "text-white" : "text-white/70 hover:text-white"
                 }`}

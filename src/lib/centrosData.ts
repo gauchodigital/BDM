@@ -10,8 +10,14 @@ export interface CentroVacunacion {
   localidad: string;
   barrio?: string;
   direccion: string;
+  telefono?: string;
   lat?: number;
   lng?: number;
+}
+
+export function matchesTipoCentro(centro: CentroVacunacion, tipo: string): boolean {
+  if (!tipo || tipo === "Todos") return true;
+  return centro.tipo === tipo;
 }
 
 function uniqueSorted(values: string[]): string[] {
@@ -49,6 +55,27 @@ export function barriosDe(
   );
 }
 
+export function tiposDe(
+  centros: CentroVacunacion[],
+  provincia: string,
+  localidad: string,
+  barrio: string,
+): TipoVacunatorio[] {
+  if (!provincia || !localidad) return [];
+
+  const present = new Set(
+    centros
+      .filter((c) => {
+        if (c.provincia !== provincia || c.localidad !== localidad) return false;
+        if (barrio && (c.barrio ?? "") !== barrio) return false;
+        return true;
+      })
+      .map((c) => c.tipo),
+  );
+
+  return TIPOS_VACUNATORIO.filter((t) => present.has(t));
+}
+
 export function filtrarCentros(
   centros: CentroVacunacion[],
   {
@@ -68,7 +95,7 @@ export function filtrarCentros(
     if (c.provincia !== provincia) return false;
     if (localidad && c.localidad !== localidad) return false;
     if (barrio && (c.barrio ?? "") !== barrio) return false;
-    if (tipo && tipo !== "Todos" && c.tipo !== tipo) return false;
+    if (!matchesTipoCentro(c, tipo)) return false;
     return true;
   });
 }

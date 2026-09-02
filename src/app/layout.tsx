@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { Inter } from "next/font/google";
 import {
   GoogleTagManager,
@@ -10,6 +11,7 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { MobileAppNav } from "@/components/layout/MobileAppNav";
 import { WorldMeningitisDayPopup } from "@/components/campaign/WorldMeningitisDayPopup";
+import { PopupDemoBar } from "@/components/engagement/PopupDemoBar";
 import { SITE_NAME } from "@/lib/siteLinks";
 import "./globals.css";
 
@@ -57,6 +59,9 @@ export default function RootLayout({
         <Footer />
         <MobileAppNav />
         <WorldMeningitisDayPopup />
+        <Suspense fallback={null}>
+          <PopupDemoBar />
+        </Suspense>
       </body>
     </html>
   );

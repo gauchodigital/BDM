@@ -3,6 +3,12 @@ export const PARASITARIA = {
   badgeColor: "secondary" as const,
   title: "Meningitis parasitaria",
   breadcrumb: "Meningitis por parásitos",
+  toc: [
+    { id: "que-es", label: "¿Qué es?" },
+    { id: "sintomas", label: "Síntomas" },
+    { id: "tratamiento", label: "Tratamiento" },
+    { id: "prevencion", label: "Prevención" },
+  ],
   intro:
     "Los parásitos pueden causar meningitis o afectar el cerebro y el sistema nervioso de otras maneras.",
   queEs: {

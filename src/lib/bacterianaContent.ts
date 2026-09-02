@@ -188,23 +188,23 @@ export const BACTERIANA = {
     },
   },
   prevencion: {
-    eyebrow: "Otros consejos",
-    title: "Prevención",
+    eyebrow: "PREVENCIÓN",
+    title: "Protegé a tu familia",
     body: "Además de las vacunas, **otras medidas de prevención son**: lavarse las manos, taparse la nariz al estornudar o toser y mantener una buena ventilación dentro de la casa[17].",
-    ctaLabel: "Calendario de Vacunación",
-    ctaHref: "/docs/calendario-vacunacion-gsk-2026.pdf",
+    ctaLabel: "Ver calendario de vacunación",
+    ctaHref: "/vacunacion#calendario",
   },
   otrasCausas: [
     {
-      href: "/causas/fungica",
-      label: "Fúngica",
-      bg: "#F0E6FE",
+      href: "/causas/viral",
+      label: "Viral",
+      bg: "#F3F0F8",
       text: "#503C77",
     },
     {
       href: "/causas/fungica",
-      label: "Hongos",
-      bg: "#E6D4FE",
+      label: "Fúngica",
+      bg: "#F0E6FE",
       text: "#503C77",
     },
     {

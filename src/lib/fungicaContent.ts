@@ -3,6 +3,13 @@ export const FUNGICA = {
   badgeColor: "secondary" as const,
   title: "Meningitis fúngica",
   breadcrumb: "Meningitis fúngica",
+  toc: [
+    { id: "que-es", label: "¿Qué es?" },
+    { id: "sintomas", label: "Síntomas" },
+    { id: "grupos-riesgo", label: "Grupos de riesgo" },
+    { id: "tratamiento", label: "Tratamiento" },
+    { id: "prevencion", label: "Prevención" },
+  ],
   intro:
     "Es muy poco frecuente, no se transmite de persona a persona y generalmente se produce en personas con el **sistema inmune debilitado.**[5]",
   queEs: {

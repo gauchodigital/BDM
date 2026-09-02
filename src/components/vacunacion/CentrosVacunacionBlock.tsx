@@ -3,16 +3,54 @@
 import Link from "next/link";
 import { useMemo, useState, type ReactNode } from "react";
 import {
-  TIPOS_VACUNATORIO,
-  barriosDe,
   filtrarCentros,
   localidadesDe,
+  barriosDe,
+  tiposDe,
   mapsDirectionsUrl,
   mapsEmbedQuery,
   mapsSearchUrl,
   type CentroVacunacion,
 } from "@/lib/centrosData";
 import { Reveal } from "@/components/ui/Reveal";
+
+const RESULTS_SCROLL_OFFSET = 180;
+const RESULTS_SCROLL_DURATION_MS = 900;
+
+function easeInOutCubic(t: number): number {
+  return t < 0.5 ? 4 * t * t * t : 1 - (-2 * t + 2) ** 3 / 2;
+}
+
+function scrollToResults(): void {
+  window.setTimeout(() => {
+    const el = document.getElementById("centros-resultados-titulo");
+    if (!el) return;
+
+    const rect = el.getBoundingClientRect();
+    const alreadyVisible =
+      rect.top >= RESULTS_SCROLL_OFFSET &&
+      rect.top <= window.innerHeight * 0.55;
+    if (alreadyVisible) return;
+
+    const targetY = Math.max(
+      0,
+      window.scrollY + rect.top - RESULTS_SCROLL_OFFSET,
+    );
+    const startY = window.scrollY;
+    const distance = targetY - startY;
+    if (Math.abs(distance) < 8) return;
+
+    const startTime = performance.now();
+
+    function step(now: number): void {
+      const progress = Math.min((now - startTime) / RESULTS_SCROLL_DURATION_MS, 1);
+      window.scrollTo(0, startY + distance * easeInOutCubic(progress));
+      if (progress < 1) requestAnimationFrame(step);
+    }
+
+    requestAnimationFrame(step);
+  }, 180);
+}
 
 function DisclaimerText({ text }: { text: string }): ReactNode {
   const parts = text.split(/(hacé click acá\.?)/i);
@@ -113,7 +151,7 @@ export function CentrosVacunacionBlock({
   const [provincia, setProvincia] = useState("");
   const [localidad, setLocalidad] = useState("");
   const [barrio, setBarrio] = useState("");
-  const [tipo, setTipo] = useState("Todos");
+  const [tipo, setTipo] = useState("");
   const [showMap, setShowMap] = useState(false);
   const [searched, setSearched] = useState(false);
 
@@ -124,6 +162,10 @@ export function CentrosVacunacionBlock({
   const barrios = useMemo(
     () => barriosDe(centros, provincia, localidad),
     [centros, provincia, localidad],
+  );
+  const tiposDisponibles = useMemo(
+    () => tiposDe(centros, provincia, localidad, barrio),
+    [centros, provincia, localidad, barrio],
   );
   const resultados = useMemo(
     () => filtrarCentros(centros, { provincia, localidad, barrio, tipo }),
@@ -144,7 +186,7 @@ export function CentrosVacunacionBlock({
     setProvincia(value);
     setLocalidad("");
     setBarrio("");
-    setTipo("Todos");
+    setTipo("");
     setShowMap(false);
     setSearched(false);
   }
@@ -152,9 +194,26 @@ export function CentrosVacunacionBlock({
   function handleLocalidad(value: string) {
     setLocalidad(value);
     setBarrio("");
-    setTipo("Todos");
+    setTipo("");
     setShowMap(false);
     setSearched(false);
+  }
+
+  function handleBarrio(value: string) {
+    setBarrio(value);
+    setTipo("");
+    setShowMap(false);
+    setSearched(false);
+  }
+
+  function handleTipo(value: string) {
+    setTipo(value);
+    if (value && provincia && localidad) {
+      setSearched(true);
+      scrollToResults();
+    } else {
+      setSearched(false);
+    }
   }
 
   function handleBuscar() {
@@ -166,14 +225,15 @@ export function CentrosVacunacionBlock({
       document.getElementById("localidad-vacunacion")?.focus();
       return;
     }
+    if (!tipo) {
+      document.getElementById("tipo-vacunacion")?.focus();
+      return;
+    }
     setSearched(true);
-    document.getElementById("centros-resultados")?.scrollIntoView({
-      behavior: "smooth",
-      block: "start",
-    });
+    scrollToResults();
   }
 
-  const showResults = searched && Boolean(localidad);
+  const showResults = searched && Boolean(localidad && tipo);
 
   const formInner = (
     <div className="flex flex-col gap-6 lg:gap-6">
@@ -204,18 +264,18 @@ export function CentrosVacunacionBlock({
           value={barrio}
           placeholder="Seleccioná un barrio"
           options={barrios}
-          onChange={setBarrio}
+          onChange={handleBarrio}
         />
       ) : null}
 
-      {localidad ? (
+      {localidad && (!needsBarrio || barrio) && tiposDisponibles.length > 0 ? (
         <SelectField
           id="tipo-vacunacion"
           label="Paso 4: elegí dónde querés vacunarte"
           value={tipo}
-          allowEmpty={false}
-          options={["Todos", ...TIPOS_VACUNATORIO]}
-          onChange={setTipo}
+          placeholder="Seleccioná un tipo"
+          options={tiposDisponibles}
+          onChange={handleTipo}
         />
       ) : null}
 
@@ -283,9 +343,12 @@ export function CentrosVacunacionBlock({
           </Reveal>
         </div>
 
-        <Reveal delay={80} className="mt-12 scroll-mt-24 lg:mt-16">
+        <Reveal delay={80} className="mt-12 lg:mt-16">
           <div id="centros-resultados" className="flex flex-col gap-5">
-            <div className="flex flex-wrap items-center gap-3">
+            <div
+              id="centros-resultados-titulo"
+              className="flex scroll-mt-36 flex-wrap items-center gap-3"
+            >
               <h3 className="text-[22px] font-bold leading-7 text-white md:text-[28px]">
                 Resultados
               </h3>
@@ -341,6 +404,19 @@ export function CentrosVacunacionBlock({
                       </span>
                       {centro.direccion}
                     </p>
+                    {centro.telefono ? (
+                      <p className="flex items-start gap-2 text-[14px] leading-snug text-dark">
+                        <span className="material-symbols-outlined mt-0.5 text-[18px] leading-none text-muted">
+                          call
+                        </span>
+                        <a
+                          href={`tel:${centro.telefono.replace(/\s/g, "")}`}
+                          className="hover:text-primary"
+                        >
+                          {centro.telefono}
+                        </a>
+                      </p>
+                    ) : null}
                     <div className="mt-auto flex flex-wrap gap-x-5 gap-y-2 pt-1">
                       <a
                         href={mapsDirectionsUrl(centro)}

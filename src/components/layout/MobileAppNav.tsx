@@ -2,10 +2,10 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { MOBILE_TAB_ITEMS } from "@/lib/navLinks";
+import { MOBILE_TAB_ITEMS, isHomeHeroRoute } from "@/lib/navLinks";
 
 function isTabActive(pathname: string, match: string) {
-  if (match === "que-es") return pathname === "/";
+  if (match === "que-es") return isHomeHeroRoute(pathname);
   return pathname === `/${match}` || pathname.startsWith(`/${match}/`);
 }
 
@@ -41,11 +41,15 @@ export function MobileAppNav() {
     >
       <div className="grid h-14 grid-cols-5">
         {MOBILE_TAB_ITEMS.map((tab) => {
+          const href =
+            tab.match === "que-es" && pathname === "/home2"
+              ? "/home2#que-es"
+              : tab.href;
           const active = isTabActive(pathname, tab.match);
           return (
             <Link
               key={tab.href}
-              href={tab.href}
+              href={href}
               className={`flex min-w-0 flex-col items-center justify-center gap-1 px-0.5 ${
                 active
                   ? "border-t-[1.5px] border-[#442748] pt-px"

@@ -2,6 +2,13 @@ export const VIRAL = {
   badge: "MÁS FRECUENTE",
   title: "Meningitis viral",
   breadcrumb: "Meningitis por virus",
+  toc: [
+    { id: "que-es", label: "¿Qué es?" },
+    { id: "sintomas", label: "Síntomas" },
+    { id: "grupos-riesgo", label: "Grupos de riesgo" },
+    { id: "tratamiento", label: "Tratamiento" },
+    { id: "prevencion", label: "Prevención" },
+  ],
   intro:
     "Si bien las meningitis virales tienden a ser menos graves que otros tipos, los síntomas iniciales suelen ser muy parecidos a los síntomas habituales de la meningitis.[4]",
   queEs: {

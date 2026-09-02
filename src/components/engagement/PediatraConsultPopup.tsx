@@ -9,7 +9,8 @@ import {
   shouldShowPediatraConsultPopup,
   type PediatraAnswer,
 } from "@/lib/pediatraEngagement";
-import { isPediatraPreviewMode } from "@/lib/popupPreview";
+import { isDemoMode, isPediatraPreviewMode } from "@/lib/popupPreview";
+import { POPUP_DEMO_PEDIATRA_EVENT } from "@/lib/popupDemo";
 
 type Step = "hidden" | "question" | "thanks";
 
@@ -20,16 +21,19 @@ export function PediatraConsultPopup() {
   const [answer, setAnswer] = useState<PediatraAnswer | null>(null);
   const stepRef = useRef<Step>("hidden");
   const sectionVisibleRef = useRef(false);
+  const autoShownRef = useRef(false);
   stepRef.current = step;
 
   const close = useCallback((value?: PediatraAnswer) => {
     dismissPediatraConsultPopup(value);
+    autoShownRef.current = true;
     setStep("hidden");
   }, []);
 
   const respond = useCallback((value: PediatraAnswer) => {
     setAnswer(value);
     dismissPediatraConsultPopup(value);
+    autoShownRef.current = true;
     setStep("thanks");
     window.setTimeout(() => setStep("hidden"), value === "yes" ? 3200 : 1800);
   }, []);
@@ -38,12 +42,25 @@ export function PediatraConsultPopup() {
     if (stepRef.current !== "hidden") return;
     if (!shouldShowPediatraConsultPopup()) return;
     if (hasOpenCampaignPopup()) return;
+    if (isDemoMode()) return;
+    if (autoShownRef.current) return;
     if (!isPediatraPreviewMode() && !sectionVisibleRef.current) return;
+    autoShownRef.current = true;
     setStep("question");
   }, []);
 
   useEffect(() => {
+    const show = () => {
+      setAnswer(null);
+      setStep("question");
+    };
+    window.addEventListener(POPUP_DEMO_PEDIATRA_EVENT, show);
+    return () => window.removeEventListener(POPUP_DEMO_PEDIATRA_EVENT, show);
+  }, []);
+
+  useEffect(() => {
     if (step !== "hidden") return;
+    if (isDemoMode()) return;
     if (!shouldShowPediatraConsultPopup()) return;
 
     const preview = isPediatraPreviewMode();

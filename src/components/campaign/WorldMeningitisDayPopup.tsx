@@ -1,13 +1,17 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
   dismissWorldMeningitisDayPopup,
   HOLD_DURATION_MS,
+  HOLD_SECONDS,
   shouldShowWorldMeningitisDayPopup,
 } from "@/lib/worldMeningitisDay";
-import { CampaignPopupClouds } from "@/components/campaign/CampaignPopupClouds";
+import { POPUP_DEMO_CAMPAIGN_EVENT } from "@/lib/popupDemo";
+import { PopupFireworks } from "@/components/campaign/PopupFireworks";
+import { LogoManito } from "@/components/layout/LogoManito";
 
 type Phase = "hidden" | "intro" | "holding" | "complete";
 
@@ -54,7 +58,9 @@ function useHoldProgress(onComplete: () => void) {
 }
 
 export function WorldMeningitisDayPopup() {
+  const pathname = usePathname();
   const [phase, setPhase] = useState<Phase>("hidden");
+  const [fireworksKey, setFireworksKey] = useState(0);
   const dialogRef = useRef<HTMLDivElement>(null);
 
   const close = useCallback(() => {
@@ -63,16 +69,28 @@ export function WorldMeningitisDayPopup() {
   }, []);
 
   const onComplete = useCallback(() => {
+    setFireworksKey((key) => key + 1);
     setPhase("complete");
   }, []);
 
   const { progress, start, stop } = useHoldProgress(onComplete);
 
   useEffect(() => {
+    if (pathname === "/home2") return;
     if (!shouldShowWorldMeningitisDayPopup()) return;
     const timer = window.setTimeout(() => setPhase("intro"), 1400);
     return () => window.clearTimeout(timer);
-  }, []);
+  }, [pathname]);
+
+  useEffect(() => {
+    const show = () => {
+      if (pathname === "/home2") return;
+      stop();
+      setPhase("intro");
+    };
+    window.addEventListener(POPUP_DEMO_CAMPAIGN_EVENT, show);
+    return () => window.removeEventListener(POPUP_DEMO_CAMPAIGN_EVENT, show);
+  }, [pathname, stop]);
 
   useEffect(() => {
     if (phase === "hidden") return;
@@ -83,15 +101,15 @@ export function WorldMeningitisDayPopup() {
     return () => window.removeEventListener("keydown", onKey);
   }, [phase, close]);
 
-  if (phase === "hidden") return null;
+  if (pathname === "/home2" || phase === "hidden") return null;
 
   const holding = phase === "holding";
   const complete = phase === "complete";
   const glow = complete ? 1 : holding ? progress : 0.08;
   const count =
     holding && progress > 0
-      ? Math.min(5, Math.max(1, Math.ceil(progress * 5)))
-      : 5;
+      ? Math.min(HOLD_SECONDS, Math.max(1, Math.ceil(progress * HOLD_SECONDS)))
+      : HOLD_SECONDS;
 
   const ringRadius = 54;
   const ringCircumference = 2 * Math.PI * ringRadius;
@@ -103,12 +121,10 @@ export function WorldMeningitisDayPopup() {
       role="presentation"
       data-campaign-popup-open=""
     >
-      <CampaignPopupClouds />
-
       <button
         type="button"
         aria-label="Cerrar"
-        className="absolute inset-0 z-[1] bg-[#001B36]/45 backdrop-blur-[1px] transition-opacity duration-500"
+        className="absolute inset-0 bg-[#120f18]/55 backdrop-blur-[1px] transition-opacity duration-500"
         onClick={close}
       />
 
@@ -127,7 +143,10 @@ export function WorldMeningitisDayPopup() {
             : `0 24px 80px rgba(0,0,0,0.5), 0 0 ${80 + glow * 120}px rgba(255,200,140,${0.15 + glow * 0.35})`,
         }}
       >
+        {complete ? <PopupFireworks key={fireworksKey} /> : null}
+
         {/* Luz central */}
+        {!complete ? (
         <div
           aria-hidden
           className="pointer-events-none absolute left-1/2 top-[42%] -translate-x-1/2 -translate-y-1/2 rounded-full transition-all duration-300 ease-out"
@@ -138,6 +157,7 @@ export function WorldMeningitisDayPopup() {
             filter: `blur(${4 + glow * 8}px)`,
           }}
         />
+        ) : null}
 
         <button
           type="button"
@@ -177,7 +197,7 @@ export function WorldMeningitisDayPopup() {
               >
                 {holding
                   ? "Mantené presionado…"
-                  : "¿Nos regalás 5 segundos?"}
+                  : "¿Nos regalás 3 segundos?"}
               </p>
 
               <div className="relative mx-auto mt-8 flex size-[148px] items-center justify-center">
@@ -255,7 +275,7 @@ export function WorldMeningitisDayPopup() {
                   }}
                 >
                   <span className="text-[34px] font-black leading-none tabular-nums">
-                    {holding ? count : "5s"}
+                    {holding ? count : `${HOLD_SECONDS}s`}
                   </span>
                   <span className="mt-1 text-[10px] font-bold uppercase tracking-[0.12em]">
                     Mantené
@@ -269,14 +289,19 @@ export function WorldMeningitisDayPopup() {
             </>
           ) : (
             <div className="animate-fade-in">
-              <p className="text-[32px] leading-none" aria-hidden>
-                💜
-              </p>
+              <div className="popup-logo-pop mx-auto flex size-[112px] items-center justify-center rounded-full bg-white/80 shadow-[0_0_48px_rgba(122,120,187,0.35)] ring-2 ring-[#503C77]/10">
+                <LogoManito
+                  variant="purple"
+                  className="h-[68px] w-auto md:h-[72px]"
+                  width={72}
+                  height={80}
+                />
+              </div>
               <h2
                 id="wmd-popup-title"
-                className="mt-4 text-[22px] font-black leading-tight text-[#503C77] sm:text-[24px]"
+                className="mt-5 text-[22px] font-black leading-tight text-[#503C77] sm:text-[24px]"
               >
-                Gracias por tus 5 segundos.
+                Gracias por tus 3 segundos.
               </h2>
               <p className="mx-auto mt-3 max-w-[300px] text-[15px] leading-[1.55] text-[#442748]/85">
                 Ahora tomate unos minutos para informarte.

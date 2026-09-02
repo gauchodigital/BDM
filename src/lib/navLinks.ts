@@ -40,3 +40,8 @@ export const NAV_LINKS = [
   { href: "/vacunacion", label: "Vacunación" },
   { href: "/faq", label: "Preguntas" },
 ] as const;
+
+/** Rutas con hero a pantalla completa (navbar transparente sobre el cielo). */
+export function isHomeHeroRoute(pathname: string): boolean {
+  return pathname === "/" || pathname === "/home2";
+}
