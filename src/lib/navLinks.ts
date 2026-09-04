@@ -36,9 +36,37 @@ export const MOBILE_TAB_ITEMS = [
 export const NAV_LINKS = [
   { href: "/#que-es", label: "¿Qué es?" },
   { href: "/sintomas", label: "Síntomas" },
-  { href: "/causas", label: "Causas" },
+  { href: "/causas", label: "Causas", hasDropdown: true },
   { href: "/vacunacion", label: "Vacunación" },
   { href: "/faq", label: "Preguntas" },
+] as const;
+
+/** Items del desplegable de Causas (desktop). */
+export const CAUSAS_DROPDOWN = [
+  {
+    href: "/causas/bacteriana",
+    title: "Bacteriana",
+    description: "La más grave; puede avanzar en pocas horas.",
+    icon: "emergency",
+  },
+  {
+    href: "/causas/viral",
+    title: "Viral",
+    description: "La más frecuente; suele tener mejor evolución.",
+    icon: "coronavirus",
+  },
+  {
+    href: "/causas/fungica",
+    title: "Fúngica",
+    description: "Poco frecuente; más riesgosa si hay inmunodepresión.",
+    icon: "microbiology",
+  },
+  {
+    href: "/causas/parasitaria",
+    title: "Parasitaria",
+    description: "Poco frecuente; asociada a alimentos contaminados.",
+    icon: "bug_report",
+  },
 ] as const;
 
 /** Rutas con hero a pantalla completa (navbar transparente sobre el cielo). */
