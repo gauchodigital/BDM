@@ -201,10 +201,9 @@ function NavLinks({
 }
 
 /**
- * Opción 2 sticky:
- * - Sin degradé de fondo
- * - Una sola pastilla blanca (logo + menú juntos, mismo alto siempre)
- * - Al tope del home: logo suelto + pill de menú vidrio (como la captura)
+ * Sticky home 1 / páginas:
+ * - Pastilla blanca (logo + menú juntos)
+ * - Al tope del home: logo suelto + pill de menú vidrio
  */
 function DesktopNav({
   pathname,
