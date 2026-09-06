@@ -348,15 +348,17 @@ export function Navbar() {
       {/* Desktop home 2 — tradicional violeta */}
       {isHome2 ? (
         <header className="sticky top-0 z-50 hidden bg-primary lg:block">
-          <nav
-            className="mx-auto max-w-7xl px-8"
-            aria-label="Navegación principal"
-          >
-            <DesktopNavTraditional
-              pathname={pathname}
-              queEsHref={queEsHref}
-            />
-          </nav>
+          <div className="px-5 md:px-8">
+            <nav
+              className="mx-auto w-full max-w-7xl"
+              aria-label="Navegación principal"
+            >
+              <DesktopNavTraditional
+                pathname={pathname}
+                queEsHref={queEsHref}
+              />
+            </nav>
+          </div>
         </header>
       ) : (
         <header
@@ -368,16 +370,18 @@ export function Navbar() {
               : "sticky top-0 z-50 hidden bg-transparent pb-2 pt-3 lg:block"
           }
         >
-          <nav
-            className="mx-auto max-w-7xl px-8"
-            aria-label="Navegación principal"
-          >
-            <DesktopNav
-              pathname={pathname}
-              queEsHref={queEsHref}
-              solid={solid}
-            />
-          </nav>
+          <div className="px-5 md:px-8">
+            <nav
+              className="mx-auto w-full max-w-7xl"
+              aria-label="Navegación principal"
+            >
+              <DesktopNav
+                pathname={pathname}
+                queEsHref={queEsHref}
+                solid={solid}
+              />
+            </nav>
+          </div>
         </header>
       )}
     </>

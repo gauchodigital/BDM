@@ -8,7 +8,6 @@ import { DatosSection } from "@/components/home/DatosSection";
 import { VacunasCtaSection } from "@/components/home/VacunasCtaSection";
 import { CompromisoSocialSection } from "@/components/home/CompromisoSocialSection";
 import { PediatraConsultPopup } from "@/components/engagement/PediatraConsultPopup";
-import { WorldMeningitisDayPopupHome2 } from "@/components/campaign/WorldMeningitisDayPopupHome2";
 import { readCausas } from "@/lib/causasData";
 import { readTestimonios } from "@/lib/testimoniosData";
 import { readDatos } from "@/lib/datosData";
@@ -31,7 +30,6 @@ export default function Home2Page() {
       <DatosSection items={datos} />
       <VacunasCtaSection />
       <CompromisoSocialSection />
-      <WorldMeningitisDayPopupHome2 />
       <PediatraConsultPopup />
     </>
   );
