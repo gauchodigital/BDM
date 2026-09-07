@@ -53,8 +53,10 @@ export function HeroSection() {
                   1
                 </sup>
               </h1>
-              <p className="animate-fade-up animate-delay-1 mt-4 max-w-sm text-[16px] leading-[1.55] text-white/85">
-                Conocé todo lo que necesitás saber para proteger a tu familia.
+              <p className="animate-fade-up animate-delay-1 mt-4 text-[16px] leading-[1.55] text-white/85">
+                Conocé todo lo que necesitás{" "}
+                <br className="lg:hidden" />
+                saber para proteger a tu familia.
               </p>
             </div>
 
