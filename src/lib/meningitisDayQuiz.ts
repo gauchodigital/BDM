@@ -34,7 +34,7 @@ export const QUIZ_COPY = {
     "¿Cuál de estas afirmaciones sobre meningitis bacteriana creés que es correcta?",
   correctTitle: "¡Sí, es correcta!",
   correctBody:
-    "La meningitis bacteriana es la más grave de todas y puede causar la muerte en pocas horas o dejar discapacidades severas¹. Por eso, ante la sospecha de meningitis es importante consultar de forma inmediata con un profesional de la salud.",
+    "La meningitis bacteriana puede causar la muerte en pocas horas o dejar discapacidades severas¹. Por eso, ante la sospecha de meningitis es importante consultar de forma inmediata con un profesional de la salud.",
   correctFooter:
     "Aprovechá el Día Mundial de la Meningitis para seguir informándote.",
   wrongTitle: "No era esa, pero ahora ya lo sabés.",

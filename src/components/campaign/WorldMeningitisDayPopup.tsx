@@ -169,7 +169,7 @@ export function WorldMeningitisDayPopup() {
         className="relative z-10 w-full max-w-[920px] overflow-hidden rounded-[24px] shadow-[0_24px_80px_rgba(18,15,24,0.55)]"
         style={{ backgroundColor: "#ffffff" }}
       >
-        {result ? <PopupFireworks key={fireworksKey} /> : null}
+        {result && correct ? <PopupFireworks key={fireworksKey} /> : null}
         <div className="relative flex flex-col md:min-h-[320px] md:flex-row">
           <div
             className="relative shrink-0 md:w-[34%] md:self-stretch"

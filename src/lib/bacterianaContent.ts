@@ -188,10 +188,10 @@ export const BACTERIANA = {
     },
   },
   prevencion: {
-    eyebrow: "PREVENCIÓN",
-    title: "Protegé a tu familia",
+    eyebrow: "OTROS CONSEJOS",
+    title: "Prevención",
     body: "Además de las vacunas, **otras medidas de prevención son**: lavarse las manos, taparse la nariz al estornudar o toser y mantener una buena ventilación dentro de la casa[17].",
-    ctaLabel: "Ver calendario de vacunación",
+    ctaLabel: "Calendario de Vacunación",
     ctaHref: "/vacunacion#calendario",
   },
   otrasCausas: [

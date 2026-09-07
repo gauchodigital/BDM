@@ -10,7 +10,7 @@ import { BACTERIANA } from "@/lib/bacterianaContent";
 
 const WRAP = "mx-auto w-full max-w-7xl px-5 md:px-8";
 const PANEL =
-  "rounded-[12px] border border-[#D8D4DE] bg-transparent p-6 md:p-8";
+  "rounded-[12px] border-0 bg-transparent p-0 md:border md:border-[#D8D4DE] md:p-8";
 
 function Eyebrow({ children }: { children: string }) {
   return (
@@ -195,17 +195,21 @@ export function BacterianaPage() {
                 {d.title}
               </h1>
             </div>
-            <div className="animate-fade-up animate-delay-1 flex flex-col gap-4 text-[15px] leading-6 text-[#442748] lg:text-[16px] lg:leading-[26px]">
-              {d.intro.map((p) => (
-                <p key={p.slice(0, 48)}>
-                  <RichText
-                    text={p}
-                    strongClassName="font-semibold text-[#442748]"
-                    citeClassName="ml-0.5 text-[0.85em] font-[inherit] leading-none text-[#442748]"
-                  />
-                </p>
-              ))}
-            </div>
+            <p className="animate-fade-up animate-delay-1 text-[15px] leading-6 text-[#442748] lg:text-[16px] lg:leading-[26px]">
+              <RichText
+                text={d.intro[0]}
+                strongClassName="font-semibold text-[#442748]"
+                citeClassName="ml-0.5 text-[0.65em] font-[inherit] leading-none text-[#442748]"
+              />
+              <br />
+              <span className="text-[#5C5670]">
+                <RichText
+                  text={d.intro[1]}
+                  strongClassName="font-semibold text-[#442748]"
+                  citeClassName="ml-0.5 text-[0.65em] font-[inherit] leading-none text-[#5C5670]"
+                />
+              </span>
+            </p>
           </div>
 
           <aside className="animate-fade-up animate-delay-2 flex flex-col gap-2 lg:sticky lg:top-24">
@@ -259,15 +263,6 @@ export function BacterianaPage() {
                 ))}
               </ul>
             </div>
-            <Link
-              href="/sintomas"
-              className="mt-2 inline-flex items-center gap-1.5 text-[14px] font-bold text-[#503c77] underline-offset-2 hover:underline"
-            >
-              Conocer más sobre los síntomas
-              <span aria-hidden className="text-lg leading-none">
-                →
-              </span>
-            </Link>
           </div>
         </div>
       </RevealSection>
@@ -450,11 +445,11 @@ export function BacterianaPage() {
 
       {/* Quote evolución */}
       <RevealSection className="bg-[#503c77] py-16" delay={100}>
-        <p className={`${WRAP} mx-auto max-w-4xl text-center text-[20px] font-medium leading-[28px] text-white md:text-[22px]`}>
+        <p className={`${WRAP} mx-auto max-w-4xl text-center text-[20px] font-normal leading-[28px] text-white md:text-[22px]`}>
           <RichText
             text={d.quote}
             strongClassName="font-semibold text-white"
-            citeClassName="ml-0.5 text-[0.85em] font-[inherit] leading-none text-white"
+            citeClassName="ml-0.5 text-[0.65em] font-[inherit] leading-none text-white"
           />
         </p>
       </RevealSection>
@@ -512,23 +507,20 @@ export function BacterianaPage() {
               <RichText text={d.vacunacion.esquemasTitle} />
             </h3>
 
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div className="flex flex-col gap-5 rounded-[14px] border border-white bg-[#503C77]/10 p-5 shadow-[2px_2px_4px_rgba(51,51,51,0.15)]">
               {d.vacunacion.esquemas.map((esquema) => (
-                <div
-                  key={esquema.badge}
-                  className="flex h-full flex-col gap-4 rounded-[12px] border border-[#E2E8F0] bg-white p-5 shadow-[2px_2px_4px_rgba(51,51,51,0.06)]"
-                >
+                <div key={esquema.badge} className="flex flex-col gap-4">
                   <span className="w-fit rounded-[20px] bg-[#DD876E] px-3 py-1.5 text-[10px] font-bold uppercase leading-none tracking-wide text-white sm:text-[11px]">
                     {esquema.badge}
                   </span>
-                  <ul className="flex flex-1 flex-col gap-2.5">
+                  <ul className="flex flex-col gap-2.5">
                     {esquema.doses.map((dose) => (
                       <li key={dose} className="flex gap-2.5">
                         <span
                           className="mt-1.5 size-1.5 shrink-0 rounded-full bg-[#503c77]"
                           aria-hidden
                         />
-                        <span className="text-[13px] leading-5 text-[#442748] sm:text-[14px]">
+                        <span className="text-[13px] font-normal leading-5 text-[#442748] sm:text-[14px]">
                           {dose}
                         </span>
                       </li>
@@ -538,24 +530,24 @@ export function BacterianaPage() {
               ))}
             </div>
 
-            <div className="flex flex-col gap-4 rounded-[12px] border border-[#E2E8F0] bg-white p-5 shadow-[2px_2px_4px_rgba(51,51,51,0.06)] lg:p-6">
+            <div className="flex flex-col gap-4">
               <h3 className="text-[16px] font-bold text-[#503c77] lg:text-[18px]">
                 {d.vacunacion.serogrupoB.title}
               </h3>
-              <p className="text-[15px] leading-[1.65] text-[#442748]">
+              <p className="text-[15px] font-normal leading-[1.65] text-[#442748]">
                 <RichText
                   text={d.vacunacion.serogrupoB.body}
                   strongClassName="font-semibold text-[#442748]"
                 />
               </p>
-              <ul className="flex flex-col gap-3">
+              <ul className="flex flex-col gap-3 rounded-[14px] border border-white bg-[#503C77]/10 p-5 shadow-[2px_2px_4px_rgba(51,51,51,0.15)]">
                 {d.vacunacion.serogrupoB.conditions.map((c) => (
                   <li key={c} className="flex gap-2.5">
                     <span
                       className="mt-2 size-2 shrink-0 rounded-full bg-[#503c77]"
                       aria-hidden
                     />
-                    <span className="text-[14px] leading-5 text-[#442748]">
+                    <span className="text-[14px] font-normal leading-5 text-[#442748]">
                       {c}
                     </span>
                   </li>
@@ -566,32 +558,29 @@ export function BacterianaPage() {
         </div>
       </RevealSection>
 
-      {/* Prevención CTA */}
+      {/* Otros consejos / Prevención */}
       <RevealSection
         id="prevencion"
-        className="scroll-mt-20 bg-[#503c77] py-16"
+        className="scroll-mt-20 bg-[#F4F3F8] py-12 md:py-16"
         delay={100}
       >
-        <div
-          className={`${WRAP} flex flex-col items-center gap-8 text-center`}
-        >
-          <div className="flex flex-col gap-2">
-            <Eyebrow>{d.prevencion.eyebrow}</Eyebrow>
-            <h2 className="text-[22px] font-bold leading-[28px] text-white md:text-[24px]">
-              {d.prevencion.title}
-            </h2>
-          </div>
+        <div className={`${WRAP} flex max-w-3xl flex-col gap-4`}>
+          <Eyebrow>{d.prevencion.eyebrow}</Eyebrow>
+          <h2 className="text-[28px] font-black leading-8 text-[#442748] lg:text-[32px] lg:leading-9">
+            {d.prevencion.title}
+          </h2>
+          <p className="text-[15px] font-normal leading-[1.65] text-[#442748] md:text-[16px]">
+            <RichText
+              text={d.prevencion.body}
+              strongClassName="font-semibold text-[#442748]"
+              citeClassName="ml-0.5 text-[0.65em] font-[inherit] leading-none text-[#442748]"
+            />
+          </p>
           <Link
             href={d.prevencion.ctaHref}
-            className="flex h-[52px] w-full max-w-md items-center justify-center gap-2 rounded-[12px] bg-white px-6 text-[15px] font-bold text-[#503c77] transition hover:bg-white/95"
+            className="mt-2 flex h-[52px] w-full items-center justify-center rounded-[12px] bg-white px-6 text-[15px] font-bold text-[#442748] transition hover:bg-white/90 md:max-w-md"
           >
             {d.prevencion.ctaLabel}
-            <span
-              aria-hidden
-              className="material-symbols-outlined text-[18px] leading-none"
-            >
-              arrow_forward
-            </span>
           </Link>
         </div>
       </RevealSection>

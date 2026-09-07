@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { RichText } from "@/components/ui/RichText";
 import { Reveal } from "@/components/ui/Reveal";
 import { VacunasEtapasPanel } from "@/components/vacunacion/VacunasEtapasPanel";
@@ -66,7 +66,18 @@ export function VacunacionCalendarioSection({
                 {calendarioIntro.title}
               </h2>
               <p className="mt-4 text-[16px] leading-[26px] text-dark">
-                <RichText text={calendarioIntro.body} />
+                {calendarioIntro.body
+                  .split(/\n+/)
+                  .filter(Boolean)
+                  .map((line, i, lines) => (
+                    <Fragment key={`${i}-${line.slice(0, 24)}`}>
+                      <RichText
+                        text={line}
+                        strongClassName="font-semibold text-[#442748]"
+                      />
+                      {i < lines.length - 1 ? <br /> : null}
+                    </Fragment>
+                  ))}
               </p>
             </div>
           </Reveal>

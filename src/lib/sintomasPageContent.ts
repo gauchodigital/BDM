@@ -141,8 +141,7 @@ export const ADULTOS_TIMELINE: SintomaData[] = [
   {
     id: "rechazo-luz",
     label: "Rechazo a la luz",
-    description:
-      "Erupciones de la piel de color rojo o púrpura oscuro[1].",
+    description: "",
     icon: "/sintomas/rechazo-luz.svg",
     phase: "alarm",
     visible: true,
@@ -150,7 +149,8 @@ export const ADULTOS_TIMELINE: SintomaData[] = [
   {
     id: "petequias",
     label: "Petequias",
-    description: "Parte superior de la cabeza del bebé[1].",
+    description:
+      "Erupciones de la piel de color rojo o púrpura oscuro[1].",
     icon: "/sintomas/petequias.svg",
     phase: "alarm",
     visible: true,
@@ -210,15 +210,15 @@ export const LACTANTES_RN_TIMELINE: SintomaData[] = [
   {
     id: "lac-petequias",
     label: "Petequias",
-    description: "",
+    description: "Erupciones de la piel de color rojo o púrpura oscuro[1].",
     icon: "/sintomas/petequias.svg",
     phase: "alarm",
     visible: true,
   },
   {
     id: "lac-fontanela",
-    label: "Fontanela (parte superior de la cabeza del bebé) abultada",
-    description: "",
+    label: "Fontanela abultada",
+    description: "Parte superior de la cabeza del bebé[1].",
     icon: "/sintomas/fontanela.svg",
     phase: "alarm",
     visible: true,

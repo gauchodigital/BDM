@@ -4,9 +4,13 @@
   /* Design System v4 — BastaDeMeningitis */
   --color-primary: #503c77;
   --color-secondary: #6d6aae;
-  --color-dark: #44274b;
+  --color-dark: #442748;
   --color-light: #a6c0d6;
-  --color-accent: #d9876e;
+  --color-accent: #dd876e;
+  --color-meningococo: #e9eff5;
+  --color-alert: #ef4444;
+  --color-alert-bg: #fef2f2;
+  --color-alert-text: #7f1d1d;
   --color-badge: #fec4b3;
   --color-badge-border: #e2ae9f;
   --color-craneo: #e6e6e8;
@@ -18,17 +22,23 @@
   --color-cream: #f9f7f5;
   --color-on-primary: #ffffff;
   --color-on-dark: #ffffff;
-  --color-on-light: #44274b;
-  --color-on-accent: #44274b;
+  --color-on-light: #442748;
+  --color-on-accent: #442748;
   --color-muted: #5c5670;
   --color-border: #e5e5e5;
 
   --font-headline: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-body: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
 
+  /* Espaciado: 64 / 96 / 120px */
   --spacing-section-mobile: 4rem;
   --spacing-section-desktop: 6rem;
   --spacing-hero: 7.5rem;
+  --spacing-section-gap: 4rem;
+  --spacing-title-body: 1.5rem;
+  --spacing-body-component: 1.5rem;
+  --spacing-eyebrow-title: 0.5rem;
+  --spacing-item: 1rem;
 
   --radius-sm: 0.25rem;
   --radius-md: 0.5rem;

@@ -78,7 +78,9 @@ export function PhaseHeader({
       >
         {cfg.badge}
       </p>
-      <p className="mt-3 text-[13px] leading-[1.55] text-muted">{cfg.lead}</p>
+      <p className="mt-3 text-[13px] font-normal leading-[18px] tracking-normal text-dark">
+        {cfg.lead}
+      </p>
     </div>
   );
 }
@@ -372,7 +374,9 @@ function DesktopPhaseHeader({ phase }: { phase: SintomaPhase }) {
       >
         {cfg.badge}
       </p>
-      <p className="mt-3 text-[13px] leading-[1.55] text-muted">{cfg.lead}</p>
+      <p className="mt-3 text-[13px] font-normal leading-[18px] tracking-normal text-dark">
+        {cfg.lead}
+      </p>
     </div>
   );
 }

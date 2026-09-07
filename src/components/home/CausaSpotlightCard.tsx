@@ -15,44 +15,48 @@ const SPOTLIGHT: Record<CausaTagColor, string> = {
 
 const CARD_THEME: Record<
   CausaTagColor,
-  { shell: string; ring: string; ctaHover: string }
+  { shell: string; ring: string; cta: string; ctaHover: string }
 > = {
   accent: {
     shell:
       "border-[#F0C4B8]/60 bg-gradient-to-br from-[#FDF0EC] via-white to-white",
     ring: "group-hover:ring-[#DD876E]/20",
+    cta: "text-[#503C77]",
     ctaHover: "group-hover:text-[#DD876E]",
   },
   primary: {
     shell:
       "border-[#D8D4DE]/80 bg-gradient-to-br from-[#F3F0F8] via-white to-white",
     ring: "group-hover:ring-primary/15",
-    ctaHover: "group-hover:text-[#DD876E]",
+    cta: "text-[#503C77]",
+    ctaHover: "group-hover:text-[#503C77]",
   },
   secondary: {
     shell:
       "border-[#D8D4DE]/80 bg-gradient-to-br from-[#F0EDF8] via-white to-white",
-    ring: "group-hover:ring-secondary/20",
-    ctaHover: "group-hover:text-secondary",
+    ring: "group-hover:ring-[#6D6AAE]/20",
+    cta: "text-[#503C77]",
+    ctaHover: "group-hover:text-[#6D6AAE]",
   },
   light: {
     shell:
       "border-[#D8D4DE]/80 bg-gradient-to-br from-[#F0EDF8] via-white to-white",
-    ring: "group-hover:ring-secondary/20",
-    ctaHover: "group-hover:text-secondary",
+    ring: "group-hover:ring-[#6D6AAE]/20",
+    cta: "text-[#503C77]",
+    ctaHover: "group-hover:text-[#6D6AAE]",
   },
 };
 
 const ACCENT_BAR: Record<CausaTagColor, string> = {
-  accent: "bg-[#DD876E]",
-  primary: "bg-primary",
-  secondary: "bg-secondary",
-  light: "bg-secondary",
+  accent: "bg-[#DD876E]", // MÁS GRAVE
+  primary: "bg-[#503C77]", // MÁS FRECUENTE
+  secondary: "bg-[#6D6AAE]", // POCO FRECUENTE
+  light: "bg-[#6D6AAE]",
 };
 
 export function CausaSpotlightCard({
   causa,
-  ctaLabel = "Aprendé más",
+  ctaLabel = "Aprender más",
   showExternalIcon = false,
 }: {
   causa: CausaData;
@@ -105,14 +109,14 @@ export function CausaSpotlightCard({
 
       <div className="relative z-[1] flex h-full flex-col gap-3 pl-1">
         <Chip label={causa.tagLabel} color={causa.tagColor} />
-        <h3 className="text-[24px] font-extrabold leading-tight text-primary transition-colors duration-300 group-hover:text-[#442748] md:text-[26px] lg:text-[22px]">
+        <h3 className="text-[24px] font-extrabold leading-tight text-[#442748] md:text-[26px] lg:text-[22px]">
           {causa.title}
         </h3>
         <p className="text-[14px] leading-[1.65] text-muted lg:flex-1">
           <RichText text={causa.description} />
         </p>
         <span
-          className={`mt-1 inline-flex items-center gap-1.5 text-sm font-semibold text-primary transition-all duration-300 group-hover:gap-2.5 ${theme.ctaHover}`}
+          className={`mt-1 inline-flex items-center gap-1.5 text-sm font-semibold transition-all duration-300 group-hover:gap-2.5 ${theme.cta} ${theme.ctaHover}`}
         >
           {ctaLabel}
           {showExternalIcon ? (

@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { RichText } from "@/components/ui/RichText";
 import { Reveal } from "@/components/ui/Reveal";
 import { SintomasMobileTimeline } from "@/components/sintomas/SintomasTimeline";
@@ -9,10 +8,8 @@ const HOME_WARNING =
   "Ante la presencia de estos síntomas, consultá al médico.";
 
 export function SintomasPreview({
-  showMoreLink = true,
   headingAs = "h2",
 }: {
-  showMoreLink?: boolean;
   headingAs?: "h1" | "h2";
 }) {
   const { early, alarm } = splitTimeline(ADULTOS_TIMELINE);
@@ -48,22 +45,6 @@ export function SintomasPreview({
           warningText={HOME_WARNING}
           className="relative mt-10 hidden lg:block"
         />
-
-        {showMoreLink && (
-          <Reveal delay={200}>
-            <div className="mt-8 flex justify-center lg:mt-6">
-              <Link
-                href="/sintomas"
-                className="flex w-full min-w-[200px] items-center justify-center gap-2 rounded-[10px] bg-primary px-8 py-3.5 text-[15px] font-bold text-white transition hover:brightness-110 lg:w-auto"
-              >
-                Conocé más
-                <span aria-hidden className="text-lg leading-none">
-                  →
-                </span>
-              </Link>
-            </div>
-          </Reveal>
-        )}
       </div>
     </section>
   );

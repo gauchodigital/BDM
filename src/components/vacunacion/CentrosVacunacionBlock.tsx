@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useMemo, useState, type ReactNode } from "react";
 import {
   filtrarCentros,
@@ -53,25 +52,7 @@ function scrollToResults(): void {
 }
 
 function DisclaimerText({ text }: { text: string }): ReactNode {
-  const parts = text.split(/(hacé click acá\.?)/i);
-  return (
-    <>
-      {parts.map((part, i) => {
-        if (/^hacé click acá\.?$/i.test(part)) {
-          return (
-            <Link
-              key={i}
-              href="/contacto"
-              className="underline underline-offset-2 hover:opacity-90"
-            >
-              {part}
-            </Link>
-          );
-        }
-        return <span key={i}>{part}</span>;
-      })}
-    </>
-  );
+  return <>{text}</>;
 }
 
 function SelectField({

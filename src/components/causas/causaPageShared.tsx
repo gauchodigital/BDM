@@ -4,7 +4,7 @@ import { RichText } from "@/components/ui/RichText";
 
 export const CAUSA_WRAP = "mx-auto w-full max-w-7xl px-5 md:px-8";
 export const CAUSA_PANEL =
-  "rounded-[12px] border border-[#D8D4DE] bg-transparent p-6 md:p-8";
+  "rounded-[12px] border-0 bg-transparent p-0 md:border md:border-[#D8D4DE] md:p-8";
 
 export type CausaTocItem = {
   id: string;
@@ -20,9 +20,19 @@ export function CausaEyebrow({ children }: { children: string }) {
   );
 }
 
-export function CausaSectionTitle({ children }: { children: ReactNode }) {
+export function CausaSectionTitle({
+  children,
+  tone = "primary",
+}: {
+  children: ReactNode;
+  tone?: "primary" | "secondary";
+}) {
   return (
-    <h2 className="text-[28px] font-black leading-8 text-[#503c77] lg:text-[32px] lg:leading-9">
+    <h2
+      className={`text-[28px] font-black leading-8 lg:text-[32px] lg:leading-9 ${
+        tone === "secondary" ? "text-[#6D6AAE]" : "text-[#503C77]"
+      }`}
+    >
       {children}
     </h2>
   );
@@ -84,15 +94,6 @@ export function CausaSintomasPanel() {
         empeorar rápidamente. Ante cualquier signo de alarma, consultá de
         inmediato a un profesional de la salud.
       </p>
-      <Link
-        href="/sintomas"
-        className="mt-2 inline-flex items-center gap-1.5 text-[14px] font-bold text-[#503c77] underline-offset-2 hover:underline"
-      >
-        Conocer más sobre los síntomas
-        <span aria-hidden className="text-lg leading-none">
-          →
-        </span>
-      </Link>
     </div>
   );
 }
@@ -122,19 +123,22 @@ export function CausaPrevencionCta({
   body,
   ctaLabel,
   ctaHref,
+  tone = "primary",
 }: {
   eyebrow: string;
   title: string;
   body: string;
   ctaLabel: string;
   ctaHref: string;
+  tone?: "primary" | "secondary";
 }) {
+  const ctaText = tone === "secondary" ? "text-[#6D6AAE]" : "text-[#503C77]";
   return (
-    <div className={`${CAUSA_WRAP} flex flex-col items-center gap-8 text-center`}>
+    <div className={`${CAUSA_WRAP} flex flex-col items-start gap-8 text-left`}>
       <div className="flex max-w-3xl flex-col gap-4">
         <div className="flex flex-col gap-2">
           <CausaEyebrow>{eyebrow}</CausaEyebrow>
-          <h2 className="text-[22px] font-bold leading-[28px] text-white md:text-[24px]">
+          <h2 className="text-[22px] font-bold leading-[28px] text-white">
             {title}
           </h2>
         </div>
@@ -148,7 +152,7 @@ export function CausaPrevencionCta({
       </div>
       <Link
         href={ctaHref}
-        className="flex h-[52px] w-full max-w-md items-center justify-center gap-2 rounded-[12px] bg-white px-6 text-[15px] font-bold text-[#503c77] transition hover:bg-white/95"
+        className={`flex h-[52px] w-full max-w-md items-center justify-center gap-2 rounded-[12px] bg-white px-6 text-[15px] font-bold transition hover:bg-white/95 ${ctaText}`}
       >
         {ctaLabel}
         <span

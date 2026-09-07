@@ -369,3 +369,122 @@ export function recommendVaccines(months: number): VaccineReco {
     ],
   };
 }
+
+/** Hitos del esquema infantil: anterior / actual / siguiente visita. */
+export type VaccineBucket = {
+  id: "anteriores" | "actuales" | "siguientes";
+  title: string;
+  rangeLabel: string;
+  /** Si false, solo informativo (próximas); no se marcan como aplicadas */
+  checkable: boolean;
+  calendario: Vaccine[];
+  recomendadas: Vaccine[];
+};
+
+export type VaccinePlan = {
+  isChild: boolean;
+  buckets: VaccineBucket[];
+};
+
+type ChildMilestone = {
+  id: string;
+  label: string;
+  /** Mes representativo para `recommendVaccines` */
+  sampleMonth: number;
+  matches: (months: number) => boolean;
+};
+
+/** Misma granularidad que `recommendVaccines` (niños hasta 17 años). */
+const CHILD_MILESTONES: ChildMilestone[] = [
+  { id: "rn", label: "Recién nacido", sampleMonth: 0, matches: (m) => m < 2 },
+  { id: "2m", label: "2 meses", sampleMonth: 2, matches: (m) => m >= 2 && m < 3 },
+  { id: "3m", label: "3 meses", sampleMonth: 3, matches: (m) => m >= 3 && m < 4 },
+  { id: "4m", label: "4 meses", sampleMonth: 4, matches: (m) => m >= 4 && m < 5 },
+  { id: "5m", label: "5 meses", sampleMonth: 5, matches: (m) => m >= 5 && m < 6 },
+  { id: "6m", label: "6 a 11 meses", sampleMonth: 6, matches: (m) => m >= 6 && m < 12 },
+  { id: "12m", label: "12 meses", sampleMonth: 12, matches: (m) => m >= 12 && m < 15 },
+  { id: "15m", label: "15 meses", sampleMonth: 15, matches: (m) => m >= 15 && m < 18 },
+  { id: "18m", label: "18 meses", sampleMonth: 18, matches: (m) => m >= 18 && m < 24 },
+  { id: "2-4y", label: "2 a 4 años", sampleMonth: 36, matches: (m) => m >= 24 && m < 60 },
+  { id: "5y", label: "5 años", sampleMonth: 60, matches: (m) => m >= 60 && m < 72 },
+  { id: "6-10y", label: "6 a 10 años", sampleMonth: 84, matches: (m) => m >= 72 && m < 132 },
+  { id: "11y", label: "11 años", sampleMonth: 132, matches: (m) => m >= 132 && m < 144 },
+  { id: "12-14y", label: "12 a 14 años", sampleMonth: 150, matches: (m) => m >= 144 && m < 180 },
+  { id: "15-17y", label: "15 a 17 años", sampleMonth: 180, matches: (m) => m >= 180 && m < 216 },
+];
+
+function vaccineKey(v: Vaccine): string {
+  return `${v.name}::${v.detail}`;
+}
+
+function childMilestoneIndex(months: number): number | null {
+  const idx = CHILD_MILESTONES.findIndex((r) => r.matches(months));
+  return idx >= 0 ? idx : null;
+}
+
+/**
+ * Niños: visita anterior + actual + siguiente (última visita infantil: solo anterior + actual).
+ * Adultos: solo el bucket actual.
+ */
+export function getVaccinePlan(months: number): VaccinePlan {
+  const idx = childMilestoneIndex(months);
+
+  if (idx === null) {
+    const reco = recommendVaccines(months);
+    return {
+      isChild: false,
+      buckets: [
+        {
+          id: "actuales",
+          title: "Vacunas actuales",
+          rangeLabel: "Según tu edad",
+          checkable: true,
+          ...reco,
+        },
+      ],
+    };
+  }
+
+  const current = CHILD_MILESTONES[idx]!;
+  const prev = idx > 0 ? CHILD_MILESTONES[idx - 1] : null;
+  const next =
+    idx < CHILD_MILESTONES.length - 1 ? CHILD_MILESTONES[idx + 1] : null;
+
+  const buckets: VaccineBucket[] = [];
+
+  if (prev) {
+    const reco = recommendVaccines(prev.sampleMonth);
+    buckets.push({
+      id: "anteriores",
+      title: "Vacunas anteriores",
+      rangeLabel: prev.label,
+      checkable: true,
+      ...reco,
+    });
+  }
+
+  buckets.push({
+    id: "actuales",
+    title: "Vacunas actuales",
+    rangeLabel: current.label,
+    checkable: true,
+    ...recommendVaccines(months),
+  });
+
+  if (next) {
+    const reco = recommendVaccines(next.sampleMonth);
+    buckets.push({
+      id: "siguientes",
+      title: "Vacunas siguientes",
+      rangeLabel: next.label,
+      checkable: false,
+      ...reco,
+    });
+  }
+
+  return { isChild: true, buckets };
+}
+
+export function vaccineItemKey(bucketId: string, v: Vaccine): string {
+  return `${bucketId}::${vaccineKey(v)}`;
+}

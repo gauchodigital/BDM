@@ -184,12 +184,12 @@ function AnatomyMobile({ className = "" }: { className?: string }) {
                   aria-hidden
                 />
                 <div className="min-w-0 flex-1">
-                  <div className="flex flex-wrap items-center gap-2">
+                  <div className="flex items-center gap-2">
                     <p className="text-[15px] font-bold leading-snug text-[#442748]">
                       {item.title}
                     </p>
                     {item.badge ? (
-                      <span className="rounded-md bg-accent px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-white">
+                      <span className="ml-auto shrink-0 rounded-md bg-accent px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-white">
                         {item.badge}
                       </span>
                     ) : null}
@@ -303,7 +303,7 @@ function AnatomyDesktop({ className = "" }: { className?: string }) {
                       {item.index}
                     </span>
                     <div className="min-w-0 flex-1">
-                      <div className="flex flex-wrap items-center gap-1.5">
+                      <div className="flex items-center gap-1.5">
                         <p
                           className={`text-[14px] font-bold leading-snug transition-colors ${
                             selected ? "text-[#442748]" : "text-[#442748]/65"
@@ -312,7 +312,7 @@ function AnatomyDesktop({ className = "" }: { className?: string }) {
                           {item.title}
                         </p>
                         {item.badge ? (
-                          <span className="rounded-md bg-[#DD876E] px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wide text-white">
+                          <span className="ml-auto shrink-0 rounded-md bg-[#DD876E] px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wide text-white">
                             {item.badge}
                           </span>
                         ) : null}

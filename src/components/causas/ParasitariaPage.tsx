@@ -4,14 +4,10 @@ import { RichText } from "@/components/ui/RichText";
 import { CausaOtrasCausas } from "@/components/causas/CausaOtrasCausas";
 import { RevealSection } from "@/components/ui/RevealSection";
 import {
-  CAUSA_PANEL,
   CAUSA_WRAP,
   CausaEyebrow,
   CausaPrevencionCta,
   CausaSectionTitle,
-  CausaSintomasPanel,
-  CausaTocNav,
-  CausaUrgencyBar,
 } from "@/components/causas/causaPageShared";
 import { PARASITARIA } from "@/lib/parasitariaContent";
 
@@ -24,7 +20,7 @@ export function ParasitariaPage() {
         <div className={`${CAUSA_WRAP} flex items-center gap-2 text-[13px]`}>
           <Link
             href="/causas"
-            className="font-medium text-[#503c77] underline underline-offset-2 hover:opacity-90"
+            className="font-medium text-[#503C77] underline underline-offset-2 hover:opacity-90"
           >
             Causas
           </Link>
@@ -33,66 +29,62 @@ export function ParasitariaPage() {
         </div>
       </nav>
 
-      <section className="bg-white pb-10 pt-6">
-        <div
-          className={`${CAUSA_WRAP} flex flex-col gap-8 lg:grid lg:grid-cols-[minmax(0,1fr)_300px] lg:items-start lg:gap-12`}
-        >
-          <div className="flex flex-col gap-6">
+      <section className="bg-white pb-12 pt-6">
+        <div className={`${CAUSA_WRAP} flex max-w-3xl flex-col gap-10`}>
+          <div className="flex flex-col gap-4">
             <div className="animate-fade-up flex flex-col gap-3">
               <Chip label={d.badge} color={d.badgeColor} />
-              <h1 className="text-[34px] font-black leading-tight text-[#503c77] md:text-[40px] lg:text-[44px]">
+              <h1 className="text-[34px] font-black leading-tight text-[#503C77] md:text-[40px] lg:text-[44px]">
                 {d.title}
               </h1>
             </div>
-            <p className="animate-fade-up animate-delay-1 text-[15px] leading-6 text-[#442748] lg:text-[16px] lg:leading-[26px]">
-              <RichText text={d.intro} />
+            <p className="animate-fade-up animate-delay-1 text-[15px] font-normal leading-6 text-[#442748] lg:text-[16px] lg:leading-[26px]">
+              <RichText
+                text={d.intro}
+                strongClassName="font-semibold text-[#442748]"
+                citeClassName="ml-0.5 text-[0.65em] font-[inherit] leading-none text-[#503C77]"
+              />
             </p>
           </div>
 
-          <aside className="animate-fade-up animate-delay-2 flex flex-col gap-2 lg:sticky lg:top-24">
-            <CausaEyebrow>EN ESTA PÁGINA</CausaEyebrow>
-            <CausaTocNav items={d.toc} />
-          </aside>
-        </div>
-      </section>
-
-      <RevealSection className="scroll-mt-20 bg-white pb-16" delay={80}>
-        <div className={`${CAUSA_WRAP} grid gap-8 lg:grid-cols-2 lg:gap-10`}>
-          <div id="que-es" className={`${CAUSA_PANEL} flex flex-col gap-4`}>
+          <div id="que-es" className="animate-fade-up animate-delay-2 flex scroll-mt-20 flex-col gap-3">
             <div className="flex flex-col gap-2">
               <CausaEyebrow>{d.queEs.eyebrow}</CausaEyebrow>
-              <CausaSectionTitle>{d.queEs.title}</CausaSectionTitle>
+              <CausaSectionTitle tone="primary">{d.queEs.title}</CausaSectionTitle>
             </div>
-            <div className="flex flex-col gap-4 text-[16px] leading-[25px] text-[#442748]">
+            <div className="flex flex-col gap-4 text-[16px] font-normal leading-[25px] text-[#442748]">
               {d.queEs.paragraphs.map((p) => (
                 <p key={p.slice(0, 48)}>
-                  <RichText text={p} />
+                  <RichText
+                    text={p}
+                    strongClassName="font-semibold text-[#442748]"
+                    citeClassName="ml-0.5 text-[0.65em] font-[inherit] leading-none text-[#503C77]"
+                  />
                 </p>
               ))}
             </div>
           </div>
-          <CausaSintomasPanel />
         </div>
-      </RevealSection>
-
-      <RevealSection className="bg-[#503c77]" delay={150}>
-        <CausaUrgencyBar />
-      </RevealSection>
+      </section>
 
       <RevealSection
         id="tratamiento"
         className="scroll-mt-20 bg-white py-16"
         delay={100}
       >
-        <div className={`${CAUSA_WRAP} max-w-3xl flex flex-col gap-4`}>
+        <div className={`${CAUSA_WRAP} flex max-w-3xl flex-col gap-4`}>
           <div className="flex flex-col gap-2">
             <CausaEyebrow>{d.tratamiento.eyebrow}</CausaEyebrow>
-            <CausaSectionTitle>{d.tratamiento.title}</CausaSectionTitle>
+            <CausaSectionTitle tone="primary">{d.tratamiento.title}</CausaSectionTitle>
           </div>
           <div className="flex flex-col gap-4 text-[16px] leading-[26px] text-[#442748]">
             {d.tratamiento.paragraphs.map((p) => (
               <p key={p.slice(0, 48)}>
-                <RichText text={p} />
+                <RichText
+                  text={p}
+                  strongClassName="font-semibold text-[#442748]"
+                  citeClassName="ml-0.5 text-[0.65em] font-[inherit] leading-none text-[#503C77]"
+                />
               </p>
             ))}
           </div>
@@ -101,10 +93,10 @@ export function ParasitariaPage() {
 
       <RevealSection
         id="prevencion"
-        className="scroll-mt-20 bg-[#503c77] py-16"
+        className="scroll-mt-20 bg-[#503C77] py-16"
         delay={150}
       >
-        <CausaPrevencionCta {...d.prevencion} />
+        <CausaPrevencionCta {...d.prevencion} tone="primary" />
       </RevealSection>
 
       <CausaOtrasCausas

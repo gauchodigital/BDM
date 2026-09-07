@@ -7,7 +7,7 @@ export function RichText({
   text,
   className = "",
   strongClassName = "font-semibold text-[#442748]",
-  citeClassName = "ml-0.5 text-[0.85em] font-[inherit] leading-none text-[#503C77]",
+  citeClassName = "ml-0.5 text-[0.65em] font-[inherit] leading-none text-[#503C77]",
 }: {
   text: string;
   className?: string;

@@ -74,7 +74,7 @@ export function VacunasCtaSection({
                 <p className="text-[11px] font-bold uppercase leading-[16.8px] tracking-[1.3px] text-[#DD876E]">
                   Chequeá tu calendario de vacunación
                 </p>
-                <h2 className="text-[28px] font-[900] leading-9 !text-white md:text-[2.5rem] md:leading-tight">
+                <h2 className="text-[28px] font-bold leading-[36px] tracking-normal text-white">
                   ¿Estás al día con las vacunas?
                 </h2>
               </div>

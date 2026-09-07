@@ -78,7 +78,7 @@ function TestimonialsMobile({ items }: { items: TestimonioData[] }) {
     <div className="lg:hidden">
       <div
         role="tablist"
-        className="flex w-full items-center gap-0.5 rounded-full bg-[#F0EDF5] p-1 sm:mx-auto sm:w-fit"
+        className="flex w-full items-center gap-0.5 rounded-[10px] border border-[#503C77] bg-[#503C77] p-1"
       >
         {TABS.map((t) => {
           const active = t.id === tab;
@@ -89,10 +89,10 @@ function TestimonialsMobile({ items }: { items: TestimonioData[] }) {
               role="tab"
               aria-selected={active}
               onClick={() => setTab(t.id)}
-              className={`flex flex-1 items-center justify-center rounded-full px-3 py-2 text-center text-[12px] leading-tight transition-all duration-200 sm:flex-none sm:px-4 sm:py-1.5 sm:text-[13px] ${
+              className={`flex min-w-0 flex-1 items-center justify-center whitespace-nowrap rounded-[8px] px-1.5 py-2 text-center text-[11px] leading-none transition-all duration-200 sm:flex-none sm:px-4 sm:py-1.5 sm:text-[13px] ${
                 active
-                  ? "bg-white font-medium text-[#503C77] shadow-[0_1px_4px_rgba(68,39,72,0.08)]"
-                  : "font-normal text-[#7A7585] hover:text-[#503C77]"
+                  ? "bg-white font-bold text-[#503C77] shadow-[0_1px_4px_rgba(68,39,72,0.12)]"
+                  : "font-medium text-white/85 hover:text-white"
               }`}
             >
               {t.label}
