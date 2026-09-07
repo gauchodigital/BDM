@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
   dismissPediatraConsultPopup,
@@ -15,6 +14,25 @@ import { POPUP_DEMO_PEDIATRA_EVENT } from "@/lib/popupDemo";
 type Step = "hidden" | "question" | "thanks";
 
 const SECTION_VISIBLE_RATIO = 0.22;
+
+function PediatraIcon({ kind }: { kind: "question" | "check" }) {
+  return (
+    <div
+      className="mx-auto flex size-[72px] items-center justify-center rounded-full bg-[#C5C4E8]/55"
+      aria-hidden
+    >
+      <div className="flex size-12 items-center justify-center rounded-full bg-[#9B99D0] text-white">
+        {kind === "question" ? (
+          <span className="text-[28px] font-bold leading-none">?</span>
+        ) : (
+          <span className="material-symbols-outlined text-[28px] font-bold leading-none">
+            check
+          </span>
+        )}
+      </div>
+    </div>
+  );
+}
 
 export function PediatraConsultPopup() {
   const [step, setStep] = useState<Step>("hidden");
@@ -35,7 +53,6 @@ export function PediatraConsultPopup() {
     dismissPediatraConsultPopup(value);
     autoShownRef.current = true;
     setStep("thanks");
-    window.setTimeout(() => setStep("hidden"), value === "yes" ? 3200 : 1800);
   }, []);
 
   const tryShow = useCallback(() => {
@@ -129,7 +146,7 @@ export function PediatraConsultPopup() {
         role="dialog"
         aria-modal="true"
         aria-labelledby="pediatra-popup-title"
-        className="relative z-10 w-full max-w-[360px] animate-fade-in rounded-[16px] bg-white px-6 pb-6 pt-8 shadow-[0_20px_60px_rgba(68,39,72,0.22)] sm:max-w-[400px]"
+        className="relative z-10 w-full max-w-[360px] animate-fade-in rounded-[20px] bg-white px-7 pb-7 pt-9 shadow-[0_20px_60px_rgba(68,39,72,0.22)] sm:max-w-[400px]"
       >
         <button
           type="button"
@@ -142,64 +159,57 @@ export function PediatraConsultPopup() {
 
         {step === "question" ? (
           <>
-            <div
-              className="mx-auto flex size-14 items-center justify-center rounded-full bg-[#7A78BB] text-[28px] font-bold text-white"
-              aria-hidden
-            >
-              ?
-            </div>
+            <PediatraIcon kind="question" />
 
             <p
               id="pediatra-popup-title"
-              className="mt-5 text-center text-[15px] leading-[1.55] text-[#442748]"
+              className="mt-6 text-center text-[15px] leading-[1.55] text-[#4a4a4a]"
             >
               Después de leer esta información,{" "}
-              <strong className="font-bold text-[#442748]">
+              <strong className="font-bold text-[#1a1a1a]">
                 ¿vas a consultarle a tu pediatra acerca de la vacunación contra
                 los distintos tipos de meningitis?
               </strong>
             </p>
 
-            <div className="mt-6 grid grid-cols-2 gap-3">
+            <div className="mt-7 grid grid-cols-2 gap-3">
               <button
                 type="button"
                 onClick={() => respond("no")}
-                className="h-11 rounded-[10px] bg-[#F0F0F0] text-[15px] font-semibold text-[#442748] transition hover:bg-[#e8e8e8]"
+                className="h-11 rounded-[10px] bg-[#F0F0F0] text-[15px] font-semibold text-[#333] transition hover:bg-[#e8e8e8]"
               >
                 No
               </button>
               <button
                 type="button"
                 onClick={() => respond("yes")}
-                className="h-11 rounded-[10px] bg-[#F0F0F0] text-[15px] font-semibold text-[#442748] transition hover:bg-[#e8e8e8]"
+                className="h-11 rounded-[10px] bg-[#F0F0F0] text-[15px] font-semibold text-[#333] transition hover:bg-[#e8e8e8]"
               >
-                Sí
+                Si
               </button>
             </div>
           </>
         ) : (
-          <div className="px-1 pb-1 pt-2 text-center">
-            <p className="text-[32px] leading-none" aria-hidden>
-              {answer === "yes" ? "💜" : "🙏"}
+          <div className="text-center">
+            <PediatraIcon kind="check" />
+            <p
+              id="pediatra-popup-title"
+              className="mt-6 text-[20px] font-bold leading-snug text-[#1a1a1a]"
+            >
+              ¡Gracias por tu respuesta!
             </p>
-            <p className="mt-4 text-[18px] font-bold leading-snug text-[#503C77]">
+            <p className="mt-3 text-[14px] leading-[1.55] text-[#4a4a4a]">
               {answer === "yes"
-                ? "¡Excelente decisión!"
-                : "Gracias por tu tiempo"}
+                ? "Hablar con el pediatra es un gran paso para proteger la salud de quienes más importan."
+                : "Haber llegado hasta acá es el primer paso. Siempre podés consultar con el pediatra cuando estés listo/a."}
             </p>
-            <p className="mt-2 text-[14px] leading-[1.5] text-[#442748]/80">
-              {answer === "yes"
-                ? "Consultá con tu pediatra y revisá el calendario de vacunación."
-                : "Seguí informándote: conocer también es prevenir."}
-            </p>
-            {answer === "yes" ? (
-              <Link
-                href="/vacunacion"
-                className="mt-5 inline-flex h-11 w-full items-center justify-center rounded-[10px] bg-[#503C77] text-[14px] font-bold text-white transition hover:brightness-110"
-              >
-                Ver vacunación
-              </Link>
-            ) : null}
+            <button
+              type="button"
+              onClick={() => close(answer ?? undefined)}
+              className="mt-7 flex h-11 w-full items-center justify-center rounded-[10px] bg-[#F0F0F0] text-[15px] font-semibold text-[#333] transition hover:bg-[#e8e8e8]"
+            >
+              Volver
+            </button>
           </div>
         )}
       </div>

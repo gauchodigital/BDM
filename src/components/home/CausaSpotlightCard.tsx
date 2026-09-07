@@ -52,7 +52,7 @@ const ACCENT_BAR: Record<CausaTagColor, string> = {
 
 export function CausaSpotlightCard({
   causa,
-  ctaLabel = "Aprender más",
+  ctaLabel = "Aprendé más",
   showExternalIcon = false,
 }: {
   causa: CausaData;

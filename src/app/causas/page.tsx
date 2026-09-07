@@ -42,7 +42,7 @@ export default function CausasPage() {
             <Reveal key={causa.id} delay={i * 70} className="h-full">
               <CausaSpotlightCard
                 causa={causa}
-                ctaLabel="Aprender más"
+                ctaLabel="Aprendé más"
                 showExternalIcon
               />
             </Reveal>

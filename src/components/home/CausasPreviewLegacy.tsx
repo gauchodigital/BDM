@@ -50,7 +50,7 @@ export function CausasPreviewLegacy({ causas }: { causas: CausaData[] }) {
                     href={`/causas/${causa.slug}`}
                     className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:underline"
                   >
-                    Leer más
+                    Aprendé más
                     <span aria-hidden>→</span>
                   </Link>
                 </article>

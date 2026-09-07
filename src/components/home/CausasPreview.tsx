@@ -33,7 +33,7 @@ export function CausasPreview({ causas }: { causas: CausaData[] }) {
           <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:mt-12 lg:gap-6 xl:grid-cols-4">
             {causas.map((causa, i) => (
               <Reveal key={causa.id} delay={i * 70} className="h-full">
-                <CausaSpotlightCard causa={causa} ctaLabel="Leer más" />
+                <CausaSpotlightCard causa={causa} ctaLabel="Aprendé más" />
               </Reveal>
             ))}
           </div>

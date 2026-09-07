@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { ReferencesAccordion } from "@/components/layout/ReferencesAccordion";
 
@@ -16,9 +17,14 @@ export function Footer() {
       <ReferencesAccordion />
       <footer className="bg-[#503C77] pb-[calc(3.85rem+env(safe-area-inset-bottom))] text-white md:pb-0">
         <div className="mx-auto max-w-7xl px-6 py-10 md:px-8 md:py-12">
-          <p className="text-[28px] font-extrabold tracking-tight text-white">
-            GSK
-          </p>
+          <Image
+            src="/brand/logo-gsk-footer.png"
+            alt="GSK"
+            width={120}
+            height={48}
+            className="h-10 w-auto object-contain object-left mix-blend-screen md:h-11"
+            priority={false}
+          />
           <div className="mt-5 h-px w-full bg-white/30" />
           <nav className="mt-5 flex flex-wrap gap-x-6 gap-y-2">
             {legalLinks.map((l) => (
