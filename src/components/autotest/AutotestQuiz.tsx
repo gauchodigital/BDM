@@ -624,14 +624,14 @@ export function AutotestQuiz() {
           >
             Fecha de nacimiento
           </label>
-          <div className="relative mt-2">
+          <div className="relative mt-2 overflow-hidden">
             <input
               id="fecha-nac"
               type="date"
               value={birth}
               max={today}
               onChange={(e) => setBirth(e.target.value)}
-              className="w-full rounded-[10px] border border-[#D6DEE8] bg-white px-4 py-3.5 pr-12 text-[15px] text-dark outline-none focus:border-[#503C77]"
+              className="date-input w-full rounded-[10px] border border-[#D6DEE8] bg-white px-4 py-3.5 pr-12 text-[15px] text-dark outline-none focus:border-[#503C77]"
             />
             <span
               className="pointer-events-none absolute top-1/2 right-3 -translate-y-1/2 text-[#503C77]/50"

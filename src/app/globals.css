@@ -291,6 +291,31 @@ h6 {
   animation: popup-logo-pop 0.55s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
+/* iOS/Safari pinta un botón nativo de calendario que se sale del input. */
+.date-input {
+  min-width: 0;
+  max-width: 100%;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.date-input::-webkit-date-and-time-value {
+  text-align: left;
+}
+
+.date-input::-webkit-calendar-picker-indicator {
+  position: absolute;
+  inset: 0;
+  width: auto;
+  height: auto;
+  margin: 0;
+  padding: 0;
+  opacity: 0;
+  cursor: pointer;
+  background: transparent;
+  color: transparent;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .popup-fireworks {
     display: none;
