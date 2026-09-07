@@ -108,7 +108,7 @@ export const ADULTOS_TIMELINE: SintomaData[] = [
   },
   {
     id: "nauseas",
-    label: "Náuseas y vómitos",
+    label: "Náuseas o vómitos",
     description: "",
     icon: "/sintomas/nauseas.svg",
     phase: "early",
@@ -141,7 +141,8 @@ export const ADULTOS_TIMELINE: SintomaData[] = [
   {
     id: "rechazo-luz",
     label: "Rechazo a la luz",
-    description: "",
+    description:
+      "Erupciones de la piel de color rojo o púrpura oscuro[1].",
     icon: "/sintomas/rechazo-luz.svg",
     phase: "alarm",
     visible: true,
@@ -149,7 +150,7 @@ export const ADULTOS_TIMELINE: SintomaData[] = [
   {
     id: "petequias",
     label: "Petequias",
-    description: "Erupciones de la piel de color rojo o púrpura oscuro.",
+    description: "Parte superior de la cabeza del bebé[1].",
     icon: "/sintomas/petequias.svg",
     phase: "alarm",
     visible: true,

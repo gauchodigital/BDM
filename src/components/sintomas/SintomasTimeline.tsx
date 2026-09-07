@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, type RefObject } from "react";
 import { Reveal } from "@/components/ui/Reveal";
+import { RichText } from "@/components/ui/RichText";
 import type { SintomaData, SintomaPhase } from "@/lib/sintomasData";
 
 export const SINTOMA_PHASE_UI: Record<
@@ -133,7 +134,7 @@ export function SymptomCard({
           </p>
           {item.description ? (
             <p className="mt-1 text-[12px] leading-[1.5] text-muted">
-              {item.description}
+              <RichText text={item.description} />
             </p>
           ) : null}
         </div>
