@@ -1,4 +1,5 @@
 # BastaDeMeningitis
+<!-- deploy 2026-09-08 -->
 
 Sitio de concientización sobre meningitis (Next.js 16 + React 19 + Tailwind v4).
 Misma arquitectura que EAAM (JSON + admin + App Router), con diseño propio (Design System v4).
