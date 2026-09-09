@@ -73,7 +73,7 @@
           "vacunas": [
             {
               "nombre": "BCG",
-              "detalle": "Iniciar o completar esquema."
+              "detalle": "Antes de egresar de la maternidad."
             },
             {
               "nombre": "Hepatitis B",
@@ -107,20 +107,20 @@
               "detalle": "2 y 4 meses."
             },
             {
-              "nombre": "Antigripal",
-              "detalle": "A partir de los 6 meses."
-            },
-            {
-              "nombre": "Hepatitis A",
-              "detalle": "12 meses."
-            },
-            {
               "nombre": "Neumococo Conjugada",
               "detalle": "2, 4 y 12 meses."
             },
             {
               "nombre": "Meningococo ACWY",
               "detalle": "3 y 5 meses."
+            },
+            {
+              "nombre": "Antigripal",
+              "detalle": "A partir de los 6 meses."
+            },
+            {
+              "nombre": "Hepatitis A",
+              "detalle": "12 meses."
             },
             {
               "nombre": "Triple Viral SRP",
@@ -142,8 +142,16 @@
           "badge": "HASTA 2 AÑOS",
           "vacunas": [
             {
-              "nombre": "Fiebre amarilla",
-              "detalle": "18 meses, residentes en zona de riesgo."
+              "nombre": "Meningococo ACWY",
+              "detalle": "15 meses."
+            },
+            {
+              "nombre": "Varicela",
+              "detalle": "15 meses."
+            },
+            {
+              "nombre": "Quíntuple",
+              "detalle": "15-18 meses."
             },
             {
               "nombre": "Triple Viral SRP",
@@ -154,16 +162,8 @@
               "detalle": "Hasta los 24 meses."
             },
             {
-              "nombre": "Varicela",
-              "detalle": "15 meses."
-            },
-            {
-              "nombre": "Meningococo ACWY",
-              "detalle": "15 meses."
-            },
-            {
-              "nombre": "Quíntuple",
-              "detalle": "15-18 meses."
+              "nombre": "Fiebre amarilla",
+              "detalle": "18 meses, residentes en zona de riesgo."
             }
           ]
         }
@@ -212,6 +212,10 @@
           "badge": "NACIDOS EN 2015",
           "vacunas": [
             {
+              "nombre": "Meningococo ACWY",
+              "detalle": ""
+            },
+            {
               "nombre": "Hepatitis B",
               "detalle": "Iniciar o completar esquema de 3 dosis."
             },
@@ -226,10 +230,6 @@
             {
               "nombre": "Triple Bacteriana Acelular",
               "detalle": "Refuerzo."
-            },
-            {
-              "nombre": "Meningococo ACWY",
-              "detalle": ""
             },
             {
               "nombre": "Fiebre amarilla",
@@ -251,8 +251,8 @@
           "badge": "JÓVENES Y ADULTOS",
           "vacunas": [
             {
-              "nombre": "Fiebre Hemorrágica Argentina",
-              "detalle": "Residentes y/o trabajadores con riesgo ocupacional en zona de riesgo y que no hayan recibido la vacuna antes."
+              "nombre": "Antigripal",
+              "detalle": "Mayores de 65 años o menores con factores de riesgo."
             },
             {
               "nombre": "Hepatitis B",
@@ -263,12 +263,12 @@
               "detalle": "Iniciar o completar esquema."
             },
             {
-              "nombre": "Antigripal",
-              "detalle": "Mayores de 65 años o menores con factores de riesgo."
-            },
-            {
               "nombre": "Doble Bacteriana",
               "detalle": "Refuerzo cada 10 años."
+            },
+            {
+              "nombre": "Fiebre Hemorrágica Argentina",
+              "detalle": "Residentes y/o trabajadores con riesgo ocupacional en zona de riesgo y que no hayan recibido la vacuna antes."
             }
           ]
         },

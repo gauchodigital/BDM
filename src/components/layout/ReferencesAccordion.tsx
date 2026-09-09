@@ -3,24 +3,63 @@
 import { useState, type ReactNode } from "react";
 import referencias from "../../../referencias-data.json";
 
-function linkify(text: string): ReactNode[] {
+const LINK_CLASS =
+  "text-[#2E7D32] underline underline-offset-2";
+
+function linkifyUrls(text: string, keyBase: number): ReactNode[] {
   const parts = text.split(/(https?:\/\/[^\s)]+)/g);
-  return parts.map((part, i) => {
-    if (/^https?:\/\//.test(part)) {
-      return (
-        <a
-          key={i}
-          href={part}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="break-all text-[#2E7D32] underline underline-offset-2"
-        >
-          {part}
-        </a>
-      );
+  return parts.flatMap((part, i) => {
+    if (!/^https?:\/\//.test(part)) {
+      return [<span key={`${keyBase}-${i}`}>{part}</span>];
     }
-    return <span key={i}>{part}</span>;
+    const href = part.replace(/[.,;:]+$/, "");
+    const trail = part.slice(href.length);
+    const nodes: ReactNode[] = [
+      <a
+        key={`${keyBase}-${i}`}
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={`break-all ${LINK_CLASS}`}
+      >
+        {href}
+      </a>,
+    ];
+    if (trail) {
+      nodes.push(<span key={`${keyBase}-${i}-t`}>{trail}</span>);
+    }
+    return nodes;
   });
+}
+
+function linkify(text: string): ReactNode[] {
+  const nodes: ReactNode[] = [];
+  const md = /\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g;
+  let last = 0;
+  let key = 0;
+  let match: RegExpExecArray | null;
+  while ((match = md.exec(text))) {
+    if (match.index > last) {
+      nodes.push(...linkifyUrls(text.slice(last, match.index), key));
+      key += 50;
+    }
+    nodes.push(
+      <a
+        key={`md-${key++}`}
+        href={match[2]}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={LINK_CLASS}
+      >
+        {match[1]}
+      </a>,
+    );
+    last = match.index + match[0].length;
+  }
+  if (last < text.length) {
+    nodes.push(...linkifyUrls(text.slice(last), key));
+  }
+  return nodes;
 }
 
 export function ReferencesAccordion() {
