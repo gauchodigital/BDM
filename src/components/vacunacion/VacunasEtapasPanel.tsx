@@ -146,6 +146,11 @@ export function VacunasEtapasPanel({
               <span className="inline-flex w-fit items-center rounded-bl-lg rounded-tr-lg bg-primary px-4 py-2.5 text-[10px] font-bold uppercase tracking-[0.2px] text-white">
                 {grupo.badge}
               </span>
+              {grupo.subtitulo ? (
+                <p className="-mt-2 text-[14px] leading-[1.45] text-muted">
+                  {grupo.subtitulo}
+                </p>
+              ) : null}
               <VacunaCards vacunas={grupo.vacunas} />
             </div>
           ))}
@@ -164,14 +169,21 @@ export function VacunasEtapasPanel({
               idx > 0 ? "mt-8 border-t border-[#F0EDF5] pt-8" : undefined
             }
           >
-            <div className="mb-5 flex items-center gap-3">
-              <span
-                className="size-3 shrink-0 rounded-full bg-primary"
-                aria-hidden
-              />
-              <h3 className="text-[15px] font-bold uppercase tracking-[0.06em] text-primary xl:text-[16px]">
-                {grupo.badge}
-              </h3>
+            <div className="mb-5">
+              <div className="flex items-center gap-3">
+                <span
+                  className="size-3 shrink-0 rounded-full bg-primary"
+                  aria-hidden
+                />
+                <h3 className="text-[15px] font-bold uppercase tracking-[0.06em] text-primary xl:text-[16px]">
+                  {grupo.badge}
+                </h3>
+              </div>
+              {grupo.subtitulo ? (
+                <p className="mt-2 pl-6 text-[14px] leading-[1.45] text-muted xl:text-[15px]">
+                  {grupo.subtitulo}
+                </p>
+              ) : null}
             </div>
             <VacunaCards vacunas={grupo.vacunas} columns />
           </div>

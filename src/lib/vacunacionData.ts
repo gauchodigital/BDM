@@ -9,6 +9,7 @@ export interface VacunaItem {
 export interface VacunaGrupo {
   id: string;
   badge: string;
+  subtitulo?: string;
   vacunas: VacunaItem[];
 }
 

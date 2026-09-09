@@ -21,6 +21,7 @@
         {
           "id": "embarazadas-grupo",
           "badge": "EMBARAZADAS",
+          "subtitulo": "Deben administrarse en cada embarazo",
           "vacunas": [
             {
               "nombre": "Triple Bacteriana Acelular dTpa",
