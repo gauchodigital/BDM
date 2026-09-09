@@ -46,7 +46,7 @@ export function recommendVaccines(months: number): VaccineReco {
         { name: "Quíntuple", detail: "1ª dosis (2 meses)" },
         { name: "IPV", detail: "1ª dosis (2 meses)" },
         { name: "Rotavirus", detail: "1ª dosis (2 meses)" },
-        { name: "Neumococo Conjugado", detail: "1ª dosis (2 meses)" },
+        { name: "Neumococo Conjugada", detail: "1ª dosis (2 meses)" },
       ],
       recomendadas: [],
     };
@@ -67,7 +67,7 @@ export function recommendVaccines(months: number): VaccineReco {
         { name: "Quíntuple", detail: "2ª dosis (4 meses)" },
         { name: "IPV", detail: "2ª dosis (4 meses)" },
         { name: "Rotavirus", detail: "2ª dosis (4 meses)" },
-        { name: "Neumococo Conjugado", detail: "2ª dosis (4 meses)" },
+        { name: "Neumococo Conjugada", detail: "2ª dosis (4 meses)" },
       ],
       recomendadas: [],
     };
@@ -97,7 +97,7 @@ export function recommendVaccines(months: number): VaccineReco {
   if (months < 15) {
     return {
       calendario: [
-        { name: "Neumococo Conjugado", detail: "12 meses" },
+        { name: "Neumococo Conjugada", detail: "12 meses" },
         { name: "Hepatitis A", detail: "12 meses" },
         { name: "Triple Viral SRP", detail: "12 meses" },
       ],
@@ -132,18 +132,9 @@ export function recommendVaccines(months: number): VaccineReco {
     };
   }
 
-  // 2 a 4 años — sin nuevas vacunas del calendario en este tramo
+  // 2 a 4 años — el PDF no tiene vacunas nuevas en este tramo
   if (years < 5) {
-    return {
-      calendario: [
-        {
-          name: "Esquema al día",
-          detail:
-            "Verificá que estén completas las dosis de los primeros 2 años",
-        },
-      ],
-      recomendadas: [],
-    };
+    return { calendario: [], recomendadas: [] };
   }
 
   // 5 años · ingreso escolar (nacidos en 2021)
@@ -159,17 +150,9 @@ export function recommendVaccines(months: number): VaccineReco {
     };
   }
 
-  // 6 a 10 años — sin nuevas vacunas del calendario en este tramo
+  // 6 a 10 años — el PDF no tiene vacunas nuevas en este tramo
   if (years < 11) {
-    return {
-      calendario: [
-        {
-          name: "Esquema al día",
-          detail: "Verificá que estén completas las dosis previas",
-        },
-      ],
-      recomendadas: [],
-    };
+    return { calendario: [], recomendadas: [] };
   }
 
   // 11 años (nacidos en 2015)
@@ -242,7 +225,7 @@ export function recommendVaccines(months: number): VaccineReco {
   return {
     calendario: [
       { name: "Doble Bacteriana", detail: "Refuerzo cada 10 años" },
-      { name: "Neumococo Conjugado", detail: "Esquema secuencial" },
+      { name: "Neumococo Conjugada", detail: "Esquema secuencial" },
       { name: "Antigripal", detail: "Dosis anual" },
     ],
     recomendadas: [],
