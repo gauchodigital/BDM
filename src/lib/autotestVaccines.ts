@@ -177,27 +177,7 @@ export function recommendVaccines(months: number): VaccineReco {
     };
   }
 
-  // 12 a 17 años (jóvenes)
-  if (years < 18) {
-    return {
-      calendario: [
-        {
-          name: "Hepatitis B",
-          detail: "Iniciar o completar esquema de 3 dosis",
-        },
-        { name: "Triple Viral", detail: "Iniciar o completar esquema" },
-        {
-          name: "Fiebre Hemorrágica Argentina",
-          detail:
-            "Residentes y/o trabajadores con riesgo ocupacional en zona de riesgo",
-        },
-        { name: "Antigripal", detail: "Menores con factores de riesgo" },
-      ],
-      recomendadas: [],
-    };
-  }
-
-  // 18 a 64 años (jóvenes y adultos)
+  // 12 a 64 años (etapa "Jóvenes y adultos" del PDF)
   if (years < 65) {
     return {
       calendario: [
@@ -214,7 +194,7 @@ export function recommendVaccines(months: number): VaccineReco {
         },
         {
           name: "Antigripal",
-          detail: "Mayores de 65 o menores con factores de riesgo",
+          detail: "Mayores de 65 años o menores con factores de riesgo",
         },
       ],
       recomendadas: [],
