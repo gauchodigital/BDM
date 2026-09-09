@@ -309,8 +309,7 @@ class VacunatoriosMap {
         if (tipoNorm.includes('farmacia') || tipoNorm.includes('drogueria')) {
             return 'farmacia';
         }
-        if (tipoNorm.includes('vacunatorio') || tipoNorm.includes('centro') ||
-            tipoNorm.includes('salud') || tipoNorm.includes('caps') || tipoNorm.includes('dispensario')) {
+        if (tipoNorm.includes('vacunatorio')) {
             return 'vacunatorio';
         }
         return '';
@@ -322,7 +321,7 @@ class VacunatoriosMap {
 
         const tipoOptions = [
             { value: 'hospital', label: 'Hospitales' },
-            { value: 'vacunatorio', label: 'Vacunatorios y Centros de Salud' },
+            { value: 'vacunatorio', label: 'Vacunatorio' },
             { value: 'farmacia', label: 'Farmacias' },
         ];
 

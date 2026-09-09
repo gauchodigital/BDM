@@ -109,7 +109,7 @@ export function CentrosVacunacionMap({
       });
     }
 
-    loadScript("/mapa/js/vacunatorios.js?v=como-llegar", "data-bdm-vacunatorios")
+    loadScript("/mapa/js/vacunatorios.js?v=tipo-vacunatorio", "data-bdm-vacunatorios")
       .then(() => {
         if (cancelled) return;
         if (window.google?.maps) {
