@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { VacunacionCalendarioSection } from "@/components/vacunacion/VacunacionCalendarioSection";
-import { CentrosVacunacionBlock } from "@/components/vacunacion/CentrosVacunacionBlock";
+import { CentrosVacunacionMap } from "@/components/vacunacion/CentrosVacunacionMap";
 import { VacunacionFaqCta } from "@/components/vacunacion/VacunacionFaqCta";
-import { readCentros } from "@/lib/readCentros";
 import { readVacunacion } from "@/lib/vacunacionData";
 
 export const metadata: Metadata = {
@@ -15,7 +14,6 @@ export const dynamic = "force-dynamic";
 
 export default function VacunacionPage() {
   const data = readVacunacion();
-  const centros = readCentros();
 
   return (
     <>
@@ -25,7 +23,14 @@ export default function VacunacionPage() {
         calendarioPdfUrl={data.calendarioPdfUrl}
         etapas={data.etapas}
       />
-      <CentrosVacunacionBlock {...data.centros} centros={centros} />
+      <CentrosVacunacionMap
+        eyebrow={data.centros.eyebrow}
+        title={data.centros.title}
+        body={data.centros.body}
+        paso1Label={data.centros.paso1Label}
+        placeholder={data.centros.placeholder}
+        disclaimer={data.centros.disclaimer}
+      />
       <VacunacionFaqCta />
     </>
   );
