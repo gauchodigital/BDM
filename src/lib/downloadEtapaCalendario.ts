@@ -84,7 +84,7 @@ export function buildEtapaCalendarioCanvas(etapa: VacunaEtapa): HTMLCanvasElemen
       t: "badge",
       text: grupo.badge,
       y,
-      tone: gi === 0 ? "primary" : "secondary",
+      tone: "primary",
     });
     y += 44;
     for (const v of grupo.vacunas) {

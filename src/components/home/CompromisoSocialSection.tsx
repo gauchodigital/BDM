@@ -17,7 +17,7 @@ export function CompromisoSocialSection() {
               Nos unimos al compromiso de la Organización Mundial de la Salud
               para poner fin a la meningitis para el 2030
               <sup className="text-[10px] leading-[26px] text-[#442748]">
-                22
+                7
               </sup>
               .
             </p>

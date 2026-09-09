@@ -141,13 +141,9 @@ export function VacunasEtapasPanel({
         </div>
 
         <div className="flex flex-col gap-8 rounded-2xl border border-light bg-white p-5">
-          {active.grupos.map((grupo, gi) => (
+          {active.grupos.map((grupo) => (
             <div key={grupo.id} className="flex flex-col gap-4">
-              <span
-                className={`inline-flex w-fit items-center rounded-bl-lg rounded-tr-lg px-4 py-2.5 text-[10px] font-bold uppercase tracking-[0.2px] text-white ${
-                  gi === 0 ? "bg-primary" : "bg-secondary"
-                }`}
-              >
+              <span className="inline-flex w-fit items-center rounded-bl-lg rounded-tr-lg bg-primary px-4 py-2.5 text-[10px] font-bold uppercase tracking-[0.2px] text-white">
                 {grupo.badge}
               </span>
               <VacunaCards vacunas={grupo.vacunas} />
