@@ -8,13 +8,17 @@ const LINK_CLASS =
 
 function linkifyUrls(text: string, keyBase: number): ReactNode[] {
   const parts = text.split(/(https?:\/\/[^\s)]+)/g);
-  return parts.flatMap((part, i) => {
+  const nodes: ReactNode[] = [];
+
+  parts.forEach((part, i) => {
     if (!/^https?:\/\//.test(part)) {
-      return [<span key={`${keyBase}-${i}`}>{part}</span>];
+      nodes.push(<span key={`${keyBase}-${i}`}>{part}</span>);
+      return;
     }
+
     const href = part.replace(/[.,;:]+$/, "");
     const trail = part.slice(href.length);
-    const nodes: ReactNode[] = [
+    nodes.push(
       <a
         key={`${keyBase}-${i}`}
         href={href}
@@ -24,12 +28,13 @@ function linkifyUrls(text: string, keyBase: number): ReactNode[] {
       >
         {href}
       </a>,
-    ];
+    );
     if (trail) {
       nodes.push(<span key={`${keyBase}-${i}-t`}>{trail}</span>);
     }
-    return nodes;
   });
+
+  return nodes;
 }
 
 function linkify(text: string): ReactNode[] {
