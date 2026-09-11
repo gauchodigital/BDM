@@ -132,7 +132,7 @@ export function SymptomCard({
           <p
             className={`text-[13px] font-bold leading-tight ${cfg.titleColor}`}
           >
-            {item.label}
+            <RichText text={item.label} />
           </p>
           {item.description ? (
             <p className="mt-1 text-[12px] leading-[1.5] text-muted">

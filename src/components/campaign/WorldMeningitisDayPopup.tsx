@@ -18,6 +18,7 @@ import {
 import { POPUP_DEMO_CAMPAIGN_EVENT } from "@/lib/popupDemo";
 import { PopupFireworks } from "@/components/campaign/PopupFireworks";
 import { LogoManito } from "@/components/layout/LogoManito";
+import { RichText } from "@/components/ui/RichText";
 
 type Phase = "hidden" | "tease" | "question" | "result";
 
@@ -256,7 +257,9 @@ export function WorldMeningitisDayPopup() {
                   {correct ? QUIZ_COPY.correctTitle : QUIZ_COPY.wrongTitle}
                 </h2>
                 <p className="mt-3 max-w-[400px] text-[14px] leading-[1.55] text-[#442748]">
-                  {correct ? QUIZ_COPY.correctBody : QUIZ_COPY.wrongBody}
+                  <RichText
+                    text={correct ? QUIZ_COPY.correctBody : QUIZ_COPY.wrongBody}
+                  />
                 </p>
                 <p className="mt-3 text-[13px] font-semibold text-[#503C77]">
                   {correct ? QUIZ_COPY.correctFooter : QUIZ_COPY.wrongFooter}

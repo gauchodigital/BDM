@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { RichText } from "@/components/ui/RichText";
 import { Reveal } from "@/components/ui/Reveal";
 import { SintomasMobileTimeline } from "@/components/sintomas/SintomasTimeline";
@@ -45,6 +46,17 @@ export function SintomasPreview({
           warningText={HOME_WARNING}
           className="relative mt-10 hidden lg:block"
         />
+
+        <Reveal delay={200}>
+          <div className="mt-8 flex justify-center">
+            <Link
+              href="/sintomas"
+              className="flex w-full items-center justify-center rounded-[10px] bg-primary px-8 py-3.5 text-[15px] font-bold text-white transition hover:brightness-110"
+            >
+              Conocé más
+            </Link>
+          </div>
+        </Reveal>
       </div>
     </section>
   );

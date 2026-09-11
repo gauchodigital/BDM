@@ -83,7 +83,7 @@ export const BACTERIANA = {
     ],
     serogrupos: ["A", "B", "C", "W", "X", "Y"] as const,
     highlightSerogrupo: "B",
-    chartTitle: "Casos en Argentina 2024",
+    chartTitle: "Casos en Argentina 2024[14]",
     chart: [
       { label: "Serogrupo B", pct: 74, color: "#503c77" },
       { label: "Serogrupo C", pct: 11, color: "#6d6aae" },
@@ -133,7 +133,7 @@ export const BACTERIANA = {
     ],
     stat: {
       ratio: "1 de cada 5",
-      label: "sobrevivientes pueden tener secuelas permanentes.[5]",
+      label: "sobrevivientes pueden tener secuelas permanentes.[1]",
       total: 5,
       active: 1,
       highlightIndex: 1,

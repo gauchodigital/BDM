@@ -93,11 +93,14 @@ function FaqQuestionList({
                         </ul>
                       );
                     }
+                    const trimmed = block.trimStart();
+                    const isFootnote =
+                      trimmed.startsWith("*") && !trimmed.startsWith("**");
                     return (
                       <p
                         key={block.slice(0, 48)}
                         className={
-                          block.trimStart().startsWith("*")
+                          isFootnote
                             ? "text-[12px] italic leading-[1.5] text-[#442748]/70"
                             : "text-[14px] leading-[1.6] text-[#442748]/85"
                         }

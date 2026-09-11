@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { RichText } from "@/components/ui/RichText";
 
 type ChartRow = {
   label: string;
@@ -49,7 +50,9 @@ export function CasosChart({
       ref={ref}
       className="flex flex-col gap-4 rounded-[12px] border border-[#e2e8f0] bg-white p-4 shadow-[2px_2px_4px_rgba(51,51,51,0.15)]"
     >
-      <h3 className="text-[15px] font-bold text-[#442748]">{title}</h3>
+      <h3 className="text-[15px] font-bold text-[#442748]">
+        <RichText text={title} />
+      </h3>
       <div className="flex flex-col gap-5">
         {rows.map((row, i) => (
           <div key={row.label} className="flex flex-col gap-1.5">

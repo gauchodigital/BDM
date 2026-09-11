@@ -379,6 +379,7 @@ export function BacterianaPage() {
             <RichText
               text={d.meningococo.malbranStat.text}
               strongClassName="font-bold text-white"
+              citeClassName="ml-0.5 text-[0.65em] font-[inherit] leading-none text-white"
             />
           </p>
         </div>

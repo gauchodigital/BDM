@@ -29,7 +29,7 @@ export function ParasitariaPage() {
         </div>
       </nav>
 
-      <section className="bg-white pb-12 pt-6">
+      <section className="bg-white pb-6 pt-6">
         <div className={`${CAUSA_WRAP} flex max-w-3xl flex-col gap-10`}>
           <div className="flex flex-col gap-4">
             <div className="animate-fade-up flex flex-col gap-3">
@@ -69,7 +69,7 @@ export function ParasitariaPage() {
 
       <RevealSection
         id="tratamiento"
-        className="scroll-mt-20 bg-white py-16"
+        className="scroll-mt-20 bg-white pt-8 pb-12"
         delay={100}
       >
         <div className={`${CAUSA_WRAP} flex max-w-3xl flex-col gap-4`}>
