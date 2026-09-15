@@ -20,52 +20,31 @@ const DISCLAIMER_LINK_CLASS =
   "break-all text-accent underline underline-offset-2 hover:brightness-110";
 
 function DisclaimerText({ text }: { text: string }): ReactNode {
-  const nodes: ReactNode[] = [];
-  const md = /\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g;
-  let last = 0;
-  let key = 0;
-  let match: RegExpExecArray | null;
-
-  const pushUrls = (chunk: string) => {
-    chunk.split(/(https?:\/\/[^\s]+)/g).forEach((part) => {
-      if (!/^https?:\/\//.test(part)) {
-        if (part) nodes.push(<span key={key++}>{part}</span>);
-        return;
-      }
-      const href = part.replace(/[.,;:]+$/, "");
-      const trail = part.slice(href.length);
-      nodes.push(
-        <a
-          key={key++}
-          href={href}
-          target="_blank"
-          rel="noopener noreferrer"
-          className={DISCLAIMER_LINK_CLASS}
-        >
-          {href}
-        </a>,
-      );
-      if (trail) nodes.push(<span key={key++}>{trail}</span>);
-    });
-  };
-
-  while ((match = md.exec(text))) {
-    if (match.index > last) pushUrls(text.slice(last, match.index));
-    nodes.push(
-      <a
-        key={key++}
-        href={match[2]}
-        target="_blank"
-        rel="noopener noreferrer"
-        className={DISCLAIMER_LINK_CLASS}
-      >
-        {match[1]}
-      </a>,
-    );
-    last = match.index + match[0].length;
-  }
-  if (last < text.length) pushUrls(text.slice(last));
-  return <>{nodes}</>;
+  const parts = text.split(/(https?:\/\/[^\s]+)/g);
+  return (
+    <>
+      {parts.map((part, i) => {
+        if (!/^https?:\/\//.test(part)) {
+          return <span key={i}>{part}</span>;
+        }
+        const href = part.replace(/[.,;:]+$/, "");
+        const trail = part.slice(href.length);
+        return (
+          <span key={i}>
+            <a
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={DISCLAIMER_LINK_CLASS}
+            >
+              {href}
+            </a>
+            {trail}
+          </span>
+        );
+      })}
+    </>
+  );
 }
 
 function FilterSelect({
