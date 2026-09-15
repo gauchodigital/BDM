@@ -385,16 +385,16 @@ export function CentrosVacunacionMap({
             <div id="listaResultados" className="lista-resultados">
               <div className="loading">Cargando vacunatorios...</div>
             </div>
-
-            <div className="max-w-3xl space-y-3 text-[10px] leading-[14px] text-white/85">
-              {disclaimerParagraphs.map((p) => (
-                <p key={`map-${p.slice(0, 48)}`}>
-                  <DisclaimerText text={p} />
-                </p>
-              ))}
-            </div>
           </div>
         </Reveal>
+
+        <div className="mt-10 max-w-3xl space-y-3 text-[10px] leading-[14px] text-white/85 lg:hidden">
+          {disclaimerParagraphs.map((p) => (
+            <p key={`mobile-${p.slice(0, 48)}`}>
+              <DisclaimerText text={p} />
+            </p>
+          ))}
+        </div>
       </div>
     </section>
   );
