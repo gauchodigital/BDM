@@ -16,8 +16,56 @@ declare global {
   }
 }
 
+const DISCLAIMER_LINK_CLASS =
+  "break-all text-accent underline underline-offset-2 hover:brightness-110";
+
 function DisclaimerText({ text }: { text: string }): ReactNode {
-  return <>{text}</>;
+  const nodes: ReactNode[] = [];
+  const md = /\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g;
+  let last = 0;
+  let key = 0;
+  let match: RegExpExecArray | null;
+
+  const pushUrls = (chunk: string) => {
+    chunk.split(/(https?:\/\/[^\s]+)/g).forEach((part) => {
+      if (!/^https?:\/\//.test(part)) {
+        if (part) nodes.push(<span key={key++}>{part}</span>);
+        return;
+      }
+      const href = part.replace(/[.,;:]+$/, "");
+      const trail = part.slice(href.length);
+      nodes.push(
+        <a
+          key={key++}
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={DISCLAIMER_LINK_CLASS}
+        >
+          {href}
+        </a>,
+      );
+      if (trail) nodes.push(<span key={key++}>{trail}</span>);
+    });
+  };
+
+  while ((match = md.exec(text))) {
+    if (match.index > last) pushUrls(text.slice(last, match.index));
+    nodes.push(
+      <a
+        key={key++}
+        href={match[2]}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={DISCLAIMER_LINK_CLASS}
+      >
+        {match[1]}
+      </a>,
+    );
+    last = match.index + match[0].length;
+  }
+  if (last < text.length) pushUrls(text.slice(last));
+  return <>{nodes}</>;
 }
 
 function FilterSelect({
@@ -232,7 +280,7 @@ export function CentrosVacunacionMap({
 
   return (
     <section className="bg-primary">
-      <div className="mx-auto w-full max-w-7xl px-5 pb-10 pt-14 md:px-8 md:pb-14 md:pt-16">
+      <div className="mx-auto w-full max-w-7xl px-5 pb-16 pt-14 md:px-8 md:pb-16 md:pt-16">
         <div className="flex flex-col gap-10 lg:grid lg:grid-cols-[1fr_1.05fr] lg:items-start lg:gap-14">
           <Reveal>
             <div className="flex flex-col lg:h-full">
@@ -358,18 +406,16 @@ export function CentrosVacunacionMap({
             <div id="listaResultados" className="lista-resultados">
               <div className="loading">Cargando vacunatorios...</div>
             </div>
+
+            <div className="max-w-3xl space-y-3 text-[10px] leading-[14px] text-white/85">
+              {disclaimerParagraphs.map((p) => (
+                <p key={`map-${p.slice(0, 48)}`}>
+                  <DisclaimerText text={p} />
+                </p>
+              ))}
+            </div>
           </div>
         </Reveal>
-      </div>
-
-      <div className="mx-auto w-full max-w-7xl px-5 pb-16 lg:hidden md:px-8">
-        <div className="max-w-3xl space-y-3 text-[10px] leading-[14px] text-white">
-          {disclaimerParagraphs.map((p) => (
-            <p key={p.slice(0, 48)}>
-              <DisclaimerText text={p} />
-            </p>
-          ))}
-        </div>
       </div>
     </section>
   );
