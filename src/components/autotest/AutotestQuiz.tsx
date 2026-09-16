@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   ageBadge,
   getVaccinePlan,
@@ -535,13 +535,58 @@ function googleCalendarUrl(names: string[]): string {
   return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&details=${details}&dates=${fmt(start)}/${fmt(end)}`;
 }
 
+function isoToDisplay(iso: string): string {
+  const m = iso.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  if (!m) return "";
+  return `${m[3]}/${m[2]}/${m[1]}`;
+}
+
+function formatBirthTyping(raw: string): string {
+  const digits = raw.replace(/\D/g, "").slice(0, 8);
+  if (digits.length <= 2) return digits;
+  if (digits.length <= 4) return `${digits.slice(0, 2)}/${digits.slice(2)}`;
+  return `${digits.slice(0, 2)}/${digits.slice(2, 4)}/${digits.slice(4)}`;
+}
+
+function parseBirthDisplay(
+  display: string,
+  todayIso: string,
+): { iso: string } | { error: string } | { incomplete: true } {
+  const digits = display.replace(/\D/g, "");
+  if (digits.length < 8) return { incomplete: true };
+
+  const day = Number(digits.slice(0, 2));
+  const month = Number(digits.slice(2, 4));
+  const year = Number(digits.slice(4, 8));
+  const parsed = new Date(year, month - 1, day);
+
+  if (
+    year < 1900 ||
+    parsed.getFullYear() !== year ||
+    parsed.getMonth() !== month - 1 ||
+    parsed.getDate() !== day
+  ) {
+    return { error: "Esa fecha no es válida." };
+  }
+
+  const iso = `${year}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+  if (iso > todayIso) {
+    return { error: "La fecha no puede ser posterior a hoy." };
+  }
+  return { iso };
+}
+
 export function AutotestQuiz() {
   const [step, setStep] = useState<1 | 2 | 3>(1);
   const [birth, setBirth] = useState("");
+  const [birthTyped, setBirthTyped] = useState("");
   const [months, setMonths] = useState<number | null>(null);
   const [done, setDone] = useState<Record<string, boolean>>({});
+  const datePickerRef = useRef<HTMLInputElement>(null);
 
   const today = new Date().toISOString().slice(0, 10);
+  const parsedBirth = parseBirthDisplay(birthTyped, today);
+  const birthError = "error" in parsedBirth ? parsedBirth.error : null;
 
   const plan = useMemo(
     () => (months === null ? null : getVaccinePlan(months)),
@@ -587,8 +632,10 @@ export function AutotestQuiz() {
   }, [step]);
 
   const submit = () => {
-    if (!birth) return;
-    setMonths(monthsBetween(new Date(`${birth}T00:00:00`), new Date()));
+    const parsed = parseBirthDisplay(birthTyped, today);
+    if (!("iso" in parsed)) return;
+    setBirth(parsed.iso);
+    setMonths(monthsBetween(new Date(`${parsed.iso}T00:00:00`), new Date()));
     setDone({});
     setStep(2);
   };
@@ -600,8 +647,26 @@ export function AutotestQuiz() {
     setStep(1);
     setMonths(null);
     setBirth("");
+    setBirthTyped("");
     setDone({});
   };
+
+  function onBirthTypedChange(value: string) {
+    const next = formatBirthTyping(value);
+    setBirthTyped(next);
+    const parsed = parseBirthDisplay(next, today);
+    setBirth("iso" in parsed ? parsed.iso : "");
+  }
+
+  function openDatePicker() {
+    const el = datePickerRef.current;
+    if (!el) return;
+    if (typeof el.showPicker === "function") {
+      el.showPicker();
+      return;
+    }
+    el.click();
+  }
 
   const age = months !== null ? ageBadge(months) : "";
 
@@ -624,24 +689,56 @@ export function AutotestQuiz() {
           >
             Fecha de nacimiento
           </label>
-          <div className="relative mt-2 overflow-hidden">
+          <div className="relative mt-2">
             <input
               id="fecha-nac"
+              type="text"
+              inputMode="numeric"
+              autoComplete="bday"
+              placeholder="DD/MM/AAAA"
+              value={birthTyped}
+              onChange={(e) => onBirthTypedChange(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") submit();
+              }}
+              aria-invalid={Boolean(birthError)}
+              aria-describedby="fecha-nac-ayuda"
+              className="w-full rounded-[10px] border border-[#D6DEE8] bg-white px-4 py-3.5 pr-12 text-[15px] text-dark outline-none placeholder:text-[#9A93A8] focus:border-[#503C77]"
+            />
+            <input
+              ref={datePickerRef}
               type="date"
               value={birth}
               max={today}
-              onChange={(e) => setBirth(e.target.value)}
-              className="date-input w-full rounded-[10px] border border-[#D6DEE8] bg-white px-4 py-3.5 pr-12 text-[15px] text-dark outline-none focus:border-[#503C77]"
-            />
-            <span
-              className="pointer-events-none absolute top-1/2 right-3 -translate-y-1/2 text-[#503C77]/50"
+              min="1900-01-01"
+              tabIndex={-1}
               aria-hidden
+              onChange={(e) => {
+                const iso = e.target.value;
+                setBirth(iso);
+                setBirthTyped(isoToDisplay(iso));
+              }}
+              className="pointer-events-none absolute h-0 w-0 opacity-0"
+            />
+            <button
+              type="button"
+              onClick={openDatePicker}
+              className="absolute top-1/2 right-2 flex size-9 -translate-y-1/2 items-center justify-center rounded-full text-[#503C77]/70 transition hover:bg-[#F3F0F8] hover:text-[#503C77]"
+              aria-label="Elegir fecha en el calendario"
             >
-              <span className="material-symbols-outlined text-[22px]">
+              <span className="material-symbols-outlined text-[22px]" aria-hidden>
                 calendar_month
               </span>
-            </span>
+            </button>
           </div>
+          <p id="fecha-nac-ayuda" className="mt-2 text-[13px] leading-snug text-muted">
+            Escribí la fecha (DD/MM/AAAA) o usá el calendario.
+          </p>
+          {birthError ? (
+            <p className="mt-1.5 text-[13px] font-medium text-[#C2410C]" role="alert">
+              {birthError}
+            </p>
+          ) : null}
 
           <button
             type="button"

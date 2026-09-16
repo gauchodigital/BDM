@@ -37,7 +37,6 @@ function NameBadge({
     >
       <p className="text-[13px] font-bold leading-snug text-[#DD876E] lg:text-[14px]">
         {item.name}
-        <span className="font-medium text-[#5C5670]"> | {item.role}</span>
       </p>
     </div>
   );
@@ -313,7 +312,6 @@ function TestimonialsDesktop({ items }: { items: TestimonioData[] }) {
                     >
                       {item.name}
                     </span>
-                    <span className="text-[#6B6570]"> · {item.role}</span>
                   </p>
                 </button>
               );

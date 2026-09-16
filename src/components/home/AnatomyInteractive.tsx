@@ -255,7 +255,7 @@ function AnatomyDesktop({ className = "" }: { className?: string }) {
         </span>
       </div>
 
-      <div className="relative grid grid-cols-[minmax(0,236px)_minmax(0,1fr)] xl:grid-cols-[minmax(0,252px)_minmax(0,1fr)]">
+      <div className="relative grid grid-cols-[minmax(268px,280px)_minmax(0,1fr)] xl:grid-cols-[minmax(280px,300px)_minmax(0,1fr)]">
         <div
           className="border-r border-[#E5DDF0] bg-[#FAF8FD]/90 p-4"
           role="listbox"
@@ -303,7 +303,7 @@ function AnatomyDesktop({ className = "" }: { className?: string }) {
                       {item.index}
                     </span>
                     <div className="min-w-0 flex-1">
-                      <div className="flex items-center gap-1.5">
+                      <div className="flex flex-wrap items-center gap-x-1.5 gap-y-1">
                         <p
                           className={`text-[14px] font-bold leading-snug transition-colors ${
                             selected ? "text-[#442748]" : "text-[#442748]/65"
@@ -312,7 +312,7 @@ function AnatomyDesktop({ className = "" }: { className?: string }) {
                           {item.title}
                         </p>
                         {item.badge ? (
-                          <span className="ml-auto shrink-0 rounded-md bg-[#DD876E] px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wide text-white">
+                          <span className="ml-auto shrink-0 whitespace-nowrap rounded-md bg-[#DD876E] px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wide text-white">
                             {item.badge}
                           </span>
                         ) : null}
