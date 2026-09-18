@@ -535,12 +535,16 @@ export function BacterianaPage() {
               <h3 className="text-[16px] font-bold text-[#503c77] lg:text-[18px]">
                 {d.vacunacion.serogrupoB.title}
               </h3>
-              <p className="text-[15px] font-normal leading-[1.65] text-[#442748]">
-                <RichText
-                  text={d.vacunacion.serogrupoB.body}
-                  strongClassName="font-semibold text-[#442748]"
-                />
-              </p>
+              <div className="flex flex-col gap-3 text-[15px] font-normal leading-[1.65] text-[#442748]">
+                {d.vacunacion.serogrupoB.body.split("\n").map((p) => (
+                  <p key={p.slice(0, 40)}>
+                    <RichText
+                      text={p}
+                      strongClassName="font-semibold text-[#442748]"
+                    />
+                  </p>
+                ))}
+              </div>
               <ul className="flex flex-col gap-3 rounded-[14px] border border-white bg-[#503C77]/10 p-5 shadow-[2px_2px_4px_rgba(51,51,51,0.15)]">
                 {d.vacunacion.serogrupoB.conditions.map((c) => (
                   <li key={c} className="flex gap-2.5">
@@ -556,33 +560,6 @@ export function BacterianaPage() {
               </ul>
             </div>
           </div>
-        </div>
-      </RevealSection>
-
-      {/* Otros consejos / Prevención */}
-      <RevealSection
-        id="prevencion"
-        className="scroll-mt-20 bg-[#F4F3F8] py-12 md:py-16"
-        delay={100}
-      >
-        <div className={`${WRAP} flex max-w-3xl flex-col gap-4`}>
-          <Eyebrow>{d.prevencion.eyebrow}</Eyebrow>
-          <h2 className="text-[28px] font-black leading-8 text-[#442748] lg:text-[32px] lg:leading-9">
-            {d.prevencion.title}
-          </h2>
-          <p className="text-[15px] font-normal leading-[1.65] text-[#442748] md:text-[16px]">
-            <RichText
-              text={d.prevencion.body}
-              strongClassName="font-semibold text-[#442748]"
-              citeClassName="ml-0.5 text-[0.65em] font-[inherit] leading-none text-[#442748]"
-            />
-          </p>
-          <Link
-            href={d.prevencion.ctaHref}
-            className="mt-2 flex h-[52px] w-full items-center justify-center rounded-[12px] bg-white px-6 text-[15px] font-bold text-[#442748] transition hover:bg-white/90 md:max-w-md"
-          >
-            {d.prevencion.ctaLabel}
-          </Link>
         </div>
       </RevealSection>
 

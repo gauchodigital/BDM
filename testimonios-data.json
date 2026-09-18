@@ -35,7 +35,7 @@
   {
     "id": "fernando-paciente",
     "slug": "fernando",
-    "name": "Fernando Lanas",
+    "name": "Fernando Heinen",
     "role": "Paciente",
     "category": "paciente",
     "quote": "",
@@ -46,7 +46,7 @@
   {
     "id": "maribel",
     "slug": "maribel",
-    "name": "Maribel",
+    "name": "Maribel Fabián",
     "role": "Paciente",
     "category": "paciente",
     "quote": "",
@@ -57,7 +57,7 @@
   {
     "id": "paloma",
     "slug": "paloma",
-    "name": "Paloma",
+    "name": "Paloma López Fabián",
     "role": "Paciente",
     "category": "paciente",
     "quote": "",

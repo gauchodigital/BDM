@@ -16,7 +16,6 @@ export const BACTERIANA = {
       children: [
         { id: "meningococo", label: "¿Qué es?" },
         { id: "secuelas", label: "Secuelas" },
-        { id: "prevencion", label: "Prevención" },
       ],
     },
   ],
@@ -133,7 +132,7 @@ export const BACTERIANA = {
     ],
     stat: {
       ratio: "1 de cada 5",
-      label: "sobrevivientes pueden tener secuelas permanentes.[1]",
+      label: "sobrevivientes de meningitis por meningococo pueden tener secuelas permanentes.[1]",
       total: 5,
       active: 1,
       highlightIndex: 1,
@@ -177,7 +176,7 @@ export const BACTERIANA = {
     ],
     serogrupoB: {
       title: "Vacuna para el serogrupo B",
-      body: "Existe además otra **vacuna para la prevención contra el serogrupo B** que está disponible según indicación médica. En el Calendario Nacional de Vacunación se encuentra disponible para aquellas personas que presenten las siguientes condiciones de riesgo:[13]",
+      body: "Existe además otra **vacuna para la prevención contra el serogrupo B** que está disponible según indicación médica.\nEn el Calendario Nacional de Vacunación se encuentra disponible para aquellas personas que presenten las siguientes condiciones de riesgo:[13]",
       conditions: [
         "Asplenia anatómica o funcional",
         "Déficit de factores terminales del complemento (C5–C9)",
@@ -186,13 +185,6 @@ export const BACTERIANA = {
         "Trabajadores que manipulen o procesen cultivos bacteriológicos con potencial exposición a Neisseria meningitidis",
       ],
     },
-  },
-  prevencion: {
-    eyebrow: "OTROS CONSEJOS",
-    title: "Prevención",
-    body: "Además de las vacunas, **otras medidas de prevención son**: lavarse las manos, taparse la nariz al estornudar o toser y mantener una buena ventilación dentro de la casa[17].",
-    ctaLabel: "Calendario de Vacunación",
-    ctaHref: "/vacunacion#calendario",
   },
   otrasCausas: [
     {

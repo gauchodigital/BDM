@@ -11,7 +11,7 @@ import {
   type VaccineBucket,
 } from "@/lib/autotestVaccines";
 
-type Tone = "primary" | "accent" | "muted";
+type Tone = "primary" | "accent" | "sky";
 
 const TONE: Record<
   Tone,
@@ -22,6 +22,8 @@ const TONE: Record<
     check: string;
     empty: string;
     iconBg: string;
+    name: string;
+    nameDone: string;
   }
 > = {
   primary: {
@@ -31,6 +33,8 @@ const TONE: Record<
     check: "bg-[#503C77] border-[#503C77] text-white",
     empty: "border-[#503C77]/40 bg-white text-transparent",
     iconBg: "bg-[#503C77] text-white",
+    name: "text-[#503C77]",
+    nameDone: "text-[#503C77]/45 line-through",
   },
   accent: {
     sectionLabel: "text-[#DD876E]",
@@ -39,14 +43,18 @@ const TONE: Record<
     check: "bg-[#DD876E] border-[#DD876E] text-white",
     empty: "border-[#DD876E]/50 bg-white text-transparent",
     iconBg: "bg-[#DD876E] text-white",
+    name: "text-[#DD876E]",
+    nameDone: "text-[#DD876E]/50 line-through",
   },
-  muted: {
+  sky: {
     sectionLabel: "text-[#6D6AAE]",
     card: "bg-[#EEECF2]",
     badge: "bg-[#6D6AAE]/15 text-[#6D6AAE]",
     check: "bg-[#6D6AAE] border-[#6D6AAE] text-white",
     empty: "border-[#6D6AAE]/40 bg-white text-transparent",
     iconBg: "bg-[#6D6AAE] text-white",
+    name: "text-[#6D6AAE]",
+    nameDone: "text-[#6D6AAE]/50 line-through",
   },
 };
 
@@ -61,9 +69,9 @@ type Group = {
 };
 
 function bucketTone(id: VaccineBucket["id"]): Tone {
-  if (id === "anteriores") return "muted";
-  if (id === "siguientes") return "accent";
-  return "primary";
+  if (id === "anteriores") return "primary";
+  if (id === "siguientes") return "sky";
+  return "accent";
 }
 
 function makeGroups(buckets: VaccineBucket[]): Group[] {
@@ -91,7 +99,7 @@ function makeGroups(buckets: VaccineBucket[]): Group[] {
               ? "Recomendadas anteriores"
               : "Vacunas recomendadas",
         subtitle: `${b.rangeLabel} · Vacunación particular`,
-        tone: "accent",
+        tone: bucketTone(b.id),
         checkable: b.checkable,
         items: b.recomendadas,
       });
@@ -158,7 +166,7 @@ function VaccineCard({
           </span>
         </span>
         <span className="min-w-0 flex-1">
-          <span className="block text-[14px] font-bold leading-tight text-[#503C77]">
+          <span className={`block text-[14px] font-bold leading-tight ${t.name}`}>
             {v.name}
           </span>
           <span className="mt-0.5 block text-[12px] leading-snug text-muted">
@@ -191,7 +199,7 @@ function VaccineCard({
       <span className="min-w-0 flex-1">
         <span
           className={`block text-[14px] font-bold leading-tight ${
-            done ? "text-[#503C77]/45 line-through" : "text-[#503C77]"
+            done ? t.nameDone : t.name
           }`}
         >
           {v.name}
@@ -893,8 +901,8 @@ export function AutotestQuiz() {
               )}
 
               {upcomingGroups.length > 0 ? (
-                <div className="mt-6 rounded-[12px] border border-[#DD876E]/40 bg-[#FDF0EC] p-4">
-                  <p className="text-[14px] font-bold text-[#DD876E]">
+                <div className="mt-6 rounded-[12px] border border-[#6D6AAE]/40 bg-[#EEECF2] p-4">
+                  <p className="text-[14px] font-bold text-[#6D6AAE]">
                     Vacunas siguientes
                   </p>
                   <p className="mt-1 text-[13px] leading-snug text-[#442748]">

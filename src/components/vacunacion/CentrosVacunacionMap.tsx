@@ -20,10 +20,17 @@ const DISCLAIMER_LINK_CLASS =
   "break-all text-accent underline underline-offset-2 hover:brightness-110";
 
 function DisclaimerText({ text }: { text: string }): ReactNode {
-  const parts = text.split(/(https?:\/\/[^\s]+)/g);
+  const parts = text.split(/(\*\*[^*]+\*\*|https?:\/\/[^\s]+)/g);
   return (
     <>
       {parts.map((part, i) => {
+        if (part.startsWith("**") && part.endsWith("**")) {
+          return (
+            <strong key={i} className="font-semibold text-white">
+              {part.slice(2, -2)}
+            </strong>
+          );
+        }
         if (!/^https?:\/\//.test(part)) {
           return <span key={i}>{part}</span>;
         }

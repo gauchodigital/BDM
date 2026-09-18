@@ -19,5 +19,12 @@
     "title": "Diagnóstico",
     "body": "**Acudir a un médico de forma inmediata** para diferenciar el tipo de meningitis es de suma importancia para determinar el tratamiento.\nEl diagnóstico se realiza mediante el análisis de sangre o líquido cefalorraquídeo (el líquido que rodea la médula espinal) obtenido por una **punción lumbar**[3].",
     "visible": true
+  },
+  {
+    "id": "prevencion",
+    "label": "Prevención",
+    "title": "Prevención",
+    "body": "En nuestro país se han incluido vacunas para algunas variantes de Meningitis, a fin de disminuir la cantidad de casos y la mortalidad, así como también disminuir las secuelas graves y permanentes.[8]",
+    "visible": true
   }
 ]
