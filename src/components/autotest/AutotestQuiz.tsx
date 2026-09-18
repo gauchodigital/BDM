@@ -230,7 +230,7 @@ const BRAND_NAME = "BastaDeMeningitis";
 const PURPLE = "#503C77";
 
 const SHARE_WARNING =
-  "Este resultado es orientativo y únicamente contempla las vacunas dentro del Calendario Nacional de Vacunación. Siempre consultá con el médico para confirmar qué vacunas son las recomendadas según edad y condición clínica particular.";
+  "Este resultado es orientativo: contempla las vacunas del Calendario Nacional de Vacunación y algunas recomendadas fuera de él (vacunación particular). Siempre consultá con el médico para confirmar qué vacunas corresponden según edad y condición clínica particular.";
 
 const SHARE_LEGAL_LINES = [
   "NP-AR-MNU-WCNT-260001 - Agosto 2026.",
@@ -366,10 +366,14 @@ async function buildCanvas(
   const legalPad = 20;
   const legalH = legalPad + GSK_H + 10 + legalLines.length * 15 + legalPad;
 
-  const introSub = "Revisá el listado y tomá acción.";
-  const countLabel = `${pendingCount} ${
-    pendingCount === 1 ? "vacuna" : "vacunas"
-  } por aplicar.`;
+  const introSub =
+    pendingCount > 0
+      ? "Revisá el listado y tomá acción."
+      : "Estas son las próximas a recibir.";
+  const countLabel =
+    pendingCount > 0
+      ? `${pendingCount} ${pendingCount === 1 ? "vacuna" : "vacunas"} por aplicar.`
+      : "¡Estás al día!";
   const introOneLine =
     textW(countLabel, fCount) + textW(` ${introSub}`, fIntro) <= contentW;
   const introH = introOneLine ? 24 : 48;
@@ -584,7 +588,27 @@ function parseBirthDisplay(
   return { iso };
 }
 
-export function AutotestQuiz() {
+export type AutotestVariant = "default" | "byAge";
+
+/** Agrupa ítems consecutivos por `stage` (edad de origen), respetando el orden. */
+function groupByStage(items: Vaccine[]): { stage: string; items: Vaccine[] }[] {
+  const out: { stage: string; items: Vaccine[] }[] = [];
+  for (const v of items) {
+    const stage = v.stage ?? "";
+    const last = out[out.length - 1];
+    if (last && last.stage === stage) last.items.push(v);
+    else out.push({ stage, items: [v] });
+  }
+  return out;
+}
+
+/**
+ * variant="byAge" (/autotestv2): las "anteriores" acumuladas se muestran
+ * agrupadas por edad, con "Marcar todas" por grupo. Misma lógica y estado.
+ */
+export function AutotestQuiz({
+  variant = "default",
+}: { variant?: AutotestVariant } = {}) {
   const [step, setStep] = useState<1 | 2 | 3>(1);
   const [birth, setBirth] = useState("");
   const [birthTyped, setBirthTyped] = useState("");
@@ -650,6 +674,11 @@ export function AutotestQuiz() {
 
   const toggle = (key: string) =>
     setDone((d) => ({ ...d, [key]: !d[key] }));
+  const setMany = (keys: string[], value: boolean) =>
+    setDone((d) => ({
+      ...d,
+      ...Object.fromEntries(keys.map((k) => [k, value])),
+    }));
 
   const reset = () => {
     setStep(1);
@@ -799,19 +828,62 @@ export function AutotestQuiz() {
                     </span>
                   </div>
                   <div className="mt-3 flex flex-col gap-2.5">
-                    {g.items.map((v) => {
-                      const key = vaccineItemKey(g.key, v);
-                      return (
-                        <VaccineCard
-                          key={key}
-                          v={v}
-                          tone={g.tone}
-                          checkable={g.checkable}
-                          done={!!done[key]}
-                          onToggle={() => toggle(key)}
-                        />
-                      );
-                    })}
+                    {variant === "byAge" &&
+                    g.bucketId === "anteriores" &&
+                    g.items.some((v) => v.stage)
+                      ? groupByStage(g.items).map(({ stage, items }) => {
+                          const keys = items.map((v) => vaccineItemKey(g.key, v));
+                          const allDone = keys.every((k) => !!done[k]);
+                          return (
+                            <div key={stage} className="mt-2 first:mt-0">
+                              <div className="mb-2 flex items-center justify-between gap-2">
+                                <p
+                                  className={`text-[12px] font-bold uppercase tracking-[0.08em] ${t.sectionLabel}`}
+                                >
+                                  {stage}
+                                  <span className="ml-1.5 font-semibold normal-case tracking-normal text-muted">
+                                    · {items.length}
+                                  </span>
+                                </p>
+                                <button
+                                  type="button"
+                                  onClick={() => setMany(keys, !allDone)}
+                                  className={`text-[12px] font-bold underline-offset-2 hover:underline ${t.sectionLabel}`}
+                                >
+                                  {allDone ? "Desmarcar todas" : "Marcar todas"}
+                                </button>
+                              </div>
+                              <div className="flex flex-col gap-2.5">
+                                {items.map((v) => {
+                                  const key = vaccineItemKey(g.key, v);
+                                  return (
+                                    <VaccineCard
+                                      key={key}
+                                      v={v}
+                                      tone={g.tone}
+                                      checkable={g.checkable}
+                                      done={!!done[key]}
+                                      onToggle={() => toggle(key)}
+                                    />
+                                  );
+                                })}
+                              </div>
+                            </div>
+                          );
+                        })
+                      : g.items.map((v) => {
+                          const key = vaccineItemKey(g.key, v);
+                          return (
+                            <VaccineCard
+                              key={key}
+                              v={v}
+                              tone={g.tone}
+                              checkable={g.checkable}
+                              done={!!done[key]}
+                              onToggle={() => toggle(key)}
+                            />
+                          );
+                        })}
                   </div>
                 </div>
               );
@@ -943,9 +1015,10 @@ export function AutotestQuiz() {
                   type="button"
                   onClick={() => {
                     void (async () => {
+                      // La imagen lleva todo: pendientes + próximas a recibir.
                       const canvas = await buildCanvas(
                         pendingCount,
-                        pendingGroups.map((g) => ({
+                        [...pendingGroups, ...upcomingGroups].map((g) => ({
                           title: g.title,
                           items: g.items,
                         })),
@@ -982,6 +1055,26 @@ export function AutotestQuiz() {
               <p className="mt-3 text-[15px] leading-[1.55] text-dark">
                 Marcaste todas las vacunas como aplicadas.
               </p>
+              {upcomingGroups.length > 0 ? (
+                <button
+                  type="button"
+                  onClick={() => {
+                    void (async () => {
+                      const canvas = await buildCanvas(
+                        0,
+                        upcomingGroups.map((g) => ({
+                          title: g.title,
+                          items: g.items,
+                        })),
+                      );
+                      await downloadImage(canvas);
+                    })();
+                  }}
+                  className="mt-6 flex w-full items-center justify-center gap-2 rounded-[10px] bg-[#503C77] py-3.5 text-[15px] font-bold text-white transition hover:brightness-110"
+                >
+                  Descargar imagen
+                </button>
+              ) : null}
             </>
           )}
 

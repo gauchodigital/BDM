@@ -1,6 +1,7 @@
 /** Vacunas por edad — fiel al Calendario de vacunación nacional 2026 (PDF GSK/BDM). */
 
-export type Vaccine = { name: string; detail: string };
+/** `stage` = edad/hito del que viene la vacuna (solo en "anteriores" acumuladas). */
+export type Vaccine = { name: string; detail: string; stage?: string };
 export type VaccineReco = { calendario: Vaccine[]; recomendadas: Vaccine[] };
 
 export function monthsBetween(birth: Date, now: Date): number {
@@ -25,6 +26,11 @@ export function ageBadge(months: number): string {
  * no de la edad (embarazadas, puerperio, personal de salud) no se representan
  * en este autotest por edad.
  */
+/** Fuera del Calendario Nacional: se muestra aparte como "Vacunación particular". */
+const MEN_B_1: Vaccine = { name: "Meningococo B", detail: "1ª dosis (3 meses) · consultar con tu pediatra" };
+const MEN_B_2: Vaccine = { name: "Meningococo B", detail: "2ª dosis (5 meses) · consultar con tu pediatra" };
+const MEN_B_REF: Vaccine = { name: "Meningococo B", detail: "Refuerzo (15 meses) · consultar con tu pediatra" };
+
 export function recommendVaccines(months: number): VaccineReco {
   const years = Math.floor(months / 12);
 
@@ -56,7 +62,7 @@ export function recommendVaccines(months: number): VaccineReco {
   if (months < 4) {
     return {
       calendario: [{ name: "Meningococo ACWY", detail: "1ª dosis (3 meses)" }],
-      recomendadas: [],
+      recomendadas: [MEN_B_1],
     };
   }
 
@@ -77,7 +83,7 @@ export function recommendVaccines(months: number): VaccineReco {
   if (months < 6) {
     return {
       calendario: [{ name: "Meningococo ACWY", detail: "2ª dosis (5 meses)" }],
-      recomendadas: [],
+      recomendadas: [MEN_B_2],
     };
   }
 
@@ -114,7 +120,7 @@ export function recommendVaccines(months: number): VaccineReco {
         { name: "Triple Viral SRP", detail: "15-18 meses" },
         { name: "Quíntuple", detail: "15-18 meses" },
       ],
-      recomendadas: [],
+      recomendadas: [MEN_B_REF],
     };
   }
 
@@ -313,13 +319,39 @@ export function getVaccinePlan(months: number): VaccinePlan {
   const buckets: VaccineBucket[] = [];
 
   if (prev) {
-    const reco = recommendVaccines(prev.sampleMonth);
+    // Hasta los 24 meses "anteriores" acumula los controles previos, porque
+    // en los primeros dos años las vacunas van muy pegadas y es común
+    // atrasarse. Dos ventanas (pedido del cliente): 0-12 meses acumula
+    // desde el nacimiento; 12-24 meses acumula desde que cumplió el año.
+    // De 2 años en adelante, solo el control anterior.
+    let prevMilestones: ChildMilestone[];
+    if (months < 12) {
+      prevMilestones = CHILD_MILESTONES.slice(0, idx);
+    } else if (months < 24) {
+      const start = CHILD_MILESTONES.findIndex((m) => m.id === "12m");
+      prevMilestones = CHILD_MILESTONES.slice(start, idx);
+      if (prevMilestones.length === 0) prevMilestones = [prev];
+    } else {
+      prevMilestones = [prev];
+    }
+    const calendario: Vaccine[] = [];
+    const recomendadas: Vaccine[] = [];
+    for (const m of prevMilestones) {
+      const reco = recommendVaccines(m.sampleMonth);
+      calendario.push(...reco.calendario.map((v) => ({ ...v, stage: m.label })));
+      recomendadas.push(
+        ...reco.recomendadas.map((v) => ({ ...v, stage: m.label })),
+      );
+    }
+    const first = prevMilestones[0]!;
     buckets.push({
       id: "anteriores",
       title: "Vacunas anteriores",
-      rangeLabel: prev.label,
+      rangeLabel:
+        prevMilestones.length > 1 ? `${first.label} a ${prev.label}` : prev.label,
       checkable: true,
-      ...reco,
+      calendario,
+      recomendadas,
     });
   }
 
