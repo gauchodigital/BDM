@@ -2,7 +2,7 @@
   {
     "id": "valentina-lamas",
     "slug": "valentina-lamas",
-    "name": "Valentina Lamas",
+    "name": "Dra. Valentina Lamas",
     "role": "Médica",
     "category": "medico",
     "quote": "",
@@ -13,7 +13,7 @@
   {
     "id": "fernando-lamas",
     "slug": "fernando-lamas",
-    "name": "Fernando Lamas",
+    "name": "Dr. Fernando Lamas",
     "role": "Médico",
     "category": "medico",
     "quote": "",
@@ -24,7 +24,7 @@
   {
     "id": "vanesa-castellano",
     "slug": "vanesa-castellano",
-    "name": "Vanesa Castellano",
+    "name": "Dra. Vanesa Castellano",
     "role": "Especialista en pediatría",
     "category": "medico",
     "quote": "",
