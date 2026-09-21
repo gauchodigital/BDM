@@ -143,7 +143,7 @@ export function CentrosVacunacionMap({
       });
     }
 
-    loadScript("/mapa/js/vacunatorios.js?v=tipo-vacunatorio", "data-bdm-vacunatorios")
+    loadScript("/mapa/js/vacunatorios.js?v=menor-si", "data-bdm-vacunatorios")
       .then(() => {
         if (cancelled) return;
         if (window.google?.maps) {
@@ -279,7 +279,7 @@ export function CentrosVacunacionMap({
               <p className="mt-4 text-[16px] leading-normal tracking-[0.08px] text-white lg:max-w-md lg:leading-[1.6] lg:text-white/90">
                 {body}
               </p>
-              <div className="mt-8 hidden max-w-md space-y-3 rounded-[12px] bg-[#3D2E5C] p-5 text-[10px] leading-[14px] text-white/85 lg:mt-auto lg:block">
+              <div className="mt-10 hidden max-w-md space-y-3 rounded-[12px] bg-[#3D2E5C] p-5 text-[10px] leading-[14px] text-white/85 lg:mt-12 lg:block">
                 {disclaimerParagraphs.map((p) => (
                   <p key={p.slice(0, 48)}>
                     <DisclaimerText text={p} />

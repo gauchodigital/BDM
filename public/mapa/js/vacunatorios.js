@@ -12,7 +12,7 @@ class VacunatoriosMap {
         this.isLoading = false;
         this.provinciaSeleccionada = false;
 
-        this.DATA_URL = '/mapa/data/vacunatorios_coordinates_con_barrios.json';
+        this.DATA_URL = '/mapa/data/vacunatorios_coordinates_con_barrios.json?v=menor-si';
 
         this.filters = {
             provincia: '',
@@ -88,7 +88,11 @@ class VacunatoriosMap {
             const response = await fetch(this.DATA_URL);
             if (!response.ok) throw new Error('Error cargando datos');
             const json = await response.json();
-            this.data = json.data || json;
+            const raw = json.data || json;
+            // Meningitis: solo centros con APLICA VACUNA MENOR = Si
+            this.data = raw.filter(
+                (v) => String(v.apVacunaMenor || "").trim().toLowerCase() === "si"
+            );
             console.log(`Datos cargados: ${this.data.length} vacunatorios`);
             this.initFilterOptions();
 
@@ -556,9 +560,6 @@ class VacunatoriosMap {
                 </div>
                 ${telefono ? `<div style="font-size:12px;color:#444;margin-bottom:4px">
                     <strong>Teléfono:</strong> <a href="tel:${telefono.replace(/[^0-9+]/g, '')}" style="color:#503C77">${telefono}</a>
-                </div>` : ''}
-                ${v.apVacuna ? `<div style="font-size:11px;color:#666;margin-top:6px;padding-top:6px;border-top:1px solid #eee">
-                    Vacuna: ${v.apVacuna} | Menores: ${v.apVacunaMenor || '—'}
                 </div>` : ''}
             </div>`;
     }

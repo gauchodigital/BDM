@@ -53,7 +53,7 @@ function PersonStat({
   return (
     <div
       className={`flex flex-col items-center overflow-hidden ${
-        plain ? "gap-3 py-6 lg:gap-5 lg:py-10" : "gap-2 py-6"
+        plain ? "gap-3 py-2 lg:gap-5 lg:py-4" : "gap-2 py-6"
       } ${
         dark
           ? "rounded-2xl bg-[#503c77] px-5"
@@ -388,7 +388,7 @@ export function BacterianaPage() {
       {/* Secuelas */}
       <RevealSection
         id="secuelas"
-        className="scroll-mt-20 bg-white py-16"
+        className="scroll-mt-20 bg-[#EEECF2] py-16"
         delay={80}
       >
         <div className={`${WRAP} flex flex-col gap-10`}>
@@ -456,9 +456,11 @@ export function BacterianaPage() {
       </RevealSection>
 
       {/* Stat secuelas */}
-      <RevealSection className="bg-white py-12" delay={150}>
+      <RevealSection className="bg-[#EEECF2] py-12" delay={150}>
         <div className={WRAP}>
-          <PersonStat {...d.secuelas.stat} tone="plain" />
+          <div className="mx-auto max-w-4xl rounded-[14px] border border-white bg-white px-5 py-6 shadow-[2px_2px_4px_rgba(51,51,51,0.15)] md:px-8 md:py-8">
+            <PersonStat {...d.secuelas.stat} tone="plain" />
+          </div>
         </div>
       </RevealSection>
 
