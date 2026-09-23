@@ -1,22 +1,27 @@
 import type { ReactNode } from "react";
 
 /**
- * Negritas **así** y citas [1] / [1,3] → <sup>.
+ * Negritas **así**, itálicas *así* y citas [1] / [1,3] → <sup>.
  */
 export function RichText({
   text,
   className = "",
   strongClassName = "font-semibold text-[#442748]",
+  emClassName = "italic",
   citeClassName = "ml-0.5 text-[0.65em] font-[inherit] leading-none text-[#503C77]",
 }: {
   text: string;
   className?: string;
   /** Classes for `**bold**` spans (default: Figma “oscuro”). */
   strongClassName?: string;
+  /** Classes for `*italic*` spans. */
+  emClassName?: string;
   /** Classes for citation superscripts like [1]. */
   citeClassName?: string;
 }): ReactNode {
-  const parts = text.split(/(\*\*[^*]+\*\*|\[\d+(?:[.,]\d+)*\])/g);
+  const parts = text.split(
+    /(\*\*[^*]+\*\*|\*[^*]+\*|\[\d+(?:[.,]\d+)*\])/g,
+  );
 
   return (
     <span className={className}>
@@ -26,6 +31,18 @@ export function RichText({
             <strong key={i} className={strongClassName}>
               {part.slice(2, -2)}
             </strong>
+          );
+        }
+        if (
+          part.length >= 2 &&
+          part.startsWith("*") &&
+          part.endsWith("*") &&
+          !part.startsWith("**")
+        ) {
+          return (
+            <em key={i} className={emClassName}>
+              {part.slice(1, -1)}
+            </em>
           );
         }
         const cite = part.match(/^\[(\d+(?:[.,]\d+)*)\]$/);

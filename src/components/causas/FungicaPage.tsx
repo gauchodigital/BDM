@@ -97,7 +97,7 @@ export function FungicaPage() {
                   <span className="font-semibold text-[#442748]">
                     {item.lead}
                   </span>
-                  {item.rest}
+                  <RichText text={item.rest} />
                 </p>
               </div>
             ))}
@@ -132,21 +132,6 @@ export function FungicaPage() {
                   {i < d.tratamiento.paragraphs.length - 1 ? <br /> : null}
                 </span>
               ))}
-            </p>
-          </div>
-
-          <div
-            role="note"
-            className="rounded-[12px] border border-[#EF4444] bg-transparent p-5"
-          >
-            <p className="text-[14px] font-bold leading-5 text-[#442748]">
-              {d.tratamiento.alert.title}
-            </p>
-            <p className="mt-2 text-[13px] leading-5 text-[#442748]/80">
-              <RichText
-                text={d.tratamiento.alert.body}
-                citeClassName="ml-0.5 text-[0.65em] font-[inherit] leading-none text-[#442748]/80"
-              />
             </p>
           </div>
         </div>

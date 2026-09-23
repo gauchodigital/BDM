@@ -136,14 +136,14 @@
     "id": "transmision-meningitis",
     "category": "meningitis",
     "question": "¿Cómo se transmite la meningitis?",
-    "answer": "La meningitis se transmite, en la mayoría de los casos, por vía respiratoria desde una persona enferma o desde portadores asintomáticos. Las formas de transmisión incluyen:\n\n- Tos\n- Estornudos\n- Besos\n- Compartir utensilios\n\nAdemás, el contacto cercano y prolongado con una persona infectada, como en hogares, jardines maternales, escuelas o universidades, aumenta el riesgo de transmisión.[1]",
+    "answer": "La meningitis se transmite, en la mayoría de los casos, por vía respiratoria desde una persona enferma o desde portadores asintomáticos. Las formas de transmisión incluyen:\n\n- Tos\n- Estornudos\n- Besos\n- Compartir utensilios\n\nAdemás, el contacto cercano y prolongado con una persona infectada, como en hogares, jardines maternales, escuelas o universidades, aumenta el riesgo de transmisión[1,11].",
     "visible": true
   },
   {
     "id": "tipos-meningitis",
     "category": "meningitis",
     "question": "¿Qué tipos de meningitis existen?",
-    "answer": "Existen varios tipos de meningitis, clasificados según su causa:[1]\n\n**Meningitis bacteriana:** Es la forma más grave y puede ser causada por bacterias como Neumococo, Meningococo, Haemophilus influenzae tipo b y Streptococcus agalactiae. La meningitis por Meningococo puede evolucionar rápidamente y, incluso con tratamiento adecuado, algunos pacientes pueden fallecer entre las primeras 24 a 48 horas de la aparición de los síntomas.[1]\n\n**Meningitis viral:** Es la forma más frecuente y, por lo general, tiene mejor evolución que las bacterianas. Puede ser contraída a cualquier edad, pero la mayoría de los casos ocurre en niños menores de 5 años o personas con el sistema inmunitario debilitado.[4]\n\n**Meningitis fúngica:** Ciertos hongos presentes en el ambiente pueden causar meningitis, especialmente en personas con sistemas inmunológicos debilitados. La infección suele ocurrir al inhalar esporas de hongos.[5]\n\n**Meningitis parasitaria:** Se contrae al consumir animales infectados o alimentos contaminados.[6]",
+    "answer": "Existen varios tipos de meningitis, clasificados según su causa:[1]\n\n**Meningitis bacteriana:** Es la forma más grave y puede ser causada por bacterias como Neumococo, Meningococo, Haemophilus influenzae tipo b y Streptococcus agalactiae. La meningitis por Meningococo puede evolucionar rápidamente y, incluso con tratamiento adecuado, algunos pacientes pueden fallecer entre las primeras 24 a 48 horas de la aparición de los síntomas.[1,28]\n\n**Meningitis viral:** Es la forma más frecuente y, por lo general, tiene mejor evolución que las bacterianas. Puede ser contraída a cualquier edad, pero la mayoría de los casos ocurre en niños menores de 5 años o personas con el sistema inmunitario debilitado.[4]\n\n**Meningitis fúngica:** Ciertos hongos presentes en el ambiente pueden causar meningitis, especialmente en personas con sistemas inmunológicos debilitados. La infección suele ocurrir al inhalar esporas de hongos.[5]\n\n**Meningitis parasitaria:** Se contrae al consumir animales infectados o alimentos contaminados.[6]",
     "visible": true
   }
 ]

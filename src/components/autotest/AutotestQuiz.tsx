@@ -233,7 +233,7 @@ const SHARE_WARNING =
   "Este resultado es orientativo: contempla las vacunas del Calendario Nacional de Vacunación y algunas recomendadas fuera de él (vacunación particular). Siempre consultá con el médico para confirmar qué vacunas corresponden según edad y condición clínica particular.";
 
 const SHARE_LEGAL_LINES = [
-  "NP-AR-MNU-WCNT-260001 - Agosto 2026.",
+  "NP-AR-MNU-WCNT-260001 - Septiembre 2026.",
   "Para mayor información consulte a su médico.",
   "GSK Biopharma Argentina SA Av del Libertador 7202, Piso 4, CABA, Buenos Aires, Argentina.",
   "Para consultas sobre nuestros productos, consultas de calidad o reporte de eventos adversos puede comunicarse al 0800-220-4752. Para reportar eventos adversos de nuestros productos envíe un correo a: bua-farmacovigilancia-rx@gsk.com",

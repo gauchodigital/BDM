@@ -27,9 +27,9 @@ export const BACTERIANA = {
     ],
     bacteriaIntro: "Algunos tipos de bacterias que causan la meningitis son[1]:",
     bacterias: [
-      "Meningococo (Neisseria Meningitidis)",
-      "Neumococo (Streptococo pneumoniae)",
-      "Haemophilous Influenzae tipo b",
+      "Meningococo (*Neisseria Meningitidis*)",
+      "Neumococo (*Streptococo pneumoniae*)",
+      "*Haemophilous Influenzae* tipo b",
       "Streptococo del grupo B",
     ],
     stat: {
@@ -47,7 +47,7 @@ export const BACTERIANA = {
     body: "Las bacterias causantes de meningitis pueden provocar otros síntomas si infectan la sangre del torrente circulatorio, que pueden desembocar rápidamente en septicemia. Los síntomas más habituales son[1]:",
     items: [
       "Frío en manos y pies",
-      "Presión arterial baja",
+      "Dolores articulares y musculares",
       "Respiración más rápida de lo habitual",
       "Erupciones de la piel de color rojo o púrpura oscuro (petequias) que no desaparece al estirar la piel",
     ],
@@ -141,7 +141,7 @@ export const BACTERIANA = {
     },
   },
   quote:
-    "La **evolución de la meningitis por meningococo suele ser rápida** e incluso con un tratamiento adecuado, algunos pacientes pueden fallecer entre las **primeras 24 a 48 horas de la aparición de los síntomas**.[10]",
+    "La **evolución de la meningitis por meningococo suele ser rápida** e incluso con un tratamiento adecuado, algunos pacientes pueden fallecer durante las **primeras 24hs desde la aparición de los síntomas**[10,28].",
   vacunacion: {
     eyebrow: "medidas de prevención",
     title: "Vacunación contra el meningococo",

@@ -16,7 +16,7 @@ export const PARASITARIA = {
     title: "¿Qué es?",
     paragraphs: [
       "Aunque la meningitis parasitaria es menos común que la meningitis viral y bacteriana, sigue siendo una **amenaza seria para la salud.**[6]",
-      "Algunas personas pueden tener un mayor riesgo de infección debido al lugar donde viven o viajan, exponiéndose a ambientes donde estos parásitos son más prevalentes. **El diagnóstico de la meningitis parasitaria puede ser difícil**, y lamentablemente, no existen tratamientos específicos para combatirla, lo que complica aún más su manejo y tratamiento adecuado.[6]",
+      "Algunas personas pueden tener un mayor riesgo de infección debido al lugar donde viven o viajan, exponiéndose a ambientes donde estos parásitos son más prevalentes. **El diagnóstico de la meningitis parasitaria puede ser difícil**[6].",
     ],
   },
   tratamiento: {

@@ -59,7 +59,7 @@ export function Footer() {
           </nav>
 
           <p className="mt-4 max-w-3xl text-[11px] leading-[1.45] text-white/75 md:text-[12px]">
-            NP-AR-MNU-WCNT-260001 - Agosto 2026.
+            NP-AR-MNU-WCNT-260001 - Septiembre 2026.
             <br />
             Para mayor información consulte a su médico.
             <br />

@@ -9,11 +9,11 @@ export const SINTOMAS_PAGE = {
   },
   phases: {
     early: {
-      badge: "Primeras 12hs · Síntomas inespecíficos",
+      badge: "Primeras 12hs · Síntomas inespecíficos[28]",
       lead: "Pueden confundirse con otras enfermedades. Prestá atención si aparecen juntos.",
     },
     alarm: {
-      badge: "Pasadas las 12hs · Señales de alarma",
+      badge: "Pasadas las 12hs · Señales de alarma[28]",
       lead: "Si aparecen estos síntomas, buscá atención médica de inmediato.",
     },
     warning:
@@ -150,7 +150,7 @@ export const ADULTOS_TIMELINE: SintomaData[] = [
     id: "petequias",
     label: "Petequias",
     description:
-      "Erupciones de la piel de color rojo o púrpura oscuro[1].",
+      "Erupciones de la piel de color rojo o púrpura oscuro.",
     icon: "/icons/sintomas/petequias.svg",
     phase: "alarm",
     visible: true,
@@ -210,7 +210,7 @@ export const LACTANTES_RN_TIMELINE: SintomaData[] = [
   {
     id: "lac-petequias",
     label: "Petequias",
-    description: "Erupciones de la piel de color rojo o púrpura oscuro[1].",
+    description: "Erupciones de la piel de color rojo o púrpura oscuro.",
     icon: "/icons/sintomas/petequias.svg",
     phase: "alarm",
     visible: true,

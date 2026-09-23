@@ -241,7 +241,9 @@ export function BacterianaPage() {
               </p>
               <ul className="mt-3 list-disc space-y-1 pl-6">
                 {d.queEs.bacterias.map((b) => (
-                  <li key={b}>{b}</li>
+                  <li key={b}>
+                    <RichText text={b} />
+                  </li>
                 ))}
               </ul>
             </div>

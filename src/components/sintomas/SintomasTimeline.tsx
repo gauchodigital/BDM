@@ -21,7 +21,7 @@ export const SINTOMA_PHASE_UI: Record<
   }
 > = {
   early: {
-    badge: "Primeras 12hs · Síntomas inespecíficos",
+    badge: "Primeras 12hs · Síntomas inespecíficos[28]",
     lead: "Pueden confundirse con otras enfermedades. Prestá atención si aparecen juntos.",
     line: "bg-primary",
     badgeBg: "bg-primary/10",
@@ -33,7 +33,7 @@ export const SINTOMA_PHASE_UI: Record<
     markerActive: "bg-primary text-white ring-primary",
   },
   alarm: {
-    badge: "Pasadas las 12hs · Señales de alarma",
+    badge: "Pasadas las 12hs · Señales de alarma[28]",
     lead: "Si aparecen estos síntomas, buscá atención médica de inmediato.",
     line: "bg-[#DD876E]",
     badgeBg: "bg-[#DD876E]/15",
@@ -76,7 +76,10 @@ export function PhaseHeader({
       <p
         className={`w-full px-4 py-2.5 text-[13px] font-bold leading-snug ${cfg.badgeRadius} ${cfg.badgeBg} ${cfg.badgeText}`}
       >
-        {cfg.badge}
+        <RichText
+          text={cfg.badge}
+          citeClassName="ml-0.5 text-[0.65em] font-[inherit] leading-none"
+        />
       </p>
       <p className="mt-3 text-[13px] font-normal leading-[18px] tracking-normal text-dark">
         {cfg.lead}
@@ -372,7 +375,10 @@ function DesktopPhaseHeader({ phase }: { phase: SintomaPhase }) {
       <p
         className={`w-full px-4 py-2.5 text-[13px] font-bold leading-snug ${cfg.badgeRadius} ${cfg.badgeBg} ${cfg.badgeText}`}
       >
-        {cfg.badge}
+        <RichText
+          text={cfg.badge}
+          citeClassName="ml-0.5 text-[0.65em] font-[inherit] leading-none"
+        />
       </p>
       <p className="mt-3 text-[13px] font-normal leading-[18px] tracking-normal text-dark">
         {cfg.lead}

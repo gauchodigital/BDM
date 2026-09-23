@@ -27,7 +27,7 @@ export const FUNGICA = {
     items: [
       {
         lead: "Las personas con el sistema inmunitario debilitado",
-        rest: " son las que generalmente desarrollan meningitis fúngica. Ciertas afecciones médicas, como el HIV en fase avanzada y el cáncer, aumentan el riesgo.",
+        rest: " son las que generalmente desarrollan meningitis fúngica. Ciertas afecciones médicas, como la infección por el HIV y el cáncer, aumentan el riesgo.",
       },
       {
         lead: "Quienes consumen medicamentos que pueden debilitar el sistema inmunológico,",
@@ -39,7 +39,7 @@ export const FUNGICA = {
       },
       {
         lead: "Los bebés prematuros",
-        rest: " con un peso muy bajo al nacer tienen un mayor riesgo de contraer una infección fúngica por Candida en el torrente sanguíneo. Estas infecciones pueden extenderse al cerebro.",
+        rest: " con un peso muy bajo al nacer tienen un mayor riesgo de contraer una infección fúngica por *Candida* en el torrente sanguíneo. Estas infecciones pueden extenderse al cerebro.",
       },
       {
         lead: "Vivir en determinadas zonas",
@@ -52,12 +52,8 @@ export const FUNGICA = {
     title: "¿Cómo se trata?[5]",
     paragraphs: [
       "Los profesionales de la salud tratan la meningitis fúngica con **medicamentos antifúngicos en dosis elevadas**, que a menudo se administran directamente en una por vía intravenosa. Posteriormente, los pacientes también deben tomar medicamentos antifúngicos por vía oral.",
-      "La duración total del tratamiento depende del sistema inmunitario de cada persona y del tipo de hongo que provoque la infección. El tratamiento suele ser más prolongado en personas con un sistema inmunitario debilitado y puede extenderse de por vida.",
+      "La duración total del tratamiento depende del sistema inmunitario de cada persona y del tipo de hongo que provoque la infección. El tratamiento suele ser más prolongado en personas con un sistema inmunitario debilitado.",
     ],
-    alert: {
-      title: "No hay vacunas disponibles",
-      body: "No existe vacuna para proteger contra la meningitis fúngica.[17]",
-    },
   },
   prevencion: {
     eyebrow: "PREVENCIÓN",
