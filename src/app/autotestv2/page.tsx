@@ -27,7 +27,7 @@ export default function AutotestV2Page() {
           <span className="text-primary">Autotest de vacunas (v2)</span>
         </nav>
         <Reveal delay={80}>
-          <AutotestQuiz variant="byAge" accumulateMode="until12" />
+          <AutotestQuiz variant="byAge" />
         </Reveal>
       </div>
     </section>

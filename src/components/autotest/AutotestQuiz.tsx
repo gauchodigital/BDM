@@ -606,8 +606,8 @@ function groupByStage(items: Vaccine[]): { stage: string; items: Vaccine[] }[] {
 /**
  * variant="byAge" (/autotestv2, /autotestv3): las "anteriores" acumuladas se
  * muestran agrupadas por edad, con "Marcar todas" por grupo.
- * accumulateMode="until12" (/autotestv2): nace → 12 meses inclusive.
- * accumulateMode="until24" (/autotestv3): nace → 24 meses inclusive.
+ * Las tres rutas (/autotest, /autotestv2, /autotestv3) usan la MISMA lógica
+ * (accumulateMode "windows", la aprobada por GSK); solo cambia el diseño.
  * collapsibleMonths (/autotestv3): cada mes se abre/cierra para acortar la lista.
  */
 export function AutotestQuiz({

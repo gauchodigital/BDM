@@ -29,7 +29,6 @@ export default function AutotestV3Page() {
         <Reveal delay={80}>
           <AutotestQuiz
             variant="byAge"
-            accumulateMode="until24"
             collapsibleMonths
           />
         </Reveal>
