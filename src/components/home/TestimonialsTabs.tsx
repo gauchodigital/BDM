@@ -24,24 +24,6 @@ function thumbFor(item: TestimonioData): string | null {
   return id ? `https://i.ytimg.com/vi/${id}/hqdefault.jpg` : null;
 }
 
-function NameBadge({
-  item,
-  className = "",
-}: {
-  item: TestimonioData;
-  className?: string;
-}) {
-  return (
-    <div
-      className={`rounded-[10px] bg-white px-3.5 py-2.5 shadow-[0_4px_16px_rgba(0,0,0,0.14)] ${className}`}
-    >
-      <p className="text-[13px] font-bold leading-snug text-[#DD876E] lg:text-[14px]">
-        {item.name}
-      </p>
-    </div>
-  );
-}
-
 function TestimonialsMobile({ items }: { items: TestimonioData[] }) {
   const [tab, setTab] = useState<TestimonioCategory>("medico");
   const [index, setIndex] = useState(0);
@@ -131,9 +113,9 @@ function TestimonialsMobile({ items }: { items: TestimonioData[] }) {
               return (
                 <article
                   key={item.id}
-                  className="relative w-[92%] min-w-[92%] shrink-0 snap-center overflow-hidden rounded-[12px] bg-black/30 shadow-[0_8px_24px_rgba(68,39,72,0.14)] sm:w-full sm:min-w-full"
+                  className="w-[92%] min-w-[92%] shrink-0 snap-center sm:w-full sm:min-w-full"
                 >
-                  <div className="relative aspect-video">
+                  <div className="relative aspect-video overflow-hidden rounded-[12px] bg-black/30 shadow-[0_8px_24px_rgba(68,39,72,0.14)]">
                     {thumb ? (
                       // eslint-disable-next-line @next/next/no-img-element
                       <img
@@ -145,7 +127,6 @@ function TestimonialsMobile({ items }: { items: TestimonioData[] }) {
                     ) : (
                       <div className="absolute inset-0 bg-[#5a3d62]" />
                     )}
-                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-transparent" />
                     {item.videoUrl ? (
                       <a
                         href={item.videoUrl}
@@ -159,11 +140,10 @@ function TestimonialsMobile({ items }: { items: TestimonioData[] }) {
                         </span>
                       </a>
                     ) : null}
-                    <NameBadge
-                      item={item}
-                      className="pointer-events-none absolute bottom-3 left-3 z-10 max-w-[78%]"
-                    />
                   </div>
+                  <p className="mt-2 px-0.5 text-[13px] font-bold leading-snug text-[#DD876E]">
+                    {item.name}
+                  </p>
                 </article>
               );
             })}
