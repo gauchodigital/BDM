@@ -7,6 +7,7 @@ import {
   getVaccinePlan,
   monthsBetween,
   vaccineItemKey,
+  type AccumulateMode,
   type Vaccine,
   type VaccineBucket,
 } from "@/lib/autotestVaccines";
@@ -603,17 +604,27 @@ function groupByStage(items: Vaccine[]): { stage: string; items: Vaccine[] }[] {
 }
 
 /**
- * variant="byAge" (/autotestv2): las "anteriores" acumuladas se muestran
- * agrupadas por edad, con "Marcar todas" por grupo. Misma lógica y estado.
+ * variant="byAge" (/autotestv2, /autotestv3): las "anteriores" acumuladas se
+ * muestran agrupadas por edad, con "Marcar todas" por grupo.
+ * accumulateMode="until12" (/autotestv2): nace → 12 meses inclusive.
+ * accumulateMode="until24" (/autotestv3): nace → 24 meses inclusive.
+ * collapsibleMonths (/autotestv3): cada mes se abre/cierra para acortar la lista.
  */
 export function AutotestQuiz({
   variant = "default",
-}: { variant?: AutotestVariant } = {}) {
+  accumulateMode = "windows",
+  collapsibleMonths = false,
+}: {
+  variant?: AutotestVariant;
+  accumulateMode?: AccumulateMode;
+  collapsibleMonths?: boolean;
+} = {}) {
   const [step, setStep] = useState<1 | 2 | 3>(1);
   const [birth, setBirth] = useState("");
   const [birthTyped, setBirthTyped] = useState("");
   const [months, setMonths] = useState<number | null>(null);
   const [done, setDone] = useState<Record<string, boolean>>({});
+  const [openStages, setOpenStages] = useState<Record<string, boolean>>({});
   const datePickerRef = useRef<HTMLInputElement>(null);
 
   const today = new Date().toISOString().slice(0, 10);
@@ -621,8 +632,9 @@ export function AutotestQuiz({
   const birthError = "error" in parsedBirth ? parsedBirth.error : null;
 
   const plan = useMemo(
-    () => (months === null ? null : getVaccinePlan(months)),
-    [months],
+    () =>
+      months === null ? null : getVaccinePlan(months, { accumulateMode }),
+    [months, accumulateMode],
   );
 
   const groups = useMemo(
@@ -669,6 +681,7 @@ export function AutotestQuiz({
     setBirth(parsed.iso);
     setMonths(monthsBetween(new Date(`${parsed.iso}T00:00:00`), new Date()));
     setDone({});
+    setOpenStages({});
     setStep(2);
   };
 
@@ -679,6 +692,8 @@ export function AutotestQuiz({
       ...d,
       ...Object.fromEntries(keys.map((k) => [k, value])),
     }));
+  const toggleStage = (stage: string) =>
+    setOpenStages((s) => ({ ...s, [stage]: !s[stage] }));
 
   const reset = () => {
     setStep(1);
@@ -686,6 +701,7 @@ export function AutotestQuiz({
     setBirth("");
     setBirthTyped("");
     setDone({});
+    setOpenStages({});
   };
 
   function onBirthTypedChange(value: string) {
@@ -834,40 +850,87 @@ export function AutotestQuiz({
                       ? groupByStage(g.items).map(({ stage, items }) => {
                           const keys = items.map((v) => vaccineItemKey(g.key, v));
                           const allDone = keys.every((k) => !!done[k]);
+                          const doneCount = keys.filter((k) => !!done[k]).length;
+                          const isOpen = collapsibleMonths
+                            ? !!openStages[stage]
+                            : true;
                           return (
-                            <div key={stage} className="mt-2 first:mt-0">
-                              <div className="mb-2 flex items-center justify-between gap-2">
-                                <p
-                                  className={`text-[12px] font-bold uppercase tracking-[0.08em] ${t.sectionLabel}`}
-                                >
-                                  {stage}
-                                  <span className="ml-1.5 font-semibold normal-case tracking-normal text-muted">
-                                    · {items.length}
-                                  </span>
-                                </p>
+                            <div
+                              key={stage}
+                              className={`mt-2 first:mt-0 ${
+                                collapsibleMonths
+                                  ? "overflow-hidden rounded-[10px] border border-[#503C77]/15 bg-[#F7F5FA]/60"
+                                  : ""
+                              }`}
+                            >
+                              <div
+                                className={`flex items-center justify-between gap-2 ${
+                                  collapsibleMonths ? "px-3 py-2.5" : "mb-2"
+                                }`}
+                              >
+                                {collapsibleMonths ? (
+                                  <button
+                                    type="button"
+                                    onClick={() => toggleStage(stage)}
+                                    aria-expanded={isOpen}
+                                    className={`flex min-w-0 flex-1 items-center gap-2 text-left text-[12px] font-bold uppercase tracking-[0.08em] ${t.sectionLabel}`}
+                                  >
+                                    <span
+                                      aria-hidden
+                                      className={`inline-block text-[10px] transition-transform ${
+                                        isOpen ? "rotate-90" : ""
+                                      }`}
+                                    >
+                                      ▶
+                                    </span>
+                                    <span className="min-w-0 truncate">
+                                      {stage}
+                                      <span className="ml-1.5 font-semibold normal-case tracking-normal text-muted">
+                                        · {doneCount}/{items.length}
+                                      </span>
+                                    </span>
+                                  </button>
+                                ) : (
+                                  <p
+                                    className={`text-[12px] font-bold uppercase tracking-[0.08em] ${t.sectionLabel}`}
+                                  >
+                                    {stage}
+                                    <span className="ml-1.5 font-semibold normal-case tracking-normal text-muted">
+                                      · {items.length}
+                                    </span>
+                                  </p>
+                                )}
                                 <button
                                   type="button"
                                   onClick={() => setMany(keys, !allDone)}
-                                  className={`text-[12px] font-bold underline-offset-2 hover:underline ${t.sectionLabel}`}
+                                  className={`shrink-0 text-[12px] font-bold underline-offset-2 hover:underline ${t.sectionLabel}`}
                                 >
                                   {allDone ? "Desmarcar todas" : "Marcar todas"}
                                 </button>
                               </div>
-                              <div className="flex flex-col gap-2.5">
-                                {items.map((v) => {
-                                  const key = vaccineItemKey(g.key, v);
-                                  return (
-                                    <VaccineCard
-                                      key={key}
-                                      v={v}
-                                      tone={g.tone}
-                                      checkable={g.checkable}
-                                      done={!!done[key]}
-                                      onToggle={() => toggle(key)}
-                                    />
-                                  );
-                                })}
-                              </div>
+                              {isOpen ? (
+                                <div
+                                  className={`flex flex-col gap-2.5 ${
+                                    collapsibleMonths
+                                      ? "border-t border-[#503C77]/10 px-3 py-2.5"
+                                      : ""
+                                  }`}
+                                >
+                                  {items.map((v) => {
+                                    const key = vaccineItemKey(g.key, v);
+                                    return (
+                                      <VaccineCard
+                                        key={key}
+                                        v={v}
+                                        tone={g.tone}
+                                        checkable={g.checkable}
+                                        done={!!done[key]}
+                                        onToggle={() => toggle(key)}
+                                      />
+                                    );
+                                  })}
+                                </div>
+                              ) : null}
                             </div>
                           );
                         })

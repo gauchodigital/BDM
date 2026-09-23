@@ -26,11 +26,6 @@ export function ageBadge(months: number): string {
  * no de la edad (embarazadas, puerperio, personal de salud) no se representan
  * en este autotest por edad.
  */
-/** Fuera del Calendario Nacional: se muestra aparte como "Vacunación particular". */
-const MEN_B_1: Vaccine = { name: "Meningococo B", detail: "1ª dosis (3 meses) · consultar con tu pediatra" };
-const MEN_B_2: Vaccine = { name: "Meningococo B", detail: "2ª dosis (5 meses) · consultar con tu pediatra" };
-const MEN_B_REF: Vaccine = { name: "Meningococo B", detail: "Refuerzo (15 meses) · consultar con tu pediatra" };
-
 export function recommendVaccines(months: number): VaccineReco {
   const years = Math.floor(months / 12);
 
@@ -62,7 +57,7 @@ export function recommendVaccines(months: number): VaccineReco {
   if (months < 4) {
     return {
       calendario: [{ name: "Meningococo ACWY", detail: "1ª dosis (3 meses)" }],
-      recomendadas: [MEN_B_1],
+      recomendadas: [],
     };
   }
 
@@ -83,7 +78,7 @@ export function recommendVaccines(months: number): VaccineReco {
   if (months < 6) {
     return {
       calendario: [{ name: "Meningococo ACWY", detail: "2ª dosis (5 meses)" }],
-      recomendadas: [MEN_B_2],
+      recomendadas: [],
     };
   }
 
@@ -120,7 +115,7 @@ export function recommendVaccines(months: number): VaccineReco {
         { name: "Triple Viral SRP", detail: "15-18 meses" },
         { name: "Quíntuple", detail: "15-18 meses" },
       ],
-      recomendadas: [MEN_B_REF],
+      recomendadas: [],
     };
   }
 
@@ -288,11 +283,28 @@ function childMilestoneIndex(months: number): number | null {
   return idx >= 0 ? idx : null;
 }
 
+/** Cómo se arman las "vacunas anteriores" en el primer tramo infantil. */
+export type AccumulateMode =
+  /** Pedido cliente: <12 desde nacimiento; 12–24 desde el año; luego 1 control. */
+  | "windows"
+  /** Variante v2: desde el nacimiento hasta los 12 meses inclusive; luego ventana desde el año. */
+  | "until12"
+  /** Variante v3: desde el nacimiento hasta los 24 meses inclusive; luego 1 control. */
+  | "until24";
+
+export type VaccinePlanOptions = {
+  accumulateMode?: AccumulateMode;
+};
+
 /**
  * Niños: visita anterior + actual + siguiente (última visita infantil: solo anterior + actual).
  * Adultos: solo el bucket actual.
  */
-export function getVaccinePlan(months: number): VaccinePlan {
+export function getVaccinePlan(
+  months: number,
+  options: VaccinePlanOptions = {},
+): VaccinePlan {
+  const accumulateMode = options.accumulateMode ?? "windows";
   const idx = childMilestoneIndex(months);
 
   if (idx === null) {
@@ -319,13 +331,18 @@ export function getVaccinePlan(months: number): VaccinePlan {
   const buckets: VaccineBucket[] = [];
 
   if (prev) {
-    // Hasta los 24 meses "anteriores" acumula los controles previos, porque
-    // en los primeros dos años las vacunas van muy pegadas y es común
-    // atrasarse. Dos ventanas (pedido del cliente): 0-12 meses acumula
-    // desde el nacimiento; 12-24 meses acumula desde que cumplió el año.
-    // De 2 años en adelante, solo el control anterior.
+    // until12: nace→12 inclusive; después desde el año hasta 24; luego 1 control.
+    // until24: nace→24 inclusive; luego 1 control.
+    // windows: nace→<12; 12–24 desde el año; luego 1 control.
     let prevMilestones: ChildMilestone[];
-    if (months < 12) {
+    if (accumulateMode === "until24") {
+      prevMilestones =
+        months <= 24 ? CHILD_MILESTONES.slice(0, idx) : [prev];
+    } else if (
+      accumulateMode === "until12"
+        ? months <= 12
+        : months < 12
+    ) {
       prevMilestones = CHILD_MILESTONES.slice(0, idx);
     } else if (months < 24) {
       const start = CHILD_MILESTONES.findIndex((m) => m.id === "12m");

@@ -1,16 +1,16 @@
-// Variante de prueba: "anteriores" desde el nacimiento hasta los 12 meses inclusive, agrupadas por edad.
+// Variante de prueba: "anteriores" desde el nacimiento hasta los 24 meses inclusive.
 import type { Metadata } from "next";
 import Link from "next/link";
 import { AutotestQuiz } from "@/components/autotest/AutotestQuiz";
 import { Reveal } from "@/components/ui/Reveal";
 
 export const metadata: Metadata = {
-  title: "Autotest de vacunas · v2",
+  title: "Autotest de vacunas · v3",
   description:
     "Ingresá la fecha de nacimiento y descubrí qué vacunas corresponden según el Calendario Nacional de Vacunación.",
 };
 
-export default function AutotestV2Page() {
+export default function AutotestV3Page() {
   return (
     <section className="min-h-[70vh] bg-[#F7F5FA] px-5 py-10 md:px-8 md:py-14">
       <div className="mx-auto w-full max-w-7xl">
@@ -24,10 +24,14 @@ export default function AutotestV2Page() {
           <span className="mx-2" aria-hidden>
             /
           </span>
-          <span className="text-primary">Autotest de vacunas (v2)</span>
+          <span className="text-primary">Autotest de vacunas (v3)</span>
         </nav>
         <Reveal delay={80}>
-          <AutotestQuiz variant="byAge" accumulateMode="until12" />
+          <AutotestQuiz
+            variant="byAge"
+            accumulateMode="until24"
+            collapsibleMonths
+          />
         </Reveal>
       </div>
     </section>
