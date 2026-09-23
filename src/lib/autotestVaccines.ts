@@ -94,13 +94,27 @@ export function recommendVaccines(months: number): VaccineReco {
     };
   }
 
-  // 12 a 14 meses
-  if (months < 15) {
+  // 12 meses (solo el mes del control)
+  if (months < 13) {
     return {
       calendario: [
         { name: "Neumococo Conjugada", detail: "12 meses" },
         { name: "Hepatitis A", detail: "12 meses" },
         { name: "Triple Viral SRP", detail: "12 meses" },
+      ],
+      recomendadas: [],
+    };
+  }
+
+  // 13 a 14 meses — entre el control de 12 y el de 15;
+  // la Antigripal sigue vigente (desde los 6 hasta los 24 meses).
+  if (months < 15) {
+    return {
+      calendario: [
+        {
+          name: "Antigripal",
+          detail: "Desde los 6 meses hasta los 24 meses",
+        },
       ],
       recomendadas: [],
     };
@@ -254,6 +268,8 @@ type ChildMilestone = {
   /** Mes representativo para `recommendVaccines` */
   sampleMonth: number;
   matches: (months: number) => boolean;
+  /** Entre dos controles del calendario: sin vacunas "actuales" propias. */
+  betweenVisits?: boolean;
 };
 
 /** Misma granularidad que `recommendVaccines` (niños hasta 17 años). */
@@ -264,7 +280,14 @@ const CHILD_MILESTONES: ChildMilestone[] = [
   { id: "4m", label: "4 meses", sampleMonth: 4, matches: (m) => m >= 4 && m < 5 },
   { id: "5m", label: "5 meses", sampleMonth: 5, matches: (m) => m >= 5 && m < 6 },
   { id: "6m", label: "6 a 11 meses", sampleMonth: 6, matches: (m) => m >= 6 && m < 12 },
-  { id: "12m", label: "12 meses", sampleMonth: 12, matches: (m) => m >= 12 && m < 15 },
+  { id: "12m", label: "12 meses", sampleMonth: 12, matches: (m) => m >= 12 && m < 13 },
+  {
+    id: "13-14m",
+    label: "13 a 14 meses",
+    sampleMonth: 13,
+    matches: (m) => m >= 13 && m < 15,
+    betweenVisits: true,
+  },
   { id: "15m", label: "15 meses", sampleMonth: 15, matches: (m) => m >= 15 && m < 18 },
   { id: "18m", label: "18 meses", sampleMonth: 18, matches: (m) => m >= 18 && m < 24 },
   { id: "2-4y", label: "2 a 4 años", sampleMonth: 36, matches: (m) => m >= 24 && m < 60 },
@@ -281,6 +304,14 @@ function vaccineKey(v: Vaccine): string {
 function childMilestoneIndex(months: number): number | null {
   const idx = CHILD_MILESTONES.findIndex((r) => r.matches(months));
   return idx >= 0 ? idx : null;
+}
+
+function nextVisitMilestone(idx: number): ChildMilestone | null {
+  for (let i = idx + 1; i < CHILD_MILESTONES.length; i++) {
+    const m = CHILD_MILESTONES[i]!;
+    if (!m.betweenVisits) return m;
+  }
+  return null;
 }
 
 /** Cómo se arman las "vacunas anteriores" en el primer tramo infantil. */
@@ -324,20 +355,21 @@ export function getVaccinePlan(
   }
 
   const current = CHILD_MILESTONES[idx]!;
-  const prev = idx > 0 ? CHILD_MILESTONES[idx - 1] : null;
-  const next =
-    idx < CHILD_MILESTONES.length - 1 ? CHILD_MILESTONES[idx + 1] : null;
+  const prevVisit =
+    [...CHILD_MILESTONES.slice(0, idx)].reverse().find((m) => !m.betweenVisits) ??
+    null;
+  const next = nextVisitMilestone(idx);
 
   const buckets: VaccineBucket[] = [];
 
-  if (prev) {
+  if (prevVisit) {
     // until12: nace→12 inclusive; después desde el año hasta 24; luego 1 control.
     // until24: nace→24 inclusive; luego 1 control.
     // windows: nace→<12; 12–24 desde el año; luego 1 control.
     let prevMilestones: ChildMilestone[];
     if (accumulateMode === "until24") {
       prevMilestones =
-        months <= 24 ? CHILD_MILESTONES.slice(0, idx) : [prev];
+        months <= 24 ? CHILD_MILESTONES.slice(0, idx) : [prevVisit];
     } else if (
       accumulateMode === "until12"
         ? months <= 12
@@ -347,10 +379,13 @@ export function getVaccinePlan(
     } else if (months < 24) {
       const start = CHILD_MILESTONES.findIndex((m) => m.id === "12m");
       prevMilestones = CHILD_MILESTONES.slice(start, idx);
-      if (prevMilestones.length === 0) prevMilestones = [prev];
+      if (prevMilestones.length === 0) prevMilestones = [prevVisit];
     } else {
-      prevMilestones = [prev];
+      prevMilestones = [prevVisit];
     }
+    prevMilestones = prevMilestones.filter((m) => !m.betweenVisits);
+    if (prevMilestones.length === 0) prevMilestones = [prevVisit];
+
     const calendario: Vaccine[] = [];
     const recomendadas: Vaccine[] = [];
     for (const m of prevMilestones) {
@@ -361,24 +396,38 @@ export function getVaccinePlan(
       );
     }
     const first = prevMilestones[0]!;
+    const last = prevMilestones[prevMilestones.length - 1]!;
     buckets.push({
       id: "anteriores",
       title: "Vacunas anteriores",
       rangeLabel:
-        prevMilestones.length > 1 ? `${first.label} a ${prev.label}` : prev.label,
+        prevMilestones.length > 1
+          ? `${first.label} a ${last.label}`
+          : last.label,
       checkable: true,
       calendario,
       recomendadas,
     });
   }
 
-  buckets.push({
-    id: "actuales",
-    title: "Vacunas actuales",
-    rangeLabel: current.label,
-    checkable: true,
-    ...recommendVaccines(months),
-  });
+  // Entre controles (p. ej. 13–14): sin vacunas del hito de 12,
+  // pero sí las vigentes del tramo (Antigripal).
+  const actuales = recommendVaccines(months);
+  if (
+    !current.betweenVisits ||
+    actuales.calendario.length > 0 ||
+    actuales.recomendadas.length > 0
+  ) {
+    buckets.push({
+      id: "actuales",
+      title: "Vacunas actuales",
+      rangeLabel: current.betweenVisits
+        ? "Vigentes en esta edad"
+        : current.label,
+      checkable: true,
+      ...actuales,
+    });
+  }
 
   if (next) {
     const reco = recommendVaccines(next.sampleMonth);
