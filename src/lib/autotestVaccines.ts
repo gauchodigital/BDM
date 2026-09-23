@@ -170,8 +170,8 @@ export function recommendVaccines(months: number): VaccineReco {
     return { calendario: [], recomendadas: [] };
   }
 
-  // 11 a 14 años (cohorte "Nacidos en 2015" del PDF: completar este esquema)
-  if (years < 15) {
+  // 11 años (cohorte "Nacidos en 2015" del PDF)
+  if (years < 12) {
     return {
       calendario: [
         { name: "Meningococo ACWY", detail: "Única dosis (11 años)" },
@@ -190,6 +190,11 @@ export function recommendVaccines(months: number): VaccineReco {
       ],
       recomendadas: [],
     };
+  }
+
+  // 12 a 14 años — tramo sin dosis (misma lógica que 2-4 y 6-10 años)
+  if (years < 15) {
+    return { calendario: [], recomendadas: [] };
   }
 
   // 15 a 17 años (etapa "A partir de los 15 años" del PDF)
@@ -293,7 +298,8 @@ const CHILD_MILESTONES: ChildMilestone[] = [
   { id: "2-4y", label: "2 a 4 años", sampleMonth: 36, matches: (m) => m >= 24 && m < 60 },
   { id: "5y", label: "5 años", sampleMonth: 60, matches: (m) => m >= 60 && m < 72 },
   { id: "6-10y", label: "6 a 10 años", sampleMonth: 84, matches: (m) => m >= 72 && m < 132 },
-  { id: "11-14y", label: "11 a 14 años", sampleMonth: 132, matches: (m) => m >= 132 && m < 180 },
+  { id: "11y", label: "11 años", sampleMonth: 132, matches: (m) => m >= 132 && m < 144 },
+  { id: "12-14y", label: "12 a 14 años", sampleMonth: 144, matches: (m) => m >= 144 && m < 180 },
   { id: "15-17y", label: "15 a 17 años", sampleMonth: 180, matches: (m) => m >= 180 && m < 216 },
 ];
 
