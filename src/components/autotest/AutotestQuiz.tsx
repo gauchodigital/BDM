@@ -230,6 +230,31 @@ const GSK_LOGO_SRC = "/brand/logo-gsk-footer.png";
 const BRAND_NAME = "BastaDeMeningitis";
 const PURPLE = "#503C77";
 
+/** Colores del canvas de descarga (mismos tonos que la UI de selección). */
+const TONE_CANVAS: Record<
+  Tone,
+  { label: string; card: string; bullet: string; name: string }
+> = {
+  primary: {
+    label: "#503C77",
+    card: "#F3F0F8",
+    bullet: "#503C77",
+    name: "#503C77",
+  },
+  accent: {
+    label: "#DD876E",
+    card: "#FDF0EC",
+    bullet: "#DD876E",
+    name: "#DD876E",
+  },
+  sky: {
+    label: "#6D6AAE",
+    card: "#EEECF2",
+    bullet: "#6D6AAE",
+    name: "#6D6AAE",
+  },
+};
+
 const SHARE_WARNING =
   "Este resultado es orientativo: contempla las vacunas del Calendario Nacional de Vacunación y algunas recomendadas fuera de él (vacunación particular). Siempre consultá con el médico para confirmar qué vacunas corresponden según edad y condición clínica particular.";
 
@@ -291,7 +316,7 @@ function wrapText(
 
 async function buildCanvas(
   pendingCount: number,
-  groups: { title: string; items: Vaccine[] }[],
+  groups: { title: string; items: Vaccine[]; tone: Tone }[],
 ) {
   const [logo, gskLogo] = await Promise.all([
     loadImage(LOGO_SRC),
@@ -334,6 +359,7 @@ async function buildCanvas(
   };
   type GroupOp = {
     title: string;
+    tone: Tone;
     cards: CardOp[];
     h: number;
   };
@@ -352,7 +378,12 @@ async function buildCanvas(
       return { nameLines, detailLines, h };
     });
     const cardsH = cards.reduce((sum, c, i) => sum + c.h + (i > 0 ? 10 : 0), 0);
-    groupOps.push({ title: g.title.toUpperCase(), cards, h: 22 + cardsH });
+    groupOps.push({
+      title: g.title.toUpperCase(),
+      tone: g.tone,
+      cards,
+      h: 22 + cardsH,
+    });
   }
 
   const listH =
@@ -429,27 +460,29 @@ async function buildCanvas(
 
   for (let gi = 0; gi < groupOps.length; gi++) {
     const g = groupOps[gi]!;
+    const colors = TONE_CANVAS[g.tone];
     if (gi > 0) y += 24;
 
-    ctx.fillStyle = PURPLE;
+    ctx.fillStyle = colors.bullet;
     ctx.beginPath();
     ctx.arc(PAD + 5, y + 6, 4, 0, Math.PI * 2);
     ctx.fill();
+    ctx.fillStyle = colors.label;
     ctx.font = fGroup;
     ctx.fillText(g.title, PAD + 16, y);
     y += 22;
 
     for (const card of g.cards) {
-      ctx.fillStyle = "#F3F0F8";
+      ctx.fillStyle = colors.card;
       roundRectPath(ctx, PAD, y, contentW, card.h, 12);
       ctx.fill();
-      ctx.fillStyle = PURPLE;
+      ctx.fillStyle = colors.bullet;
       ctx.beginPath();
       ctx.arc(PAD + 14, y + card.h / 2, 4, 0, Math.PI * 2);
       ctx.fill();
 
       let ty = y + 14;
-      ctx.fillStyle = PURPLE;
+      ctx.fillStyle = colors.name;
       ctx.font = fName;
       for (const l of card.nameLines) {
         ctx.fillText(l, cardTextX, ty);
@@ -987,14 +1020,24 @@ export function AutotestQuiz({
                   </p>
 
                   <div className="mt-5 flex flex-col gap-6">
-                    {pendingGroups.map((g) => (
+                    {pendingGroups.map((g) => {
+                      const t = TONE[g.tone];
+                      return (
                       <div key={g.key}>
                         <div className="flex items-center gap-2">
                           <span
-                            className="h-2 w-2 shrink-0 rounded-full bg-[#503C77]"
+                            className={`h-2 w-2 shrink-0 rounded-full ${
+                              g.tone === "accent"
+                                ? "bg-[#DD876E]"
+                                : g.tone === "sky"
+                                  ? "bg-[#6D6AAE]"
+                                  : "bg-[#503C77]"
+                            }`}
                             aria-hidden
                           />
-                          <p className="text-[12px] font-extrabold uppercase tracking-wide text-[#503C77]">
+                          <p
+                            className={`text-[12px] font-extrabold uppercase tracking-wide ${t.sectionLabel}`}
+                          >
                             {g.title}
                           </p>
                         </div>
@@ -1002,14 +1045,20 @@ export function AutotestQuiz({
                           {g.items.map((v) => (
                             <li
                               key={vaccineItemKey(g.key, v)}
-                              className="flex gap-3 rounded-[12px] bg-[#F3F0F8] px-4 py-3.5"
+                              className={`flex gap-3 rounded-[12px] px-4 py-3.5 ${t.card}`}
                             >
                               <span
-                                className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-[#503C77]"
+                                className={`mt-1.5 h-2 w-2 shrink-0 rounded-full ${
+                                  g.tone === "accent"
+                                    ? "bg-[#DD876E]"
+                                    : g.tone === "sky"
+                                      ? "bg-[#6D6AAE]"
+                                      : "bg-[#503C77]"
+                                }`}
                                 aria-hidden
                               />
                               <div>
-                                <p className="text-[15px] font-bold text-[#503C77]">
+                                <p className={`text-[15px] font-bold ${t.name}`}>
                                   {v.name}
                                 </p>
                                 <p className="mt-0.5 text-[13px] text-muted">
@@ -1020,7 +1069,8 @@ export function AutotestQuiz({
                           ))}
                         </ul>
                       </div>
-                    ))}
+                      );
+                    })}
                   </div>
                 </>
               ) : (
@@ -1084,6 +1134,7 @@ export function AutotestQuiz({
                         [...pendingGroups, ...upcomingGroups].map((g) => ({
                           title: g.title,
                           items: g.items,
+                          tone: g.tone,
                         })),
                       );
                       await downloadImage(canvas);
@@ -1128,6 +1179,7 @@ export function AutotestQuiz({
                         upcomingGroups.map((g) => ({
                           title: g.title,
                           items: g.items,
+                          tone: g.tone,
                         })),
                       );
                       await downloadImage(canvas);
