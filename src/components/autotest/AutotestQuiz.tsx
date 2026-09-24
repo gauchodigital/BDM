@@ -550,24 +550,52 @@ function canvasToBlob(canvas: HTMLCanvasElement): Promise<Blob | null> {
   return new Promise((res) => canvas.toBlob(res, "image/png"));
 }
 
+/**
+ * En iPhone/iPad, `<a download>` cae en Archivos/Drive.
+ * Con Web Share el sistema ofrece "Guardar en Fotos" (no se puede forzar
+ * la galería sin esa elección del usuario).
+ */
 async function downloadImage(canvas: HTMLCanvasElement) {
   const blob = await canvasToBlob(canvas);
   if (!blob) return;
+  const fileName = "vacunas-pendientes-bdm.png";
+  const file = new File([blob], fileName, { type: "image/png" });
+
+  const canShareFiles =
+    typeof navigator !== "undefined" &&
+    typeof navigator.share === "function" &&
+    typeof navigator.canShare === "function" &&
+    navigator.canShare({ files: [file] });
+
+  if (canShareFiles) {
+    try {
+      await navigator.share({ files: [file], title: "Vacunas pendientes" });
+      return;
+    } catch (err) {
+      // Canceló el share: no forzar otra descarga.
+      if (err instanceof DOMException && err.name === "AbortError") return;
+    }
+  }
+
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;
-  a.download = "vacunas-pendientes-bdm.png";
+  a.download = fileName;
   document.body.appendChild(a);
   a.click();
   a.remove();
   setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 
-function googleCalendarUrl(names: string[]): string {
-  const title = encodeURIComponent("Recordatorio: vacunas");
-  const details = encodeURIComponent(
-    `Vacunas (Basta de Meningitis):\n• ${names.join("\n• ")}\n\nResultado orientativo — consultá con tu médico o pediatra.`,
-  );
+function icsEscape(text: string): string {
+  return text
+    .replace(/\\/g, "\\\\")
+    .replace(/;/g, "\\;")
+    .replace(/,/g, "\\,")
+    .replace(/\r?\n/g, "\\n");
+}
+
+function reminderDates() {
   const start = new Date();
   start.setDate(start.getDate() + 7);
   start.setHours(10, 0, 0, 0);
@@ -578,7 +606,67 @@ function googleCalendarUrl(names: string[]): string {
       .toISOString()
       .replace(/[-:]/g, "")
       .replace(/\.\d{3}/, "");
+  return { start, end, fmt };
+}
+
+function googleCalendarUrl(names: string[]): string {
+  const title = encodeURIComponent("Recordatorio: vacunas");
+  const details = encodeURIComponent(
+    `Vacunas (Basta de Meningitis):\n• ${names.join("\n• ")}\n\nResultado orientativo — consultá con tu médico o pediatra.`,
+  );
+  const { start, end, fmt } = reminderDates();
   return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&details=${details}&dates=${fmt(start)}/${fmt(end)}`;
+}
+
+function buildReminderIcs(names: string[]): string {
+  const { start, end, fmt } = reminderDates();
+  const stamp = fmt(new Date());
+  const uid = `bdm-vacunas-${Date.now()}@bastademeningitis`;
+  const title = "Recordatorio: vacunas";
+  const details = `Vacunas (Basta de Meningitis):\n• ${names.join("\n• ")}\n\nResultado orientativo — consultá con tu médico o pediatra.`;
+  return [
+    "BEGIN:VCALENDAR",
+    "VERSION:2.0",
+    "PRODID:-//BastaDeMeningitis//Autotest//ES",
+    "CALSCALE:GREGORIAN",
+    "METHOD:PUBLISH",
+    "BEGIN:VEVENT",
+    `UID:${uid}`,
+    `DTSTAMP:${stamp}`,
+    `DTSTART:${fmt(start)}`,
+    `DTEND:${fmt(end)}`,
+    `SUMMARY:${icsEscape(title)}`,
+    `DESCRIPTION:${icsEscape(details)}`,
+    "END:VEVENT",
+    "END:VCALENDAR",
+  ].join("\r\n");
+}
+
+function isAppleTouchDevice(): boolean {
+  if (typeof navigator === "undefined") return false;
+  return (
+    /iPad|iPhone|iPod/i.test(navigator.userAgent) ||
+    (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1)
+  );
+}
+
+/** iOS: .ics → Calendar del teléfono. Resto: plantilla de Google Calendar. */
+function openCalendarReminder(names: string[]) {
+  if (isAppleTouchDevice()) {
+    const blob = new Blob([buildReminderIcs(names)], {
+      type: "text/calendar;charset=utf-8",
+    });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "recordatorio-vacunas-bdm.ics";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+    return;
+  }
+  window.open(googleCalendarUrl(names), "_blank", "noopener,noreferrer");
 }
 
 function isoToDisplay(iso: string): string {
@@ -637,11 +725,9 @@ function groupByStage(items: Vaccine[]): { stage: string; items: Vaccine[] }[] {
 }
 
 /**
- * variant="byAge" (/autotestv2, /autotestv3): las "anteriores" acumuladas se
- * muestran agrupadas por edad, con "Marcar todas" por grupo.
- * Las tres rutas (/autotest, /autotestv2, /autotestv3) usan la MISMA lógica
- * (accumulateMode "windows", la aprobada por GSK); solo cambia el diseño.
- * collapsibleMonths (/autotestv3): cada mes se abre/cierra para acortar la lista.
+ * variant="byAge": "anteriores" agrupadas por edad, con "Marcar todas".
+ * collapsibleMonths: cada mes se abre/cierra (diseño v3, el elegido por GSK).
+ * Lógica de acumulación: "windows" (aprobada por GSK).
  */
 export function AutotestQuiz({
   variant = "default",
@@ -1147,10 +1233,9 @@ export function AutotestQuiz({
               ) : null}
 
               {reminderNames.length > 0 ? (
-                <a
-                  href={googleCalendarUrl(reminderNames)}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <button
+                  type="button"
+                  onClick={() => openCalendarReminder(reminderNames)}
                   className={`flex w-full items-center justify-center rounded-[10px] py-3.5 text-[15px] font-bold transition ${
                     upcomingNames.length > 0
                       ? `${pendingCount > 0 ? "mt-3" : "mt-6"} bg-[#DD876E] text-white hover:brightness-105`
@@ -1158,7 +1243,7 @@ export function AutotestQuiz({
                   }`}
                 >
                   Agendar un recordatorio
-                </a>
+                </button>
               ) : null}
             </>
           ) : (

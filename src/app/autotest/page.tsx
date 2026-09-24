@@ -26,7 +26,7 @@ export default function AutotestPage() {
           <span className="text-primary">Autotest de vacunas</span>
         </nav>
         <Reveal delay={80}>
-          <AutotestQuiz />
+          <AutotestQuiz variant="byAge" collapsibleMonths />
         </Reveal>
       </div>
     </section>

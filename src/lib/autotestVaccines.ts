@@ -320,6 +320,21 @@ function nextVisitMilestone(idx: number): ChildMilestone | null {
   return null;
 }
 
+function milestoneHasDoses(m: ChildMilestone): boolean {
+  const reco = recommendVaccines(m.sampleMonth);
+  return reco.calendario.length > 0 || reco.recomendadas.length > 0;
+}
+
+/** Último control con vacunas propias (salta tramos vacíos como 12–14 años). */
+function prevVisitWithDoses(idx: number): ChildMilestone | null {
+  for (let i = idx - 1; i >= 0; i--) {
+    const m = CHILD_MILESTONES[i]!;
+    if (m.betweenVisits) continue;
+    if (milestoneHasDoses(m)) return m;
+  }
+  return null;
+}
+
 /** Cómo se arman las "vacunas anteriores" en el primer tramo infantil. */
 export type AccumulateMode =
   /** Pedido cliente: <12 desde nacimiento; 12–24 desde el año; luego 1 control. */
@@ -361,9 +376,7 @@ export function getVaccinePlan(
   }
 
   const current = CHILD_MILESTONES[idx]!;
-  const prevVisit =
-    [...CHILD_MILESTONES.slice(0, idx)].reverse().find((m) => !m.betweenVisits) ??
-    null;
+  const prevVisit = prevVisitWithDoses(idx);
   const next = nextVisitMilestone(idx);
 
   const buckets: VaccineBucket[] = [];
@@ -389,7 +402,9 @@ export function getVaccinePlan(
     } else {
       prevMilestones = [prevVisit];
     }
-    prevMilestones = prevMilestones.filter((m) => !m.betweenVisits);
+    prevMilestones = prevMilestones.filter(
+      (m) => !m.betweenVisits && milestoneHasDoses(m),
+    );
     if (prevMilestones.length === 0) prevMilestones = [prevVisit];
 
     const calendario: Vaccine[] = [];
@@ -401,19 +416,21 @@ export function getVaccinePlan(
         ...reco.recomendadas.map((v) => ({ ...v, stage: m.label })),
       );
     }
-    const first = prevMilestones[0]!;
-    const last = prevMilestones[prevMilestones.length - 1]!;
-    buckets.push({
-      id: "anteriores",
-      title: "Vacunas anteriores",
-      rangeLabel:
-        prevMilestones.length > 1
-          ? `${first.label} a ${last.label}`
-          : last.label,
-      checkable: true,
-      calendario,
-      recomendadas,
-    });
+    if (calendario.length > 0 || recomendadas.length > 0) {
+      const first = prevMilestones[0]!;
+      const last = prevMilestones[prevMilestones.length - 1]!;
+      buckets.push({
+        id: "anteriores",
+        title: "Vacunas anteriores",
+        rangeLabel:
+          prevMilestones.length > 1
+            ? `${first.label} a ${last.label}`
+            : last.label,
+        checkable: true,
+        calendario,
+        recomendadas,
+      });
+    }
   }
 
   // Entre controles (p. ej. 13–14): sin vacunas del hito de 12,
