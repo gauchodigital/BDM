@@ -44,6 +44,10 @@ type AutotestRow = {
 type MapRow = {
   type?: string;
   provincia?: string;
+  localidad?: string;
+  barrio?: string;
+  tipo?: string;
+  q?: string;
   count?: number;
   ts?: Timestamp;
 };
@@ -132,6 +136,9 @@ export function DatosDashboard() {
     llegar: "–",
     conv: "–",
   });
+  const [mapSearches, setMapSearches] = useState<
+    { name: string; value: number }[]
+  >([]);
   const [popupKpis, setPopupKpis] = useState({
     campView: "–",
     campAnswer: "–",
@@ -515,9 +522,22 @@ export function DatosDashboard() {
       );
 
       const prov: Record<string, number> = {};
+      const locs: Record<string, number> = {};
+      const queries: Record<string, number> = {};
       mp.forEach((d) => {
-        if (d.type === "results" && d.provincia) {
+        if (d.type !== "results") return;
+        if (d.provincia) {
           prov[d.provincia] = (prov[d.provincia] || 0) + 1;
+        }
+        if (d.localidad) {
+          const key = d.provincia
+            ? `${d.localidad} (${d.provincia})`
+            : d.localidad;
+          locs[key] = (locs[key] || 0) + 1;
+        }
+        if (d.q) {
+          const qKey = d.q.toLowerCase();
+          queries[qKey] = (queries[qKey] || 0) + 1;
         }
       });
       const provArr = Object.keys(prov)
@@ -548,6 +568,44 @@ export function DatosDashboard() {
         },
         true,
       );
+
+      const locArr = Object.keys(locs)
+        .map((k) => ({ name: k, value: locs[k] }))
+        .sort((a, b) => b.value - a.value)
+        .slice(0, 8)
+        .reverse();
+      chartEl("localidades")?.setOption(
+        {
+          tooltip: { trigger: "axis", axisPointer: { type: "shadow" } },
+          grid: {
+            left: 10,
+            right: 30,
+            top: 10,
+            bottom: 20,
+            containLabel: true,
+          },
+          xAxis: { type: "value" },
+          yAxis: {
+            type: "category",
+            data: locArr.length ? locArr.map((p) => p.name) : ["(sin datos)"],
+          },
+          series: [
+            {
+              type: "bar",
+              data: locArr.length ? locArr.map((p) => p.value) : [0],
+              itemStyle: { color: ACCENT, borderRadius: [0, 6, 6, 0] },
+              label: { show: true, position: "right" },
+            },
+          ],
+        },
+        true,
+      );
+
+      const qArr = Object.keys(queries)
+        .map((k) => ({ name: k, value: queries[k] }))
+        .sort((a, b) => b.value - a.value)
+        .slice(0, 10);
+      setMapSearches(qArr);
 
       // ===== Popups =====
       const camp = pp.filter((d) => d.popup === "campaign");
@@ -1124,6 +1182,49 @@ export function DatosDashboard() {
                 </Card>
                 <Card title="Top provincias buscadas" sub="En búsquedas con resultados">
                   <div id="provincias" className="h-[420px] w-full" />
+                </Card>
+              </div>
+              <div className="mt-4 grid gap-4 md:grid-cols-2">
+                <Card
+                  title="Top localidades"
+                  sub="Cuando eligen localidad en el filtro"
+                >
+                  <div id="localidades" className="h-[340px] w-full" />
+                </Card>
+                <Card
+                  title="Texto del buscador"
+                  sub="Lo que escribieron en el campo de búsqueda"
+                >
+                  {mapSearches.length === 0 ? (
+                    <p className="py-8 text-center text-sm text-[#6b6578]">
+                      Todavía no hay búsquedas con texto (solo filtros).
+                    </p>
+                  ) : (
+                    <table className="w-full border-collapse text-sm">
+                      <thead>
+                        <tr>
+                          <th className="bg-[#503C77] px-2.5 py-2 text-left text-white">
+                            Búsqueda
+                          </th>
+                          <th className="bg-[#503C77] px-2.5 py-2 text-left text-white">
+                            Veces
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {mapSearches.map((row) => (
+                          <tr key={row.name}>
+                            <td className="border border-[#e8e4f0] px-2.5 py-2">
+                              {row.name}
+                            </td>
+                            <td className="border border-[#e8e4f0] px-2.5 py-2 text-center">
+                              {row.value}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  )}
                 </Card>
               </div>
             </section>

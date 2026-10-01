@@ -481,9 +481,15 @@ class VacunatoriosMap {
         this.isLoading = false;
 
         if (typeof window.bdmTrack?.map === 'function') {
+            const searchInput = document.getElementById('inputBusqueda');
+            const q = (searchInput?.value || '').trim().slice(0, 80);
             window.bdmTrack.map({
                 type: 'results',
                 provincia: this.filters.provincia || '',
+                localidad: this.filters.localidad || '',
+                barrio: this.filters.barrio || '',
+                tipo: this.filters.tipo || '',
+                q: q || undefined,
                 count: filtered.length,
             });
         }

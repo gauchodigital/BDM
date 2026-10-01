@@ -143,7 +143,7 @@ export function CentrosVacunacionMap({
       });
     }
 
-    loadScript("/mapa/js/vacunatorios.js?v=menor-si-track", "data-bdm-vacunatorios")
+    loadScript("/mapa/js/vacunatorios.js?v=map-search-track", "data-bdm-vacunatorios")
       .then(() => {
         if (cancelled) return;
         if (window.google?.maps) {

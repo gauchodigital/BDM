@@ -21,7 +21,7 @@ service cloud.firestore {
     match /map/{id} {
       allow create: if request.resource.data.keys().hasAll(['ts', 'type'])
                     && request.resource.data.ts == request.time
-                    && request.resource.data.size() <= 8;
+                    && request.resource.data.size() <= 10;
       allow read:   if isViewer();
       allow update, delete: if false;
     }

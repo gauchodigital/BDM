@@ -31,6 +31,11 @@ type AutotestPayload = {
 type MapPayload = {
   type: MapEventType;
   provincia?: string;
+  localidad?: string;
+  barrio?: string;
+  tipo?: string;
+  /** Texto libre del buscador (recortado) */
+  q?: string;
   count?: number;
 };
 
@@ -119,6 +124,10 @@ export function trackMap(payload: MapPayload): void {
   void write("map", {
     type: payload.type,
     provincia: payload.provincia,
+    localidad: payload.localidad,
+    barrio: payload.barrio,
+    tipo: payload.tipo,
+    q: payload.q,
     count: payload.count,
   });
 }
