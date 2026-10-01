@@ -873,11 +873,9 @@ export function DatosDashboard() {
             Firebase no configurado
           </h1>
           <p className="mb-0 text-sm text-[#6b6578]">
-            Completá las variables{" "}
-            <code className="text-xs">NEXT_PUBLIC_FIREBASE_*</code> en{" "}
-            <code className="text-xs">.env.local</code> (local) o en el{" "}
-            <code className="text-xs">.env</code> del servidor antes del build.
-            Ver <code className="text-xs">docs/FIREBASE-SETUP.md</code>.
+            Completá / verificá la config de Firebase en{" "}
+            <code className="text-xs">src/lib/firebase.ts</code>. Ver{" "}
+            <code className="text-xs">docs/FIREBASE-SETUP.md</code>.
           </p>
         </LockBox>
       </Center>

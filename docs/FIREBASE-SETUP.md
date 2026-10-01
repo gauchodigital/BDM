@@ -10,9 +10,10 @@
 6. **Configuración del proyecto → Tus apps → Web** → registrar app `bdm-web`
 7. Copiá el objeto `firebaseConfig`
 
-## 2. Variables de entorno
+## 2. Config del cliente (en el código)
 
-Creá un archivo `.env.local` (no se sube a git) con:
+La config web de Firebase está en `src/lib/firebase.ts` (como en VSR: es pública).
+Opcional: override con `NEXT_PUBLIC_FIREBASE_*` en `.env.local` / servidor.
 
 ```
 NEXT_PUBLIC_FIREBASE_API_KEY=
@@ -23,7 +24,7 @@ NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=
 NEXT_PUBLIC_FIREBASE_APP_ID=
 ```
 
-En el **servidor de deploy** (Hostinger / VPS / panel de ellos): las mismas keys en el `.env` o variables de entorno del proceso Node **antes del `next build`**. Las `NEXT_PUBLIC_*` se incrustan en el build; si faltan al compilar, el sitio sale sin medición.
+No hace falta pedir estas vars en Vercel si la config del código es la correcta.
 
 ## 3. Reglas de seguridad
 
