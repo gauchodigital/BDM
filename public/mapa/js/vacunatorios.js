@@ -479,6 +479,14 @@ class VacunatoriosMap {
         this.renderMarkers(filtered);
         this.updateResultsList(filtered);
         this.isLoading = false;
+
+        if (typeof window.bdmTrack?.map === 'function') {
+            window.bdmTrack.map({
+                type: 'results',
+                provincia: this.filters.provincia || '',
+                count: filtered.length,
+            });
+        }
     }
 
     // ── Markers ──
@@ -506,6 +514,9 @@ class VacunatoriosMap {
             marker._vacunatorio = v;
 
             marker.addListener('click', () => {
+                if (typeof window.bdmTrack?.map === 'function') {
+                    window.bdmTrack.map({ type: 'marker' });
+                }
                 this.infoWindow.setContent(this.createPopupContent(v));
                 this.infoWindow.open(this.map, marker);
             });
@@ -686,11 +697,17 @@ class VacunatoriosMap {
 
         card.querySelector('.btn-como-llegar')?.addEventListener('click', (e) => {
             e.stopPropagation();
+            if (typeof window.bdmTrack?.map === 'function') {
+                window.bdmTrack.map({ type: 'como_llegar' });
+            }
         });
 
         card.addEventListener('click', () => {
             const targetMarker = this.markers.find(m => m._vacunatorio === v);
             if (targetMarker) {
+                if (typeof window.bdmTrack?.map === 'function') {
+                    window.bdmTrack.map({ type: 'marker' });
+                }
                 document.querySelectorAll('.card-vacunatorio.selected').forEach(c => c.classList.remove('selected'));
                 card.classList.add('selected');
 

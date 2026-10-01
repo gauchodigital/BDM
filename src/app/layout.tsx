@@ -6,6 +6,7 @@ import {
   GoogleTagManagerNoscript,
 } from "@/components/analytics/GoogleTagManager";
 import { GoogleAnalytics } from "@/components/analytics/GoogleAnalytics";
+import { BdmTrackBoot } from "@/components/analytics/BdmTrackBoot";
 import { MetaPixel } from "@/components/analytics/MetaPixel";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
@@ -48,10 +49,11 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-screen flex flex-col font-[family-name:var(--font-body)]">
-        <GoogleAnalytics />
-        <GoogleTagManager />
         <GoogleTagManagerNoscript />
+        <GoogleTagManager />
+        <GoogleAnalytics />
         <MetaPixel />
+        <BdmTrackBoot />
         <Navbar />
         <main className="flex-1">
           {children}

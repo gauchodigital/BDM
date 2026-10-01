@@ -3,6 +3,11 @@
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
+  getAutotestSessionId,
+  resetAutotestSessionId,
+  trackAutotest,
+} from "@/lib/bdmTrack";
+import {
   ageBadge,
   getVaccinePlan,
   monthsBetween,
@@ -570,6 +575,7 @@ async function downloadImage(canvas: HTMLCanvasElement) {
   if (canShareFiles) {
     try {
       await navigator.share({ files: [file], title: "Vacunas pendientes" });
+      trackAutotest({ status: "share" });
       return;
     } catch (err) {
       // Canceló el share: no forzar otra descarga.
@@ -585,6 +591,7 @@ async function downloadImage(canvas: HTMLCanvasElement) {
   a.click();
   a.remove();
   setTimeout(() => URL.revokeObjectURL(url), 1000);
+  trackAutotest({ status: "share" });
 }
 
 function icsEscape(text: string): string {
@@ -652,6 +659,7 @@ function isAppleTouchDevice(): boolean {
 
 /** iOS: .ics → Calendar del teléfono. Resto: plantilla de Google Calendar. */
 function openCalendarReminder(names: string[]) {
+  trackAutotest({ status: "calendar" });
   if (isAppleTouchDevice()) {
     const blob = new Blob([buildReminderIcs(names)], {
       type: "text/calendar;charset=utf-8",
@@ -745,6 +753,9 @@ export function AutotestQuiz({
   const [done, setDone] = useState<Record<string, boolean>>({});
   const [openStages, setOpenStages] = useState<Record<string, boolean>>({});
   const datePickerRef = useRef<HTMLInputElement>(null);
+  const stepRef = useRef(step);
+  stepRef.current = step;
+  const completedRef = useRef(false);
 
   const today = new Date().toISOString().slice(0, 10);
   const parsedBirth = parseBirthDisplay(birthTyped, today);
@@ -790,6 +801,25 @@ export function AutotestQuiz({
   const reminderNames = [...pendingNames, ...upcomingNames];
 
   useEffect(() => {
+    getAutotestSessionId();
+    trackAutotest({ status: "start" });
+  }, []);
+
+  useEffect(() => {
+    const onLeave = () => {
+      if (completedRef.current) return;
+      const s = stepRef.current;
+      if (s >= 3) return;
+      trackAutotest({
+        status: "abandon",
+        last_screen: s === 1 ? "step1" : "step2",
+      });
+    };
+    window.addEventListener("pagehide", onLeave);
+    return () => window.removeEventListener("pagehide", onLeave);
+  }, []);
+
+  useEffect(() => {
     if (step === 1) return;
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [step]);
@@ -797,11 +827,28 @@ export function AutotestQuiz({
   const submit = () => {
     const parsed = parseBirthDisplay(birthTyped, today);
     if (!("iso" in parsed)) return;
+    const ageMonths = monthsBetween(
+      new Date(`${parsed.iso}T00:00:00`),
+      new Date(),
+    );
     setBirth(parsed.iso);
-    setMonths(monthsBetween(new Date(`${parsed.iso}T00:00:00`), new Date()));
+    setMonths(ageMonths);
     setDone({});
     setOpenStages({});
     setStep(2);
+    trackAutotest({
+      status: "age",
+      age_months: ageMonths,
+      age_label: ageBadge(ageMonths),
+    });
+  };
+
+  const goToResults = () => {
+    completedRef.current = true;
+    const count = pendingCount;
+    setStep(3);
+    trackAutotest({ status: "checklist", pending_count: count });
+    trackAutotest({ status: "complete", pending_count: count });
   };
 
   const toggle = (key: string) =>
@@ -815,12 +862,15 @@ export function AutotestQuiz({
     setOpenStages((s) => ({ ...s, [stage]: !s[stage] }));
 
   const reset = () => {
+    completedRef.current = false;
+    resetAutotestSessionId();
     setStep(1);
     setMonths(null);
     setBirth("");
     setBirthTyped("");
     setDone({});
     setOpenStages({});
+    trackAutotest({ status: "start" });
   };
 
   function onBirthTypedChange(value: string) {
@@ -1074,7 +1124,7 @@ export function AutotestQuiz({
 
           <button
             type="button"
-            onClick={() => setStep(3)}
+            onClick={goToResults}
             className="mt-8 flex w-full items-center justify-center gap-2 rounded-[10px] bg-[#503C77] py-3.5 text-[15px] font-bold text-white transition hover:brightness-110"
           >
             Continuar

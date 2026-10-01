@@ -16,6 +16,7 @@ import {
   type QuizOptionId,
 } from "@/lib/meningitisDayQuiz";
 import { POPUP_DEMO_CAMPAIGN_EVENT } from "@/lib/popupDemo";
+import { trackPopup } from "@/lib/bdmTrack";
 import { PopupFireworks } from "@/components/campaign/PopupFireworks";
 import { LogoManito } from "@/components/layout/LogoManito";
 import { RichText } from "@/components/ui/RichText";
@@ -88,7 +89,10 @@ export function WorldMeningitisDayPopup() {
   const [selected, setSelected] = useState<QuizOptionId | null>(null);
   const [fireworksKey, setFireworksKey] = useState(0);
 
-  const close = useCallback(() => {
+  const close = useCallback((opts?: { skipTrack?: boolean }) => {
+    if (!opts?.skipTrack) {
+      trackPopup({ popup: "campaign", type: "close" });
+    }
     dismissWorldMeningitisDayPopup();
     setPhase("hidden");
     setSelected(null);
@@ -99,6 +103,7 @@ export function WorldMeningitisDayPopup() {
     setSelected(null);
     setCountdown(QUIZ_COUNTDOWN_SECONDS);
     setPhase("tease");
+    trackPopup({ popup: "campaign", type: "view" });
   }, []);
 
   useEffect(() => {
@@ -142,6 +147,12 @@ export function WorldMeningitisDayPopup() {
     setSelected(id);
     setFireworksKey((key) => key + 1);
     setPhase("result");
+    trackPopup({
+      popup: "campaign",
+      type: "answer",
+      answer: id,
+      correct: isQuizAnswerCorrect(id) ? 1 : 0,
+    });
   }
 
   if (phase === "hidden") return null;
@@ -160,7 +171,7 @@ export function WorldMeningitisDayPopup() {
         aria-label="Cerrar"
         className="absolute inset-0 bg-[#120f18]"
         style={{ opacity: 0.72 }}
-        onClick={close}
+        onClick={() => close()}
       />
 
       <div
@@ -188,7 +199,7 @@ export function WorldMeningitisDayPopup() {
           >
             <button
               type="button"
-              onClick={close}
+              onClick={() => close()}
               className="absolute right-3 top-3 z-10 flex size-9 items-center justify-center rounded-full text-[#503C77] transition hover:bg-[#EEECF2]"
               aria-label="Cerrar aviso"
             >
@@ -267,7 +278,10 @@ export function WorldMeningitisDayPopup() {
 
                 <Link
                   href={QUIZ_CTA_HREF}
-                  onClick={close}
+                  onClick={() => {
+                    trackPopup({ popup: "campaign", type: "cta" });
+                    close({ skipTrack: true });
+                  }}
                   className="mt-6 inline-flex h-[48px] w-full max-w-[420px] items-center justify-center gap-2 rounded-[12px] bg-[#503C77] px-4 text-[13px] font-bold text-white transition hover:brightness-110 md:text-[14px]"
                 >
                   {QUIZ_CTA_LABEL}

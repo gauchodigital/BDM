@@ -10,6 +10,7 @@ import {
 } from "@/lib/pediatraEngagement";
 import { isDemoMode, isPediatraPreviewMode } from "@/lib/popupPreview";
 import { POPUP_DEMO_PEDIATRA_EVENT } from "@/lib/popupDemo";
+import { trackPopup } from "@/lib/bdmTrack";
 
 type Step = "hidden" | "question" | "thanks";
 
@@ -43,6 +44,9 @@ export function PediatraConsultPopup() {
   stepRef.current = step;
 
   const close = useCallback((value?: PediatraAnswer) => {
+    if (stepRef.current === "question") {
+      trackPopup({ popup: "pediatra", type: "close" });
+    }
     dismissPediatraConsultPopup(value);
     autoShownRef.current = true;
     setStep("hidden");
@@ -50,6 +54,11 @@ export function PediatraConsultPopup() {
 
   const respond = useCallback((value: PediatraAnswer) => {
     setAnswer(value);
+    trackPopup({
+      popup: "pediatra",
+      type: "answer",
+      answer: value,
+    });
     dismissPediatraConsultPopup(value);
     autoShownRef.current = true;
     setStep("thanks");
@@ -64,12 +73,14 @@ export function PediatraConsultPopup() {
     if (!isPediatraPreviewMode() && !sectionVisibleRef.current) return;
     autoShownRef.current = true;
     setStep("question");
+    trackPopup({ popup: "pediatra", type: "view" });
   }, []);
 
   useEffect(() => {
     const show = () => {
       setAnswer(null);
       setStep("question");
+      trackPopup({ popup: "pediatra", type: "view" });
     };
     window.addEventListener(POPUP_DEMO_PEDIATRA_EVENT, show);
     return () => window.removeEventListener(POPUP_DEMO_PEDIATRA_EVENT, show);

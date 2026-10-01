@@ -15,14 +15,16 @@ npm run start    # producción (Hostinger: next build + next start)
 
 ## Variables de entorno
 
-Copiá `.env.example` a `.env.local`:
+Copiá `env.example` a `.env.local` (local) o a `.env` en el **servidor de ellos** antes de `npm run build`.
+Deploy: push a git → ellos build/start en su máquina (no Vercel). Las `NEXT_PUBLIC_*` tienen que existir **en el build**.
 
 | Variable | Uso |
 |----------|-----|
 | `ADMIN_TOKEN` | Contraseña del panel `/admin` (obligatoria para editar) |
-| `NEXT_PUBLIC_GA_ID` | Google Analytics 4 (`G-XXXXXXXX`) |
-| `NEXT_PUBLIC_GTM_ID` | Google Tag Manager (`GTM-XXXXXXX`) |
-| `NEXT_PUBLIC_META_PIXEL_ID` | Meta Pixel |
+| `NEXT_PUBLIC_GA_ID` | Google Analytics 4 — `G-L0Y9DF136T` (flujo bastademeningitis) |
+| `NEXT_PUBLIC_GTM_ID` | Google Tag Manager — `GTM-NNSKLXPR` |
+| `NEXT_PUBLIC_META_PIXEL_ID` | Meta Pixel — `26359821603663161` |
+| `NEXT_PUBLIC_FIREBASE_*` | Medición dashboard `/equipo/datos` (ver `docs/FIREBASE-SETUP.md`) |
 
 ## Sitemap
 

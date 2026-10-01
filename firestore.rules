@@ -1,0 +1,44 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ¿Es un usuario habilitado para VER el dashboard?
+    function isViewer() {
+      return request.auth != null
+        && request.auth.token.email != null
+        && exists(/databases/$(database)/documents/allowedViewers/$(request.auth.token.email));
+    }
+
+    // El sitio (anónimo) solo puede CREAR registros chicos. No puede leer ni modificar.
+    match /autotest/{id} {
+      allow create: if request.resource.data.keys().hasAll(['ts', 'status'])
+                    && request.resource.data.ts == request.time
+                    && request.resource.data.size() <= 12;
+      allow read:   if isViewer();
+      allow update, delete: if false;
+    }
+
+    match /map/{id} {
+      allow create: if request.resource.data.keys().hasAll(['ts', 'type'])
+                    && request.resource.data.ts == request.time
+                    && request.resource.data.size() <= 8;
+      allow read:   if isViewer();
+      allow update, delete: if false;
+    }
+
+    // Popups: campaña (quiz) y pediatra
+    match /popup/{id} {
+      allow create: if request.resource.data.keys().hasAll(['ts', 'type', 'popup'])
+                    && request.resource.data.ts == request.time
+                    && request.resource.data.size() <= 8;
+      allow read:   if isViewer();
+      allow update, delete: if false;
+    }
+
+    // Lista de permitidos para ver el dashboard. Se administra desde la consola.
+    match /allowedViewers/{email} {
+      allow read:  if isViewer();
+      allow write: if false;
+    }
+  }
+}
