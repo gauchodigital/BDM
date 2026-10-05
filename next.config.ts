@@ -1,7 +1,14 @@
 import type { NextConfig } from "next";
 
+/**
+ * Export estático para subir por FTP/WinSCP (carpeta `out/`).
+ * Look & feel, JS cliente (mapa, autotest, Firebase dashboard) se conservan.
+ * `/admin` con server actions no aplica en estático (stub).
+ */
 const nextConfig: NextConfig = {
+  output: "export",
   images: {
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: "https",
@@ -10,23 +17,7 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  async headers() {
-    return [
-      {
-        source: "/admin/:path*",
-        headers: [
-          {
-            key: "Cache-Control",
-            value: "private, no-store, no-cache, max-age=0, must-revalidate",
-          },
-          {
-            key: "CDN-Cache-Control",
-            value: "no-store",
-          },
-        ],
-      },
-    ];
-  },
+  trailingSlash: true,
 };
 
 export default nextConfig;

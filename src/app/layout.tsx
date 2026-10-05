@@ -31,7 +31,11 @@ export const metadata: Metadata = {
   description:
     "Concientización sobre meningitis: síntomas, causas, vacunación y cuándo consultar. Información clara en español.",
   icons: {
-    icon: "/brand/logo-manito-white.png",
+    icon: [
+      { url: "/brand/favicon.png", type: "image/png", sizes: "32x32" },
+      { url: "/favicon.ico", sizes: "48x48" },
+    ],
+    apple: "/brand/apple-touch-icon.png",
   },
 };
 
@@ -43,6 +47,7 @@ export default function RootLayout({
   return (
     <html lang="es-AR" className={`${inter.variable} scroll-smooth`}>
       <head>
+        <meta name="referrer" content="strict-origin-when-cross-origin" />
         <link
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0..1,0&display=swap"
           rel="stylesheet"

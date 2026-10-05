@@ -41,7 +41,11 @@ Sin ese documento, al loguearse con Google verán “Sin acceso”.
 
 ## 5. Dominios Auth
 
-Authentication → Settings → Authorized domains: agregá `localhost` y `bastademeningitis.com.ar` (y cualquier preview/staging que usen).
+Authentication → Settings → Authorized domains: agregá (solo el hostname, sin `https://` ni `/`):
+- `localhost`
+- `bastademeningitis.com`
+- `www.bastademeningitis.com` (si aplica)
+- `bastademeningitis-com.staging-apache.gskinternet.com` (staging GSK)
 
 ## 6. Probar (checklist end-to-end)
 
@@ -73,6 +77,15 @@ El sitio **no** va por Vercel: lo suben a git y ellos lo despliegan en su servid
 Referencia de keys: `env.example` en el repo.
 
 ## 8. Checklist de eventos (equipo)
+
+Doc completo para compartir (estilo VSR, con nombres GA4 `bdm_*`):
+
+- HTML: [`docs/Eventos-medicion-BDM.html`](./Eventos-medicion-BDM.html) — abrir en el navegador
+- Markdown: [`docs/Eventos-medicion-BDM.md`](./Eventos-medicion-BDM.md)
+
+Los mismos eventos van a Firestore (dashboard) y a GA4/GTM.
+
+Resumen rápido:
 
 | Fuente | status/type | Cuándo |
 |--------|-------------|--------|

@@ -10,7 +10,6 @@ export const metadata: Metadata = {
     "Todo lo que necesitás saber sobre la meningitis y las vacunas.",
 };
 
-export const dynamic = "force-dynamic";
 
 export default function FaqPage() {
   const items = readFaq().filter((f) => f.visible);

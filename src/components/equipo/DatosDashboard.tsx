@@ -136,9 +136,6 @@ export function DatosDashboard() {
     llegar: "–",
     conv: "–",
   });
-  const [mapSearches, setMapSearches] = useState<
-    { name: string; value: number }[]
-  >([]);
   const [popupKpis, setPopupKpis] = useState({
     campView: "–",
     campAnswer: "–",
@@ -523,7 +520,6 @@ export function DatosDashboard() {
 
       const prov: Record<string, number> = {};
       const locs: Record<string, number> = {};
-      const queries: Record<string, number> = {};
       mp.forEach((d) => {
         if (d.type !== "results") return;
         if (d.provincia) {
@@ -534,10 +530,6 @@ export function DatosDashboard() {
             ? `${d.localidad} (${d.provincia})`
             : d.localidad;
           locs[key] = (locs[key] || 0) + 1;
-        }
-        if (d.q) {
-          const qKey = d.q.toLowerCase();
-          queries[qKey] = (queries[qKey] || 0) + 1;
         }
       });
       const provArr = Object.keys(prov)
@@ -600,12 +592,6 @@ export function DatosDashboard() {
         },
         true,
       );
-
-      const qArr = Object.keys(queries)
-        .map((k) => ({ name: k, value: queries[k] }))
-        .sort((a, b) => b.value - a.value)
-        .slice(0, 10);
-      setMapSearches(qArr);
 
       // ===== Popups =====
       const camp = pp.filter((d) => d.popup === "campaign");
@@ -991,6 +977,13 @@ export function DatosDashboard() {
     <div className="min-h-full">
       <header className="flex flex-wrap items-center justify-between gap-2 bg-gradient-to-br from-[#3d2d5c] to-[#503C77] px-7 py-[18px] text-white">
         <h1 className="m-0 text-xl font-bold">
+          <a
+            href="/equipo"
+            className="text-white no-underline opacity-90 hover:opacity-100"
+          >
+            Portal
+          </a>
+          {" · "}
           Dashboard BDM ·{" "}
           <span className="font-normal">datos en vivo</span>
           {totalPill ? (
@@ -1184,47 +1177,12 @@ export function DatosDashboard() {
                   <div id="provincias" className="h-[420px] w-full" />
                 </Card>
               </div>
-              <div className="mt-4 grid gap-4 md:grid-cols-2">
+              <div className="mt-4">
                 <Card
                   title="Top localidades"
                   sub="Cuando eligen localidad en el filtro"
                 >
                   <div id="localidades" className="h-[340px] w-full" />
-                </Card>
-                <Card
-                  title="Texto del buscador"
-                  sub="Lo que escribieron en el campo de búsqueda"
-                >
-                  {mapSearches.length === 0 ? (
-                    <p className="py-8 text-center text-sm text-[#6b6578]">
-                      Todavía no hay búsquedas con texto (solo filtros).
-                    </p>
-                  ) : (
-                    <table className="w-full border-collapse text-sm">
-                      <thead>
-                        <tr>
-                          <th className="bg-[#503C77] px-2.5 py-2 text-left text-white">
-                            Búsqueda
-                          </th>
-                          <th className="bg-[#503C77] px-2.5 py-2 text-left text-white">
-                            Veces
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {mapSearches.map((row) => (
-                          <tr key={row.name}>
-                            <td className="border border-[#e8e4f0] px-2.5 py-2">
-                              {row.name}
-                            </td>
-                            <td className="border border-[#e8e4f0] px-2.5 py-2 text-center">
-                              {row.value}
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  )}
                 </Card>
               </div>
             </section>

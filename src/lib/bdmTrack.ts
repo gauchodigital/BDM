@@ -1,8 +1,9 @@
 /**
- * Tracking anónimo a Firestore (método Virus VSR).
+ * Tracking anónimo a Firestore (método Virus VSR) + espejo GA4/GTM (`bdm_*`).
  * Sin PII: no guarda fecha de nacimiento ni datos personales.
  */
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { pushDataLayer } from "@/lib/analytics";
 import { getFirebaseDb, isFirebaseConfigured } from "@/lib/firebase";
 
 export type AutotestStatus =
@@ -34,8 +35,6 @@ type MapPayload = {
   localidad?: string;
   barrio?: string;
   tipo?: string;
-  /** Texto libre del buscador (recortado) */
-  q?: string;
   count?: number;
 };
 
@@ -49,6 +48,22 @@ type PopupPayload = {
 };
 
 const SESSION_KEY = "bdm_autotest_session";
+
+const AUTOTEST_GA4: Record<AutotestStatus, string> = {
+  start: "bdm_autotest_start",
+  age: "bdm_autotest_age",
+  checklist: "bdm_autotest_checklist",
+  complete: "bdm_autotest_complete",
+  abandon: "bdm_autotest_abandon",
+  share: "bdm_autotest_share",
+  calendar: "bdm_autotest_calendar",
+};
+
+const MAP_GA4: Record<MapEventType, string> = {
+  results: "bdm_map_results",
+  marker: "bdm_map_marker",
+  como_llegar: "bdm_map_como_llegar",
+};
 
 function newSessionId(): string {
   if (typeof crypto !== "undefined" && crypto.randomUUID) {
@@ -117,6 +132,14 @@ export function trackAutotest(payload: AutotestPayload): void {
     pending_count: payload.pending_count,
     last_screen: payload.last_screen,
   });
+  pushDataLayer({
+    event: AUTOTEST_GA4[payload.status],
+    autotest_session_id: session,
+    age_months: payload.age_months,
+    age_label: payload.age_label,
+    pending_count: payload.pending_count,
+    last_screen: payload.last_screen,
+  });
 }
 
 export function trackMap(payload: MapPayload): void {
@@ -127,7 +150,14 @@ export function trackMap(payload: MapPayload): void {
     localidad: payload.localidad,
     barrio: payload.barrio,
     tipo: payload.tipo,
-    q: payload.q,
+    count: payload.count,
+  });
+  pushDataLayer({
+    event: MAP_GA4[payload.type],
+    provincia: payload.provincia,
+    localidad: payload.localidad,
+    barrio: payload.barrio,
+    tipo: payload.tipo,
     count: payload.count,
   });
 }
@@ -137,6 +167,11 @@ export function trackPopup(payload: PopupPayload): void {
   void write("popup", {
     popup: payload.popup,
     type: payload.type,
+    answer: payload.answer,
+    correct: payload.correct,
+  });
+  pushDataLayer({
+    event: `bdm_popup_${payload.popup}_${payload.type}`,
     answer: payload.answer,
     correct: payload.correct,
   });

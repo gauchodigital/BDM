@@ -10,7 +10,6 @@ export const metadata: Metadata = {
     "Calendario Nacional de Vacunación: etapas de la vida, vacunas recomendadas y centros.",
 };
 
-export const dynamic = "force-dynamic";
 
 export default function VacunacionPage() {
   const data = readVacunacion();

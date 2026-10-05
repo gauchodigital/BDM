@@ -8,11 +8,15 @@ import { BacterianaPage } from "@/components/causas/BacterianaPage";
 import { FungicaPage } from "@/components/causas/FungicaPage";
 import { ParasitariaPage } from "@/components/causas/ParasitariaPage";
 import { ViralPage } from "@/components/causas/ViralPage";
-import { getCausaBySlug } from "@/lib/causasData";
-
-export const dynamic = "force-dynamic";
+import { getCausaBySlug, readCausas } from "@/lib/causasData";
 
 type Props = { params: Promise<{ slug: string }> };
+
+export function generateStaticParams() {
+  return readCausas()
+    .filter((c) => c.visible)
+    .map((c) => ({ slug: c.slug }));
+}
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;

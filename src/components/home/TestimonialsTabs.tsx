@@ -224,12 +224,13 @@ function TestimonialsDesktop({ items }: { items: TestimonioData[] }) {
           <article className="relative overflow-hidden rounded-[20px] bg-[#1a1228] shadow-[0_20px_56px_rgba(80,60,119,0.2)] ring-1 ring-[#7A78BB]/15">
             <div className="relative aspect-video w-full">
               {videoId ? (
-                <iframe
+                  <iframe
                   key={`${tab}-${active.id}`}
-                  src={`https://www.youtube-nocookie.com/embed/${videoId}?rel=0&modestbranding=1`}
+                  src={`https://www.youtube.com/embed/${videoId}?rel=0&modestbranding=1`}
                   title={`Video de ${active.name}`}
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                   allowFullScreen
+                  referrerPolicy="strict-origin-when-cross-origin"
                   className="absolute inset-0 h-full w-full border-0"
                 />
               ) : (

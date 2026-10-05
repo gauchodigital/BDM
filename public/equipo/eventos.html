@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Eventos de medición · BastaDeMeningitis</title>
+  <style>
+    :root {
+      --purple: #503c77;
+      --purple-d: #3d2d5c;
+      --ink: #1a1428;
+      --muted: #6b6578;
+      --line: #e8e4f0;
+      --bg: #f4f2f8;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.45;
+    }
+    header {
+      background: linear-gradient(110deg, var(--purple-d), var(--purple));
+      color: #fff;
+      padding: 28px 24px 32px;
+    }
+    header h1 { margin: 0 0 6px; font-size: 24px; }
+    header p { margin: 0; opacity: 0.9; font-size: 14px; max-width: 780px; }
+    .pill {
+      display: inline-block;
+      margin-top: 12px;
+      background: rgba(255,255,255,.15);
+      border-radius: 999px;
+      padding: 4px 12px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 22px 20px 48px; }
+    .note {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 14px 16px;
+      font-size: 14px;
+      color: var(--muted);
+      margin-bottom: 18px;
+    }
+    .note strong { color: var(--purple-d); }
+    h2 {
+      margin: 28px 0 10px;
+      font-size: 15px;
+      color: var(--purple-d);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 1px 4px rgba(0,0,0,.05);
+      font-size: 13px;
+      margin-bottom: 8px;
+    }
+    th {
+      background: var(--purple);
+      color: #fff;
+      text-align: left;
+      padding: 10px 12px;
+      font-weight: 600;
+      vertical-align: top;
+    }
+    td {
+      border-top: 1px solid var(--line);
+      padding: 10px 12px;
+      vertical-align: top;
+    }
+    tr:nth-child(even) td { background: #faf9fc; }
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 12px;
+      background: #efeaf7;
+      color: var(--purple-d);
+      padding: 1px 5px;
+      border-radius: 4px;
+    }
+    @media (max-width: 900px) {
+      table, thead, tbody, th, td, tr { display: block; }
+      thead { display: none; }
+      tr { border-bottom: 8px solid var(--bg); }
+      td { border: none; padding: 6px 12px; }
+      td::before {
+        content: attr(data-label);
+        display: block;
+        font-size: 11px;
+        font-weight: 700;
+        color: var(--muted);
+        text-transform: uppercase;
+        margin-bottom: 2px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Eventos de medición · BastaDeMeningitis</h1>
+    <p>
+      Catálogo al estilo Virus VSR. Cada acción de producto se registra en
+      <strong>Firestore</strong> (dashboard <code style="background:rgba(255,255,255,.2);color:#fff">/equipo/datos</code>)
+      y se dispara el mismo evento a <strong>GA4 / GTM</strong> con nombre <code style="background:rgba(255,255,255,.2);color:#fff">bdm_*</code>.
+    </p>
+    <span class="pill">17 eventos de producto · + CTAs existentes</span>
+  </header>
+
+  <div class="wrap">
+    <div class="note">
+      <strong>GA4:</strong> property <code>G-L0Y9DF136T</code> · GTM <code>GTM-NNSKLXPR</code>
+      (vía <code>dataLayer</code> + <code>gtag</code>).<br />
+      <strong>Firestore:</strong> colecciones <code>autotest</code>, <code>map</code>, <code>popup</code>
+      · acceso dashboard con Google + <code>allowedViewers</code>.<br />
+      Sin PII: no se guarda fecha de nacimiento exacta.
+    </div>
+
+    <h2>Autotest</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Nombre del evento</th>
+          <th>Qué mide</th>
+          <th>Descripción</th>
+          <th>Cómo lo activa el usuario</th>
+          <th>Cómo figura en GA4</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td data-label="Nombre"><code>bdm_autotest_start</code></td>
+          <td data-label="Qué mide">Inicio del autotest</td>
+          <td data-label="Descripción">Abre el quiz (paso 1). Firestore: <code>status: start</code></td>
+          <td data-label="Activación">Entra al autotest / empieza de nuevo</td>
+          <td data-label="GA4"><code>bdm_autotest_start</code> · param <code>autotest_session_id</code></td>
+        </tr>
+        <tr>
+          <td data-label="Nombre"><code>bdm_autotest_age</code></td>
+          <td data-label="Qué mide">Carga de edad</td>
+          <td data-label="Descripción">Pasó del paso 1 al checklist. Firestore: <code>status: age</code></td>
+          <td data-label="Activación">Envía la fecha de nacimiento</td>
+          <td data-label="GA4"><code>bdm_autotest_age</code> · <code>autotest_session_id</code>, <code>age_months</code>, <code>age_label</code></td>
+        </tr>
+        <tr>
+          <td data-label="Nombre"><code>bdm_autotest_checklist</code></td>
+          <td data-label="Qué mide">Llegada a resultados</td>
+          <td data-label="Descripción">Continúa desde el checklist. Firestore: <code>status: checklist</code></td>
+          <td data-label="Activación">Click Continuar en paso 2</td>
+          <td data-label="GA4"><code>bdm_autotest_checklist</code> · <code>autotest_session_id</code>, <code>pending_count</code></td>
+        </tr>
+        <tr>
+          <td data-label="Nombre"><code>bdm_autotest_complete</code></td>
+          <td data-label="Qué mide">Vio el resultado</td>
+          <td data-label="Descripción">Pantalla de pendientes / al día. Firestore: <code>status: complete</code></td>
+          <td data-label="Activación">Mismo momento que checklist</td>
+          <td data-label="GA4"><code>bdm_autotest_complete</code> · <code>autotest_session_id</code>, <code>pending_count</code></td>
+        </tr>
+        <tr>
+          <td data-label="Nombre"><code>bdm_autotest_abandon</code></td>
+          <td data-label="Qué mide">Abandono mid-flow</td>
+          <td data-label="Descripción">Sale sin ver resultado. Firestore: <code>status: abandon</code></td>
+          <td data-label="Activación">Cierra / navega fuera en paso 1 o 2</td>
+          <td data-label="GA4"><code>bdm_autotest_abandon</code> · <code>autotest_session_id</code>, <code>last_screen</code> (step1/step2)</td>
+        </tr>
+        <tr>
+          <td data-label="Nombre"><code>bdm_autotest_share</code></td>
+          <td data-label="Qué mide">Descarga / share de imagen</td>
+          <td data-label="Descripción">Acción post-resultado. Firestore: <code>status: share</code></td>
+          <td data-label="Activación">Descargar imagen / compartir PNG</td>
+          <td data-label="GA4"><code>bdm_autotest_share</code> · <code>autotest_session_id</code></td>
+        </tr>
+        <tr>
+          <td data-label="Nombre"><code>bdm_autotest_calendar</code></td>
+          <td data-label="Qué mide">Agendar recordatorio</td>
+          <td data-label="Descripción">ICS (iOS) o Google Calendar. Firestore: <code>status: calendar</code></td>
+          <td data-label="Activación">Click Agendar un recordatorio</td>
+          <td data-label="GA4"><code>bdm_autotest_calendar</code> · <code>autotest_session_id</code></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Mapa de vacunatorios</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Nombre del evento</th>
+          <th>Qué mide</th>
+          <th>Descripción</th>
+          <th>Cómo lo activa el usuario</th>
+          <th>Cómo figura en GA4</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td data-label="Nombre"><code>bdm_map_results</code></td>
+          <td data-label="Qué mide">Búsqueda con resultados</td>
+          <td data-label="Descripción">Filtros aplicados. Firestore: <code>type: results</code></td>
+          <td data-label="Activación">Elige provincia / localidad / barrio / tipo</td>
+          <td data-label="GA4"><code>bdm_map_results</code> · <code>provincia</code>, <code>localidad</code>, <code>barrio</code>, <code>tipo</code>, <code>count</code></td>
+        </tr>
+        <tr>
+          <td data-label="Nombre"><code>bdm_map_marker</code></td>
+          <td data-label="Qué mide">Click en un centro</td>
+          <td data-label="Descripción">Abrió ficha. Firestore: <code>type: marker</code></td>
+          <td data-label="Activación">Click marcador o card</td>
+          <td data-label="GA4"><code>bdm_map_marker</code></td>
+        </tr>
+        <tr>
+          <td data-label="Nombre"><code>bdm_map_como_llegar</code></td>
+          <td data-label="Qué mide">Cómo llegar</td>
+          <td data-label="Descripción">Abre directions. Firestore: <code>type: como_llegar</code></td>
+          <td data-label="Activación">Click Cómo llegar</td>
+          <td data-label="GA4"><code>bdm_map_como_llegar</code></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Popup campaña (quiz)</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Nombre del evento</th>
+          <th>Qué mide</th>
+          <th>Descripción</th>
+          <th>Cómo lo activa el usuario</th>
+          <th>Cómo figura en GA4</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td data-label="Nombre"><code>bdm_popup_campaign_view</code></td>
+          <td data-label="Qué mide">Vio el popup</td>
+          <td data-label="Descripción">Firestore: <code>popup: campaign</code>, <code>type: view</code></td>
+          <td data-label="Activación">Se abre el quiz de campaña</td>
+          <td data-label="GA4"><code>bdm_popup_campaign_view</code></td>
+        </tr>
+        <tr>
+          <td data-label="Nombre"><code>bdm_popup_campaign_answer</code></td>
+          <td data-label="Qué mide">Respondió el quiz</td>
+          <td data-label="Descripción">Firestore: <code>type: answer</code></td>
+          <td data-label="Activación">Elige A / B / C</td>
+          <td data-label="GA4"><code>bdm_popup_campaign_answer</code> · <code>answer</code>, <code>correct</code> (0/1)</td>
+        </tr>
+        <tr>
+          <td data-label="Nombre"><code>bdm_popup_campaign_cta</code></td>
+          <td data-label="Qué mide">Click CTA</td>
+          <td data-label="Descripción">Firestore: <code>type: cta</code></td>
+          <td data-label="Activación">Botón CTA del resultado</td>
+          <td data-label="GA4"><code>bdm_popup_campaign_cta</code></td>
+        </tr>
+        <tr>
+          <td data-label="Nombre"><code>bdm_popup_campaign_close</code></td>
+          <td data-label="Qué mide">Cierre sin CTA</td>
+          <td data-label="Descripción">Firestore: <code>type: close</code></td>
+          <td data-label="Activación">X / overlay / Escape</td>
+          <td data-label="GA4"><code>bdm_popup_campaign_close</code></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Popup pediatra</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Nombre del evento</th>
+          <th>Qué mide</th>
+          <th>Descripción</th>
+          <th>Cómo lo activa el usuario</th>
+          <th>Cómo figura en GA4</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td data-label="Nombre"><code>bdm_popup_pediatra_view</code></td>
+          <td data-label="Qué mide">Vio el popup</td>
+          <td data-label="Descripción">Firestore: <code>popup: pediatra</code>, <code>type: view</code></td>
+          <td data-label="Activación">Aparece la pregunta</td>
+          <td data-label="GA4"><code>bdm_popup_pediatra_view</code></td>
+        </tr>
+        <tr>
+          <td data-label="Nombre"><code>bdm_popup_pediatra_answer</code></td>
+          <td data-label="Qué mide">Respondió Sí / No</td>
+          <td data-label="Descripción">Firestore: <code>type: answer</code></td>
+          <td data-label="Activación">Click Sí o No</td>
+          <td data-label="GA4"><code>bdm_popup_pediatra_answer</code> · <code>answer</code> (yes/no)</td>
+        </tr>
+        <tr>
+          <td data-label="Nombre"><code>bdm_popup_pediatra_close</code></td>
+          <td data-label="Qué mide">Cierre sin responder</td>
+          <td data-label="Descripción">Firestore: <code>type: close</code></td>
+          <td data-label="Activación">X antes de Sí/No</td>
+          <td data-label="GA4"><code>bdm_popup_pediatra_close</code></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>CTAs de sitio (ya existentes)</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Nombre del evento</th>
+          <th>Qué mide</th>
+          <th>Descripción</th>
+          <th>Cómo lo activa el usuario</th>
+          <th>Cómo figura en GA4</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td data-label="Nombre"><code>bdm_vacunarse_click</code></td>
+          <td data-label="Qué mide">CTA vacunarse</td>
+          <td data-label="Descripción">Solo GA4/GTM (no Firestore)</td>
+          <td data-label="Activación">Click en CTA de vacunación</td>
+          <td data-label="GA4"><code>bdm_vacunarse_click</code></td>
+        </tr>
+        <tr>
+          <td data-label="Nombre"><code>bdm_whatsapp_click</code></td>
+          <td data-label="Qué mide">Click WhatsApp</td>
+          <td data-label="Descripción">Solo GA4/GTM + Meta Contact</td>
+          <td data-label="Activación">Click WhatsApp</td>
+          <td data-label="GA4"><code>bdm_whatsapp_click</code></td>
+        </tr>
+        <tr>
+          <td data-label="Nombre"><code>bdm_video_click</code></td>
+          <td data-label="Qué mide">Click video</td>
+          <td data-label="Descripción">Solo GA4/GTM</td>
+          <td data-label="Activación">Click en video home</td>
+          <td data-label="GA4"><code>bdm_video_click</code></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="note" style="margin-top:24px">
+      Código: <code>src/lib/bdmTrack.ts</code> (Firestore + GA4) · <code>src/lib/analytics.ts</code> (dataLayer).<br />
+      Setup Firebase: <code>docs/FIREBASE-SETUP.md</code>.
+    </div>
+  </div>
+</body>
+</html>

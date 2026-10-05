@@ -1,11 +1,13 @@
 /** Tracking helpers para GTM / GA4 / Meta. */
 
+export type TrackParamValue = string | number | undefined;
+
 export type TrackPayload = {
   event: string;
   intent?: string;
   subject?: string;
   location?: string;
-  [key: string]: string | undefined;
+  [key: string]: TrackParamValue;
 };
 
 declare global {
@@ -24,8 +26,10 @@ export function pushDataLayer(payload: TrackPayload): void {
 
   const { event, ...params } = payload;
   const clean = Object.fromEntries(
-    Object.entries(params).filter(([, v]) => v !== undefined && v !== ""),
-  );
+    Object.entries(params).filter(
+      ([, v]) => v !== undefined && v !== "",
+    ),
+  ) as Record<string, string | number>;
 
   if (typeof window.gtag === "function" && event) {
     window.gtag("event", event, clean);
@@ -34,8 +38,8 @@ export function pushDataLayer(payload: TrackPayload): void {
   if (typeof window.fbq === "function" && event) {
     if (event === TRACK.events.whatsappClick) {
       window.fbq("track", "Contact", {
-        content_name: clean.subject || "consulta",
-        content_category: clean.location || clean.intent || "web",
+        content_name: String(clean.subject || "consulta"),
+        content_category: String(clean.location || clean.intent || "web"),
       });
     }
     window.fbq("trackCustom", event, clean);

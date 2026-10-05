@@ -7,7 +7,6 @@ export const metadata: Metadata = {
   description: "Síntomas habituales de la meningitis.",
 };
 
-export const dynamic = "force-dynamic";
 
 export default function SintomasPage() {
   return (

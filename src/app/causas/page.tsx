@@ -9,7 +9,6 @@ export const metadata: Metadata = {
     "Tipos de meningitis: bacteriana, viral, fúngica y parasitaria.",
 };
 
-export const dynamic = "force-dynamic";
 
 export default function CausasPage() {
   const causas = readCausas().filter((c) => c.visible);

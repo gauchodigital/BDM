@@ -1,0 +1,9 @@
+# Staging / Apache — favores para íconos y embeds de YouTube
+<IfModule mod_headers.c>
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+<IfModule mod_mime.c>
+  AddType image/svg+xml .svg .svgz
+  AddType image/png .png
+</IfModule>

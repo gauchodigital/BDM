@@ -7,7 +7,6 @@ export const metadata: Metadata = {
   description: "Términos frecuentes sobre meningitis, explicados en lenguaje claro.",
 };
 
-export const dynamic = "force-dynamic";
 
 export default function GlosarioPage() {
   const terms = readGlosario().filter((t) => t.visible);

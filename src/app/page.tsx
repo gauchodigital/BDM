@@ -12,7 +12,6 @@ import { readCausas } from "@/lib/causasData";
 import { readTestimonios } from "@/lib/testimoniosData";
 import { readDatos } from "@/lib/datosData";
 
-export const dynamic = "force-dynamic";
 
 export default function HomePage() {
   const causas = readCausas().filter((c) => c.visible);

@@ -9,7 +9,7 @@ import { Reveal } from "@/components/ui/Reveal";
 export function VideoKnowSection() {
   const [playing, setPlaying] = useState(false);
   const thumb = `https://i.ytimg.com/vi/${VIDEO_CONCIENTIZACION_ID}/hqdefault.jpg`;
-  const embedSrc = `https://www.youtube-nocookie.com/embed/${VIDEO_CONCIENTIZACION_ID}?autoplay=1&rel=0&modestbranding=1`;
+  const embedSrc = `https://www.youtube.com/embed/${VIDEO_CONCIENTIZACION_ID}?autoplay=1&rel=0&modestbranding=1`;
 
   return (
     <section className="bg-light">
