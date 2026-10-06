@@ -261,7 +261,7 @@ const TONE_CANVAS: Record<
 };
 
 const SHARE_WARNING =
-  "Este resultado es orientativo: contempla las vacunas del Calendario Nacional de Vacunación y algunas recomendadas fuera de él (vacunación particular). Siempre consultá con el médico para confirmar qué vacunas corresponden según edad y condición clínica particular.";
+  "Este resultado es orientativo y únicamente contempla las vacunas dentro del Calendario Nacional de Vacunación. Siempre consultá con el médico para confirmar qué vacunas son las recomendadas según edad y condición clínica particular.";
 
 const SHARE_LEGAL_LINES = [
   "NP-AR-MNU-WCNT-260001 - Septiembre 2026.",
