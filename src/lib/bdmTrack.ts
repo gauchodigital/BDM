@@ -5,6 +5,7 @@
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { pushDataLayer } from "@/lib/analytics";
 import { getFirebaseDb, isFirebaseConfigured } from "@/lib/firebase";
+import { META_ADS_EVENTS, trackMetaAds } from "@/lib/metaAds";
 
 export type AutotestStatus =
   | "start"
@@ -160,6 +161,21 @@ export function trackMap(payload: MapPayload): void {
     tipo: payload.tipo,
     count: payload.count,
   });
+
+  // Meta Ads — form vacunas finalizado (búsqueda con resultados)
+  if (payload.type === "results") {
+    trackMetaAds(
+      META_ADS_EVENTS.formVacunas,
+      {
+        provincia: payload.provincia,
+        localidad: payload.localidad,
+        barrio: payload.barrio,
+        tipo: payload.tipo,
+        count: payload.count,
+      },
+      "Lead",
+    );
+  }
 }
 
 export function trackPopup(payload: PopupPayload): void {
@@ -175,6 +191,23 @@ export function trackPopup(payload: PopupPayload): void {
     answer: payload.answer,
     correct: payload.correct,
   });
+
+  // Meta Ads — top eventos por popup (cuando el usuario responde)
+  if (payload.type === "answer") {
+    if (payload.popup === "campaign") {
+      trackMetaAds(
+        META_ADS_EVENTS.popupCampaign,
+        { answer: payload.answer, correct: payload.correct },
+        "Lead",
+      );
+    } else if (payload.popup === "pediatra") {
+      trackMetaAds(
+        META_ADS_EVENTS.popupPediatra,
+        { answer: payload.answer },
+        payload.answer === "yes" ? "Schedule" : "Lead",
+      );
+    }
+  }
 }
 
 /** API global para scripts del mapa (vacunatorios.js). */

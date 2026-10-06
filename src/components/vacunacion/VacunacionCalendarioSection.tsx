@@ -5,6 +5,7 @@ import { RichText } from "@/components/ui/RichText";
 import { Reveal } from "@/components/ui/Reveal";
 import { VacunasEtapasPanel } from "@/components/vacunacion/VacunasEtapasPanel";
 import type { VacunaEtapa, VacunacionData } from "@/lib/vacunacionData";
+import { META_ADS_EVENTS, trackMetaAds } from "@/lib/metaAds";
 
 export function VacunacionCalendarioSection({
   hero,
@@ -40,6 +41,16 @@ export function VacunacionCalendarioSection({
               <a
                 href={calendarioPdfUrl}
                 download="calendario-vacunacion-gsk-2026.pdf"
+                onClick={() =>
+                  trackMetaAds(
+                    META_ADS_EVENTS.pdfVacunacion,
+                    {
+                      file: "calendario-vacunacion-gsk-2026.pdf",
+                      location: "vacunacion_hero",
+                    },
+                    "Lead",
+                  )
+                }
                 className="inline-flex h-[52px] w-full items-center justify-center gap-2 rounded-lg bg-[#DD876E] px-5 text-[15px] font-bold text-white transition hover:brightness-105 sm:w-auto sm:min-w-[240px]"
               >
                 Descargar calendario

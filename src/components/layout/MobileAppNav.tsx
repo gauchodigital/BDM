@@ -52,28 +52,28 @@ const MENU_LINKS = [
     match: "que-es",
     label: "¿Qué es la meningitis?",
     hint: "Información clara para entenderla",
-    icon: "/icons/nav/que-es.svg",
+    icon: "/brand/icons/nav/que-es.svg",
   },
   {
     href: "/sintomas",
     match: "sintomas",
     label: "Síntomas",
     hint: "Señales de alerta y cuándo consultar",
-    icon: "/icons/nav/sintomas.svg",
+    icon: "/brand/icons/nav/sintomas.svg",
   },
   {
     href: "/vacunacion",
     match: "vacunacion",
     label: "Vacunación",
     hint: "Calendario y centros cercanos",
-    icon: "/icons/nav/vacunacion.svg",
+    icon: "/brand/icons/nav/vacunacion.svg",
   },
   {
     href: "/faq",
     match: "faq",
     label: "Preguntas frecuentes",
     hint: "Respuestas rápidas y útiles",
-    icon: "/icons/nav/preguntas.svg",
+    icon: "/brand/icons/nav/preguntas.svg",
   },
 ] as const;
 
@@ -246,7 +246,7 @@ export function MobileAppNav() {
                     }`}
                   >
                     <NavIcon
-                      src="/icons/nav/causas.svg"
+                      src="/brand/icons/nav/causas.svg"
                       color={
                         causasActive && !causasOpen ? "#FFFFFF" : "#503C77"
                       }

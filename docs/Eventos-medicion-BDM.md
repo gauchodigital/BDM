@@ -51,8 +51,24 @@ HTML presentable: [`Eventos-medicion-BDM.html`](./Eventos-medicion-BDM.html)
 | `bdm_whatsapp_click` | WhatsApp |
 | `bdm_video_click` | Video home |
 
+## Top eventos Meta Ads
+
+Eventos custom para **Meta Events Manager / campañas** (además del catálogo granular).
+También espejo a GA4/GTM. Código: [`src/lib/metaAds.ts`](../src/lib/metaAds.ts).
+
+| Nombre (Meta custom) | Estándar Meta | Activación |
+|----------------------|---------------|------------|
+| `bdm_meta_popup_campaign` | `Lead` | Popup campaña — responde A/B/C |
+| `bdm_meta_popup_pediatra` | `Schedule` (Sí) / `Lead` (No) | Popup pediatra — responde Sí/No |
+| `bdm_meta_form_vacunas` | `Lead` | Mapa: búsqueda de centros con resultados |
+| `bdm_meta_pdf_vacunacion` | `Lead` | Click “Descargar calendario” (PDF vacunación) |
+| `bdm_meta_pdf_ubicaciones` | — | **Definido, aún sin botón/PDF en el sitio** |
+
+En Meta Ads → Events Manager → crear conversión personalizada / usar estos nombres para optimizar.
+
 ## Implementación
 
 - Dual-write: [`src/lib/bdmTrack.ts`](../src/lib/bdmTrack.ts)
-- dataLayer/gtag: [`src/lib/analytics.ts`](../src/lib/analytics.ts)
+- Meta Ads top: [`src/lib/metaAds.ts`](../src/lib/metaAds.ts)
+- dataLayer/gtag/fbq: [`src/lib/analytics.ts`](../src/lib/analytics.ts)
 - Firebase setup: [`FIREBASE-SETUP.md`](./FIREBASE-SETUP.md)

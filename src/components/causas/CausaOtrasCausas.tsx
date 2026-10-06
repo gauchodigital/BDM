@@ -52,8 +52,8 @@ export function CausaOtrasCausas({
                 className="block size-3 shrink-0 lg:size-4"
                 style={{
                   backgroundColor: causa.text,
-                  WebkitMaskImage: "url(/icons/arrow-right.svg)",
-                  maskImage: "url(/icons/arrow-right.svg)",
+                  WebkitMaskImage: "url(/brand/icons/arrow-right.svg)",
+                  maskImage: "url(/brand/icons/arrow-right.svg)",
                   WebkitMaskSize: "contain",
                   maskSize: "contain",
                   WebkitMaskRepeat: "no-repeat",

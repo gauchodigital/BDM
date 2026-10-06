@@ -75,7 +75,7 @@ function FilterSelect({
         {children}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="/icons/vacunacion/chevron-down.svg"
+          src="/brand/icons/vacunacion/chevron-down.png"
           alt=""
           width={24}
           height={24}

@@ -4,31 +4,31 @@ export const MOBILE_TAB_ITEMS = [
     href: "/#que-es",
     match: "que-es",
     label: "¿Qué es?",
-    icon: "/icons/nav/que-es.svg",
+    icon: "/brand/icons/nav/que-es.svg",
   },
   {
     href: "/sintomas",
     match: "sintomas",
     label: "Síntomas",
-    icon: "/icons/nav/sintomas.svg",
+    icon: "/brand/icons/nav/sintomas.svg",
   },
   {
     href: "/causas",
     match: "causas",
     label: "Causas",
-    icon: "/icons/nav/causas.svg",
+    icon: "/brand/icons/nav/causas.svg",
   },
   {
     href: "/vacunacion",
     match: "vacunacion",
     label: "Vacunación",
-    icon: "/icons/nav/vacunacion.svg",
+    icon: "/brand/icons/nav/vacunacion.svg",
   },
   {
     href: "/faq",
     match: "faq",
     label: "Preguntas",
-    icon: "/icons/nav/preguntas.svg",
+    icon: "/brand/icons/nav/preguntas.svg",
   },
 ] as const;
 

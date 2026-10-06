@@ -225,9 +225,9 @@ function DesktopNav({
           <LogoManito
             variant="purple"
             priority
-            className="h-10 w-auto"
-            width={40}
-            height={44}
+            className="h-12 w-auto"
+            width={48}
+            height={52}
           />
         </Link>
         <div className="pr-1">
@@ -247,9 +247,9 @@ function DesktopNav({
         <LogoManito
           variant="white"
           priority
-          className="h-12 w-auto drop-shadow-[0_2px_10px_rgba(0,0,0,0.35)]"
-          width={48}
-          height={52}
+          className="h-16 w-auto drop-shadow-[0_2px_10px_rgba(0,0,0,0.35)]"
+          width={64}
+          height={70}
         />
       </Link>
 
@@ -278,9 +278,9 @@ function DesktopNavTraditional({
         <LogoManito
           variant="white"
           priority
-          className="h-12 w-auto"
-          width={48}
-          height={52}
+          className="h-16 w-auto"
+          width={64}
+          height={70}
         />
       </Link>
       <NavLinks pathname={pathname} queEsHref={queEsHref} solid={false} />
@@ -321,7 +321,9 @@ export function Navbar() {
               <LogoManito
                 variant="white"
                 priority
-                className="h-14 w-auto drop-shadow-[0_2px_8px_rgba(0,0,0,0.35)]"
+                className="h-16 w-auto drop-shadow-[0_2px_8px_rgba(0,0,0,0.35)]"
+                width={64}
+                height={70}
               />
             </Link>
           </nav>
@@ -336,9 +338,9 @@ export function Navbar() {
             >
               <LogoManito
                 variant="white"
-                className="h-14 w-auto"
-                width={52}
-                height={58}
+                className="h-16 w-auto"
+                width={64}
+                height={70}
               />
             </Link>
           </nav>

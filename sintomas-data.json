@@ -3,7 +3,7 @@
     "id": "fiebre",
     "label": "Fiebre",
     "description": "",
-    "icon": "/icons/sintomas/fiebre.svg",
+    "icon": "/brand/icons/sintomas/fiebre.svg",
     "phase": "early",
     "visible": true
   },
@@ -11,7 +11,7 @@
     "id": "dolor-cabeza",
     "label": "Dolor de cabeza",
     "description": "",
-    "icon": "/icons/sintomas/dolor-cabeza.svg",
+    "icon": "/brand/icons/sintomas/dolor-cabeza.svg",
     "phase": "early",
     "visible": true
   },
@@ -19,7 +19,7 @@
     "id": "nauseas",
     "label": "Náuseas y vómitos",
     "description": "",
-    "icon": "/icons/sintomas/nauseas.svg",
+    "icon": "/brand/icons/sintomas/nauseas.svg",
     "phase": "early",
     "visible": true
   },
@@ -27,7 +27,7 @@
     "id": "irritabilidad",
     "label": "Irritabilidad",
     "description": "",
-    "icon": "/icons/sintomas/irritabilidad.svg",
+    "icon": "/brand/icons/sintomas/irritabilidad.svg",
     "phase": "early",
     "visible": true
   },
@@ -35,7 +35,7 @@
     "id": "somnolencia",
     "label": "Somnolencia",
     "description": "",
-    "icon": "/icons/sintomas/somnolencia.svg",
+    "icon": "/brand/icons/sintomas/somnolencia.svg",
     "phase": "early",
     "visible": true
   },
@@ -43,7 +43,7 @@
     "id": "cuello-rigido",
     "label": "Cuello rígido",
     "description": "",
-    "icon": "/icons/sintomas/cuello-rigido.svg",
+    "icon": "/brand/icons/sintomas/cuello-rigido.svg",
     "phase": "alarm",
     "visible": true
   },
@@ -51,7 +51,7 @@
     "id": "rechazo-luz",
     "label": "Rechazo a la luz",
     "description": "",
-    "icon": "/icons/sintomas/rechazo-luz.svg",
+    "icon": "/brand/icons/sintomas/rechazo-luz.svg",
     "phase": "alarm",
     "visible": true
   },
@@ -59,7 +59,7 @@
     "id": "petequias",
     "label": "Petequias",
     "description": "Erupciones de la piel de color rojo o púrpura oscuro.",
-    "icon": "/icons/sintomas/petequias.svg",
+    "icon": "/brand/icons/sintomas/petequias.svg",
     "phase": "alarm",
     "visible": true
   }
