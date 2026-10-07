@@ -45,8 +45,8 @@ export function VacunacionCalendarioSection({
                   trackMetaAds(
                     META_ADS_EVENTS.pdfVacunacion,
                     {
-                      file: "calendario-vacunacion-gsk-2026.pdf",
-                      location: "vacunacion_hero",
+                      file: "calendar_pdf",
+                      location: "hero",
                     },
                     "Lead",
                   )

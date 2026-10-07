@@ -59,12 +59,16 @@ También espejo a GA4/GTM. Código: [`src/lib/metaAds.ts`](../src/lib/metaAds.ts
 | Nombre (Meta custom) | Estándar Meta | Activación |
 |----------------------|---------------|------------|
 | `bdm_meta_popup_campaign` | `Lead` | Popup campaña — responde A/B/C |
-| `bdm_meta_popup_pediatra` | `Schedule` (Sí) / `Lead` (No) | Popup pediatra — responde Sí/No |
-| `bdm_meta_form_vacunas` | `Lead` | Mapa: búsqueda de centros con resultados |
-| `bdm_meta_pdf_vacunacion` | `Lead` | Click “Descargar calendario” (PDF vacunación) |
-| `bdm_meta_pdf_ubicaciones` | — | **Definido, aún sin botón/PDF en el sitio** |
+| `bdm_meta_popup_consult` | `Schedule` (Sí) / `Lead` (No) | Popup consulta — responde Sí/No |
+| `bdm_meta_form_vc` | `Lead` | Mapa: búsqueda de centros con resultados |
+| `bdm_meta_pdf_vc` | `Lead` | Click “Descargar calendario” (PDF) |
+| `bdm_meta_pdf_locations` | — | Definido; sin botón/PDF en el sitio |
+
+**Importante (política Meta):** no usar en el *nombre* del evento palabras de salud (vacuna, meningitis, etc.). “vc” es abreviatura interna. Meta bloquea custom events con términos de salud.
 
 En Meta Ads → Events Manager → crear conversión personalizada / usar estos nombres para optimizar.
+
+**Renombres (Oct 2026):** `bdm_meta_form_vacunas` → `bdm_meta_form_vc`; `bdm_meta_pdf_vacunacion` → `bdm_meta_pdf_vc`; `bdm_meta_popup_pediatra` → `bdm_meta_popup_consult`.
 
 ## Implementación
 
