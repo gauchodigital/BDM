@@ -24,7 +24,7 @@ export const META_ADS_EVENTS = {
 export type MetaAdsEvent =
   (typeof META_ADS_EVENTS)[keyof typeof META_ADS_EVENTS];
 
-type MetaStandard = "Lead" | "Schedule" | "Contact";
+type MetaStandard = "Lead" | "Schedule";
 
 /**
  * Evento top para Meta Ads (+ espejo GA4/GTM).
@@ -37,7 +37,7 @@ export function trackMetaAds(
 ): void {
   if (typeof window === "undefined") return;
 
-  pushDataLayer({ event, ...params });
+  pushDataLayer({ event, ...params }, { meta: true });
 
   if (standard && typeof window.fbq === "function") {
     const clean = Object.fromEntries(

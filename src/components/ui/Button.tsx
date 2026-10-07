@@ -52,7 +52,7 @@ export function Button(props: ButtonAsButton | ButtonAsLink) {
 
   if ("href" in props && props.href) {
     const { href, external } = props;
-    if (external || href.startsWith("http") || href.startsWith("https://wa.me")) {
+    if (external || href.startsWith("http")) {
       return (
         <a
           href={href}

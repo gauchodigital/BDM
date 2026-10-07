@@ -48,7 +48,7 @@ Deploy: push a git → ellos build/start en su máquina (no Vercel). Las `NEXT_P
 | `testimonios-data.json` | `/admin/testimonios` |
 | `glosario-data.json` | `/admin/glosario` |
 
-Helpers en `src/lib/*Data.ts`. Links globales (WhatsApp, vacunación, redes) en `src/lib/siteLinks.ts`.
+Helpers en `src/lib/*Data.ts`. Links globales (vacunación, redes) en `src/lib/siteLinks.ts`.
 
 ## Deploy (Hostinger)
 

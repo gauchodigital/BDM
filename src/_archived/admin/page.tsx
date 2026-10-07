@@ -52,7 +52,7 @@ export default function AdminHomePage() {
         ))}
       </div>
       <p className="mt-10 text-xs text-white/30">
-        Links globales (WhatsApp, redes, vacunación):{" "}
+        Links globales (redes, vacunación):{" "}
         <code className="text-white/50">src/lib/siteLinks.ts</code>
       </p>
     </div>

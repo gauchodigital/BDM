@@ -48,13 +48,12 @@ HTML presentable: [`Eventos-medicion-BDM.html`](./Eventos-medicion-BDM.html)
 | Nombre (GA4) | Activación |
 |--------------|------------|
 | `bdm_vacunarse_click` | CTA vacunación |
-| `bdm_whatsapp_click` | WhatsApp |
 | `bdm_video_click` | Video home |
 
 ## Top eventos Meta Ads
 
 Eventos custom para **Meta Events Manager / campañas** (además del catálogo granular).
-También espejo a GA4/GTM. Código: [`src/lib/metaAds.ts`](../src/lib/metaAds.ts).
+Son los **únicos** eventos custom que se envían al Pixel de Meta; el resto (`bdm_autotest_*`, `bdm_map_*`, `bdm_popup_*`, CTAs) va solo a GA4/GTM y Firestore. `bdm_meta_form_vc` envía solo `count` (sin provincia/localidad/barrio/tipo). También espejo a GA4/GTM. Código: [`src/lib/metaAds.ts`](../src/lib/metaAds.ts).
 
 | Nombre (Meta custom) | Estándar Meta | Activación |
 |----------------------|---------------|------------|

@@ -49,6 +49,8 @@ type MapRow = {
   tipo?: string;
   q?: string;
   count?: number;
+  /** 1 = primera búsqueda con resultados de la visita; 0 = refinamiento. Ausente en datos viejos. */
+  first?: number;
   ts?: Timestamp;
 };
 
@@ -226,16 +228,21 @@ export function DatosDashboard() {
 
       const aScreen = (s: string) =>
         abandon.filter((d) => d.last_screen === s).length;
-      const abStep1 = aScreen("step1");
-      const abStep2 = aScreen("step2");
+      // Eventos `abandon` (pagehide): solo para inferir inicios si faltan `start`.
+      const abStep1Events = aScreen("step1");
 
       // Funnel por eventos (conteo de status; sesión única sería ideal pero VSR también cuenta eventos)
-      const nStart = Math.max(starts.length, ages.length + abStep1);
+      const nStart = Math.max(starts.length, ages.length + abStep1Events);
       const nAge = ages.length;
       const nCheck = checklists.length;
       const nComplete = complete.length || checklists.length;
 
-      const started = nStart || nAge + abStep1;
+      const started = nStart || nAge + abStep1Events;
+
+      // Abandono = caída entre pasos. `pagehide` no se dispara al navegar dentro del
+      // sitio ni al dejar la pestaña abierta, así que los eventos `abandon` subcuentan.
+      const abStep1 = Math.max(started - nAge, 0);
+      const abStep2 = Math.max(nAge - nComplete, 0);
       const abandonedMid = abStep1 + abStep2;
 
       setTotalPill(
@@ -248,7 +255,7 @@ export function DatosDashboard() {
 
       setKpis({
         started: String(started),
-        checklist: String(nCheck),
+        checklist: String(nAge),
         complete: String(nComplete),
         abandonPct: started
           ? `${Math.round((abandonedMid / started) * 100)}%`
@@ -268,14 +275,9 @@ export function DatosDashboard() {
           pct: pctOf(nAge, started),
         },
         {
-          value: nCheck,
-          name: "Checklist",
-          pct: pctOf(nCheck, nAge || started),
-        },
-        {
           value: nComplete,
           name: "Vio resultado",
-          pct: pctOf(nComplete, nCheck || nAge || started),
+          pct: pctOf(nComplete, nAge || started),
         },
       ];
 
@@ -301,7 +303,7 @@ export function DatosDashboard() {
                 formatter: (p: { name: string; value: number; data: { pct: number | null } }) =>
                   `${p.name}\n${p.value}${p.data.pct != null ? `  (${p.data.pct}%)` : ""}`,
               },
-              color: [PURPLE_D, PURPLE, "#6D6AAE", ACCENT],
+              color: [PURPLE_D, PURPLE, ACCENT],
               data: fData,
             },
           ],
@@ -396,14 +398,9 @@ export function DatosDashboard() {
         { value: started, name: "Inició", pct: null as number | null },
         { value: nAge, name: "Cargó edad", pct: pctOf(nAge, started) },
         {
-          value: nCheck,
-          name: "Checklist",
-          pct: pctOf(nCheck, nAge || started),
-        },
-        {
           value: nComplete,
           name: "Resultado",
-          pct: pctOf(nComplete, nCheck || nAge || started),
+          pct: pctOf(nComplete, nAge || started),
         },
       ];
       chartEl("abRet")?.setOption(
@@ -460,9 +457,14 @@ export function DatosDashboard() {
       ]);
 
       // Mapa
+      // Búsqueda = una por visita (`first`). Datos previos sin `first` cuentan cada filtro.
+      const isSearch = (d: MapRow) =>
+        d.type === "results" && d.first !== 0 && d.count !== 0;
       const mc = { results: 0, marker: 0, como_llegar: 0 };
       mp.forEach((d) => {
-        if (d.type && d.type in mc) {
+        if (d.type === "results") {
+          if (isSearch(d)) mc.results++;
+        } else if (d.type && d.type in mc) {
           mc[d.type as keyof typeof mc]++;
         }
       });
@@ -522,10 +524,10 @@ export function DatosDashboard() {
       const locs: Record<string, number> = {};
       mp.forEach((d) => {
         if (d.type !== "results") return;
-        if (d.provincia) {
+        if (d.provincia && isSearch(d)) {
           prov[d.provincia] = (prov[d.provincia] || 0) + 1;
         }
-        if (d.localidad) {
+        if (d.localidad && d.count !== 0) {
           const key = d.provincia
             ? `${d.localidad} (${d.provincia})`
             : d.localidad;
@@ -1098,7 +1100,7 @@ export function DatosDashboard() {
                 Abandono
               </p>
               <div className="mb-4 grid gap-4 md:grid-cols-2">
-                <Card title="¿En qué paso abandonan?" sub="Cerraron antes del resultado">
+                <Card title="¿En qué paso abandonan?" sub="Llegaron al paso y no avanzaron">
                   <div id="abScreen" className="h-[340px] w-full" />
                 </Card>
                 <Card title="Retención paso a paso" sub="% del paso anterior">

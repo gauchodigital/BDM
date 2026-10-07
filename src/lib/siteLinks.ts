@@ -3,19 +3,6 @@
  * TODO: reemplazar placeholders con URLs / números reales cuando estén disponibles.
  */
 
-/** WhatsApp — formato internacional sin símbolos (wa.me) */
-export const WHATSAPP_DISPLAY = "+54 9 11 0000-0000";
-export const WHATSAPP_NUMBER = "5491100000000";
-
-const WHATSAPP_DEFAULT_MESSAGE =
-  "Hola, quiero información sobre meningitis y vacunación.";
-
-export const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_DEFAULT_MESSAGE)}`;
-
-export function buildWhatsappUrl(message: string): string {
-  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
-}
-
 /** CTA principal de vacunación */
 export const VACUNARSE_URL = "/vacunacion";
 

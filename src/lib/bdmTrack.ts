@@ -50,6 +50,9 @@ type PopupPayload = {
 
 const SESSION_KEY = "bdm_autotest_session";
 
+/** Primera búsqueda con resultados de la visita (cada cambio de filtro dispara `results`). */
+let mapSearchCounted = false;
+
 const AUTOTEST_GA4: Record<AutotestStatus, string> = {
   start: "bdm_autotest_start",
   age: "bdm_autotest_age",
@@ -145,8 +148,15 @@ export function trackAutotest(payload: AutotestPayload): void {
 
 export function trackMap(payload: MapPayload): void {
   if (typeof window === "undefined") return;
+  // `first`: 1 = primera búsqueda con resultados de la visita; 0 = refinamiento.
+  let first: number | undefined;
+  if (payload.type === "results") {
+    first = !mapSearchCounted && (payload.count ?? 0) > 0 ? 1 : 0;
+    if (first) mapSearchCounted = true;
+  }
   void write("map", {
     type: payload.type,
+    first,
     provincia: payload.provincia,
     localidad: payload.localidad,
     barrio: payload.barrio,
@@ -160,21 +170,12 @@ export function trackMap(payload: MapPayload): void {
     barrio: payload.barrio,
     tipo: payload.tipo,
     count: payload.count,
+    first,
   });
 
-  // Meta Ads — form vacunas finalizado (búsqueda con resultados)
-  if (payload.type === "results") {
-    trackMetaAds(
-      META_ADS_EVENTS.formVacunas,
-      {
-        provincia: payload.provincia,
-        localidad: payload.localidad,
-        barrio: payload.barrio,
-        tipo: payload.tipo,
-        count: payload.count,
-      },
-      "Lead",
-    );
+  // Meta Ads — buscador finalizado. Sin ubicación ni tipo de centro (política salud).
+  if (first) {
+    trackMetaAds(META_ADS_EVENTS.formVacunas, { count: payload.count }, "Lead");
   }
 }
 

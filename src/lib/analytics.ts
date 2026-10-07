@@ -18,7 +18,14 @@ declare global {
   }
 }
 
-export function pushDataLayer(payload: TrackPayload): void {
+/**
+ * GA4/GTM siempre. Meta Pixel solo si `meta: true` (eventos `bdm_meta_*` con
+ * nombres neutros): Meta bloquea custom events con términos/datos de salud.
+ */
+export function pushDataLayer(
+  payload: TrackPayload,
+  { meta = false }: { meta?: boolean } = {},
+): void {
   if (typeof window === "undefined") return;
 
   window.dataLayer = window.dataLayer || [];
@@ -35,13 +42,7 @@ export function pushDataLayer(payload: TrackPayload): void {
     window.gtag("event", event, clean);
   }
 
-  if (typeof window.fbq === "function" && event) {
-    if (event === TRACK.events.whatsappClick) {
-      window.fbq("track", "Contact", {
-        content_name: String(clean.subject || "consulta"),
-        content_category: String(clean.location || clean.intent || "web"),
-      });
-    }
+  if (meta && typeof window.fbq === "function" && event) {
     window.fbq("trackCustom", event, clean);
   }
 }
@@ -50,7 +51,6 @@ export const TRACK = {
   ctaClass: "js-bdm-cta",
   events: {
     vacunarseClick: "bdm_vacunarse_click",
-    whatsappClick: "bdm_whatsapp_click",
     videoClick: "bdm_video_click",
   },
 } as const;
