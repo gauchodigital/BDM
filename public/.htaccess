@@ -7,3 +7,22 @@
   AddType image/svg+xml .svg .svgz
   AddType image/png .png
 </IfModule>
+
+# Redirecciones 301 de URLs del sitio anterior (pueden estar en QR, piezas impresas o buscadores).
+# Conservan el query string (?utm_...). Lista tomada de Internet Archive.
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # /index.html → / (solo si lo pidió el usuario; DirectoryIndex lo sirve internamente)
+  RewriteCond %{THE_REQUEST} \s/index\.html[\s?] [NC]
+  RewriteRule ^index\.html$ / [R=301,L,NC]
+
+  RewriteRule ^meningitis-bacteriana\.html$ /causas/bacteriana/ [R=301,L,NC]
+  RewriteRule ^meningitis-por-virus\.html$ /causas/viral/ [R=301,L,NC]
+  RewriteRule ^meningitis-por-hongos\.html$ /causas/fungica/ [R=301,L,NC]
+  RewriteRule ^meningitis-por-parasitos\.html$ /causas/parasitaria/ [R=301,L,NC]
+  RewriteRule ^tipos\.html$ /causas/ [R=301,L,NC]
+  RewriteRule ^sintomas\.html$ /sintomas/ [R=301,L,NC]
+  RewriteRule ^vacunas\.html$ /vacunacion/ [R=301,L,NC]
+  RewriteRule ^terminos-y-condiciones\.html$ /terminos/ [R=301,L,NC]
+</IfModule>
